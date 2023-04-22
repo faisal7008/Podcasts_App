@@ -10,6 +10,13 @@ const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
 
   try {
+    // Check if the user entered all the details
+    if (!name || !email || !password) {
+      return res
+        .status(401)
+        .json({ message: "Please fill the necessary details" });
+    }
+
     // Check if the user already exists
     let user = await User.findOne({ email });
     if (user) {
@@ -28,7 +35,7 @@ const registerUser = async (req, res) => {
 
     // Create a JWT token and return it
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
-    res.json({ token });
+    res.json({ token, user });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
@@ -43,6 +50,13 @@ const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
+    // Check if the user entered all the details
+    if (!email || !password) {
+      return res
+        .status(401)
+        .json({ message: "Please fill the necessary details" });
+    }
+
     // Check if the user exists
     const user = await User.findOne({ email });
     if (!user) {
@@ -57,7 +71,7 @@ const loginUser = async (req, res) => {
 
     // Create a JWT token and return it
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
-    res.json({ token });
+    res.json({ token, user });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });

@@ -1,11 +1,13 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import AuthContainer from "./AuthContainer";
 
 export default function SidebarContent() {
   const [current, setCurrent] = useState("home");
   const navigate = useNavigate();
   return (
-    <div className="px-6 py-6">
+    <div className="px-6 py-6 flex flex-col h-full">
       <div className="w-full flex gap-1 justify-center items-center">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -151,20 +153,7 @@ export default function SidebarContent() {
           </div>
         </li>
       </ul>
-      <div className="flex flex-col h-full gap-3">
-        <button
-          onClick={() => navigate("/login")}
-          className="px-5 py-3 hover:translate-x-1 transition-all bg-color-font text-color-dark font-mono font-semibold rounded-full"
-        >
-          Log in
-        </button>
-        <button
-          onClick={() => navigate("/signup")}
-          className="x-5 py-3 hover:translate-x-1 transition-all bg-color-card text-color-font font-mono font-semibold rounded-full"
-        >
-          Sign up
-        </button>
-      </div>
+      <AuthContainer current={current} setCurrent={setCurrent} />
     </div>
   );
 }

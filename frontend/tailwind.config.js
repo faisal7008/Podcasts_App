@@ -15,5 +15,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require("preline/plugin")],
+  // plugins: [require("preline/plugin")],
 };

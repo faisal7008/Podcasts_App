@@ -1,9 +1,14 @@
 import React from "react";
+import { logout } from "../features/userSlice";
 
 export default function Profile() {
   return (
     <div className=" place-self-end self-center">
-      <button className=" px-3 py-2 bg-slate-900 flex text-color-font rounded-full">
+      <button
+        type="button"
+        onClick={() => logout()}
+        className=" px-3 py-2 bg-slate-900 flex text-color-font rounded-full"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
