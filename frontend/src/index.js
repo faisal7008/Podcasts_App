@@ -6,6 +6,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./index.css";
 // import("preline");
+import("plyr");
 
 const container = document.getElementById("root");
 const root = createRoot(container);

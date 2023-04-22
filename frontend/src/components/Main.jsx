@@ -2,12 +2,16 @@ import React from "react";
 import SearchBar from "./SearchBar";
 import PopularCard from "./PopularCard";
 import Profile from "./Profile";
-import MediaPlayer from "./MediaPlayer";
+import VideoPlayer from "./VideoPlayer";
+import "plyr/dist/plyr.css";
+import AudioPlayer from "./AudioPlayer";
 
 export default function Main() {
   return (
     <div className="flex flex-col gap-4 w-full py-10 h-full overflow-auto px-6">
-      <MediaPlayer src="https://www.youtube.com/watch?v=T0PcqTDTL3I" />
+      {/* <VideoPlayer src="https://www.youtube.com/watch?v=AXSm49NGkg8" /> */}
+      {/* <VideoPlayer src="video1.mp4" /> */}
+      <AudioPlayer src="audio1.mp3" />
       <div className="grid lg:grid-cols-2 mb-2">
         <SearchBar />
         <Profile />
