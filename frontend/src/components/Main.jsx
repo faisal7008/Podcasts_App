@@ -2,10 +2,12 @@ import React from "react";
 import SearchBar from "./SearchBar";
 import PopularCard from "./PopularCard";
 import Profile from "./Profile";
+import MediaPlayer from "./MediaPlayer";
 
 export default function Main() {
   return (
     <div className="flex flex-col gap-4 w-full py-10 h-full overflow-auto px-6">
+      <MediaPlayer src="https://www.youtube.com/watch?v=T0PcqTDTL3I" />
       <div className="grid lg:grid-cols-2 mb-2">
         <SearchBar />
         <Profile />

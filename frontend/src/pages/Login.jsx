@@ -145,7 +145,7 @@ export default function Login() {
                 aria-label="enter email adress"
                 onChange={(e) => setEmail(e.target.value)}
                 type="email"
-                className="bg-gray-200 border focus:border-color-bg focus:ring-color-bg rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
+                className="bg-gray-200 border focus:border-color-bg focus:ring-color-bg rounded focus:outline-none text-sm font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
               />
             </div>
             <div className="mt-6  w-full">
@@ -158,7 +158,7 @@ export default function Login() {
                   aria-label="enter Password"
                   onChange={(e) => setPassword(e.target.value)}
                   type="password"
-                  className="bg-gray-200 border focus:border-color-bg focus:ring-color-bg rounded focus:outline-none text-xs font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
+                  className="bg-gray-200 border focus:border-color-bg focus:ring-color-bg rounded focus:outline-none text-sm font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
                 />
               </div>
             </div>

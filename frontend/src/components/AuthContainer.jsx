@@ -19,7 +19,7 @@ export default function AuthContainer({ current, setCurrent }) {
             >
               <div className="flex items-center gap-2">
                 <img
-                  src="mypodcasts-img.png"
+                  src="assets/mypodcasts-img.png"
                   className="h-7 bg-color-bg rounded-md p-0.5 w-7"
                   alt=""
                 />
@@ -150,7 +150,7 @@ export default function AuthContainer({ current, setCurrent }) {
               </div>
             </li>
             <li
-              //   onClick={() => dispatch(logout())}
+              onClick={() => dispatch(logout())}
               className="flex w-full justify-between hover:text-color-font text-slate-300 cursor-pointer items-center mb-6 ml-2"
             >
               <div className="flex items-center gap-2">
