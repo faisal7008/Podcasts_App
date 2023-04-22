@@ -1,11 +1,21 @@
-import React from 'react'
+import React from "react";
+import SearchBar from "./SearchBar";
+import PopularCard from "./PopularCard";
 
 export default function Main() {
   return (
-    <div className=' text-lg text-[#F4EEE0]'>Main
-        <div className='mt-4 w-40 h-80 rounded-md shadow-lg bg-[#4F4557] hover:bg-[#6D5D6E]'>
-
-        </div>
+    <div className="container flex flex-col gap-4 mx-auto py-10 h-full md:w-4/5 w-11/12 px-6">
+      <div className="grid lg:grid-cols-2">
+        <SearchBar />
+      </div>
+      <h2 className="text-2xl font-semibold text-color-font">Popular</h2>
+      <div className="grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-5">
+        <PopularCard />
+        <PopularCard />
+        <PopularCard />
+        <PopularCard />
+        <PopularCard />
+      </div>
     </div>
-  )
+  );
 }
