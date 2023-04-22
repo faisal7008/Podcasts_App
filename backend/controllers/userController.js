@@ -7,22 +7,31 @@ const User = require("../models/User");
 // @access  Public
 
 const registerUser = async (req, res) => {
+  const { name, email, password } = req.body;
+
   try {
-    // Hash the password before storing it in the database
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    // Check if the user already exists
+    let user = await User.findOne({ email });
+    if (user) {
+      return res.status(400).json({ message: "User already exists" });
+    }
 
-    const newUser = new User({
-      email: req.body.email,
+    // Hash the password and create a new user
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+    user = new User({
+      name,
+      email,
       password: hashedPassword,
-      podcasts: [],
     });
-    await newUser.save();
+    await user.save();
 
-    // Generate a JWT token and send it to the client
-    const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET);
-    res.status(201).json({ user: newUser, token });
+    // Create a JWT token and return it
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
+    res.json({ token });
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
   }
 };
 
@@ -31,136 +40,84 @@ const registerUser = async (req, res) => {
 // @access  Public
 
 const loginUser = async (req, res) => {
+  const { email, password } = req.body;
+
   try {
-    const user = await User.findOne({ email: req.body.email });
+    // Check if the user exists
+    const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ message: "Invalid email or password" });
+      return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    // Compare the provided password with the hashed password stored in the database
-    const isPasswordMatch = await bcrypt.compare(
-      req.body.password,
-      user.password
-    );
-    if (!isPasswordMatch) {
-      return res.status(400).json({ message: "Invalid email or password" });
+    // Check if the password is correct
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    // Generate a JWT token and send it to the client
+    // Create a JWT token and return it
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
-    res.json({ user, token });
+    res.json({ token });
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
   }
 };
-
-// @desc    get user profile
-// @route   PUT /users/:id
+// @desc    get user
+// @route   GET /users/me
 // @access  Private
 
-const getProfile = async (req, res) => {
+const getMe = async (req, res) => {
   try {
-    const user = await User.findById(req.user.userId).populate("podcasts");
+    // Fetch the authenticated user's information
+    const user = await User.findById(req.user.userId).select("-password");
     res.json(user);
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
   }
 };
 
 // @desc    Update User
-// @route   PUT /api/users/:id
+// @route   PUT /users/me
 // @access  Private
 
-// const updateUser = async (req, res) => {
-//   const user = await User.findById(req.params.id);
-//   if (!user) {
-//     res.status(400);
-//     throw new Error("User not found");
-//   }
+const updateMe = async (req, res) => {
+  const { name } = req.body;
 
-//   // Check for profile picture
-//   // if(!req.file){
-//   //     res.status(401)
-//   //     throw new Error('No file')
-//   // }
-//   if (req.body.password) {
-//     // Hash password
-//     const salt = await bcrypt.genSalt(10);
-//     const hashedPassword = await bcrypt.hash(req.body.password, salt);
-//     req.body.password = hashedPassword;
-//   }
-//   if (req.file) {
-//     // Profile picture
-//     const url = req.protocol + "://" + req.get("host");
-//     const uploadProfilePic = await user.updateOne({
-//       $set: {
-//         profilePicture: url + "/uploads/profile/" + req.file.filename,
-//       },
-//     });
-//   }
+  try {
+    // Update the authenticated user's information
+    const user = await User.findByIdAndUpdate(
+      req.user.userId,
+      { $set: { name } },
+      { new: true }
+    ).select("-password");
+    res.json(user);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
 
-//   const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
-//     new: true,
-//   });
+// @desc    Delete User
+// @route   DELETE /users/me
+// @access  Private
 
-//   res.status(200).json(updatedUser);
-// });
-
-// @desc    Delete Users
-// @route   DELETE /api/users/:id
-// @access  Admin
-
-// const deleteUser = async (req, res) => {
-//   const user = await User.findById(req.params.id);
-
-//   // Check for user
-//   if (!req.user) {
-//     res.status(401);
-//     throw new Error("Not Authorized");
-//   }
-
-//   if (!user) {
-//     res.status(400);
-//     throw new Error("User not found");
-//   }
-
-//   await user.remove();
-
-//   res.status(200).json({ id: req.params.id });
-// });
-
-// follow/unfollow a user
-// const follow = async (req, res) => {
-//   const id = req.params.id;
-//   const { userId } = req.body;
-
-//   try {
-//     const user = await User.findById(id);
-//     const followedUser = await User.findById(userId);
-//     if (!user.followings.includes(userId)) {
-//       await user.updateOne({ $push: { followings: userId } });
-//       await followedUser.updateOne({ $push: { followers: id } });
-//       res.status(200).json("Followed");
-//     } else {
-//       await user.updateOne({ $pull: { followings: userId } });
-//       await followedUser.updateOne({ $pull: { followers: id } });
-//       res.status(200).json("Unfollowed");
-//     }
-//   } catch (error) {
-//     res.status(500).json(error);
-//   }
-// });
-
-// Generate JWT
-
-// const generateToken = (id) => {
-//   return jwt.sign({ id }, process.env.JWT_SECRET, {
-//     expiresIn: "1d",
-//   });
-// };
+const deleteMe = async (req, res) => {
+  try {
+    // Delete the authenticated user's account
+    await User.findByIdAndDelete(req.user.userId);
+    res.json({ id: req.user.userId, message: "Account deleted successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
 
 module.exports = {
   registerUser,
   loginUser,
-  getProfile,
+  getMe,
+  updateMe,
+  deleteMe,
 };

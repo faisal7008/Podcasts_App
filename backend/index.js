@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const dotenv = require("dotenv").config();
 const userRouter = require("./routes/userRoutes");
 const podcastRouter = require("./routes/podcastRoutes");
 const playbackRouter = require("./routes/playbackRoutes");
@@ -12,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 // Connect to MongoDB
-mongoose.connect("mongodb://localhost/podcastsdb", {
+mongoose.connect("mongodb://localhost/mypodcastsdb", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
