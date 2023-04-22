@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function SidebarContent() {
+  const navigate = useNavigate();
   return (
     <div className="px-6 py-6">
       <div className="w-full flex gap-1 justify-center items-center">
@@ -116,10 +118,16 @@ export default function SidebarContent() {
         </li>
       </ul>
       <div className="flex flex-col h-full gap-3">
-        <button className="px-5 py-3 hover:translate-x-1 transition-all bg-color-font text-color-dark font-mono font-semibold rounded-full">
+        <button
+          onClick={() => navigate("/login")}
+          className="px-5 py-3 hover:translate-x-1 transition-all bg-color-font text-color-dark font-mono font-semibold rounded-full"
+        >
           Log in
         </button>
-        <button className="x-5 py-3 hover:translate-x-1 transition-all bg-color-card text-color-font font-mono font-semibold rounded-full">
+        <button
+          onClick={() => navigate("/signup")}
+          className="x-5 py-3 hover:translate-x-1 transition-all bg-color-card text-color-font font-mono font-semibold rounded-full"
+        >
           Sign up
         </button>
       </div>
