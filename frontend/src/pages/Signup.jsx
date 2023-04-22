@@ -5,6 +5,23 @@ export default function Signup() {
   // const [sidebar, setsidebar] = useState();
   return (
     <div className="h-full bg-gradient-to-tl from-color-dark to-color-bg w-full py-16 px-4">
+      <Link
+        to="/"
+        className=" absolute bg-color-font rounded-full p-2 top-4 left-4"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          className="w-5 h-5"
+        >
+          <path
+            fillRule="evenodd"
+            d="M11.03 3.97a.75.75 0 010 1.06l-6.22 6.22H21a.75.75 0 010 1.5H4.81l6.22 6.22a.75.75 0 11-1.06 1.06l-7.5-7.5a.75.75 0 010-1.06l7.5-7.5a.75.75 0 011.06 0z"
+            clipRule="evenodd"
+          />
+        </svg>
+      </Link>
       <div className="flex flex-col gap-4 items-center justify-center">
         <div className="w-full flex gap-1 justify-center items-center">
           <svg
