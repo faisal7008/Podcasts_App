@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../features/userSlice";
+import ErrorContainer from "../components/handlers/ErrorContainer";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -18,13 +19,14 @@ export default function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(email);
-    console.log(password);
+    // console.log(email);
+    // console.log(password);
     dispatch(login({ email, password }));
   };
 
   return (
     <div className="h-full bg-gradient-to-tl from-color-dark to-color-bg w-full py-16 px-4">
+      {/* <ErrorContainer /> */}
       <Link
         to="/"
         className=" absolute bg-color-font rounded-full p-2 top-4 left-4"

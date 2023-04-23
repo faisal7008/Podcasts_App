@@ -1,6 +1,7 @@
 import React from "react";
-import Sidebar from "../components/Sidebar";
-import Main from "../components/Main";
+import Sidebar from "../components/sidebar/Sidebar";
+import Main from "../components/to be deleted/Main";
+import { Outlet } from "react-router-dom";
 
 export default function Home() {
   return (
@@ -10,7 +11,8 @@ export default function Home() {
     // </div>
     <div className="flex h-screen flex-no-wrap">
       <Sidebar />
-      <Main />
+      {/* <Main Component={}/> */}
+      <Outlet />
     </div>
   );
 }

@@ -90,15 +90,15 @@ export const deleteMe = createAsyncThunk(
 );
 
 // Get user from localStorage
-const { user, token } = JSON.parse(localStorage.getItem("user"));
+const userData = JSON.parse(localStorage.getItem("user")); // do not destructure like {user, token} it raises error when you open the website in another browser as there is no user in that localStorage
 
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    isAuthenticated: user ? true : false,
-    user: user ? user : null,
-    token: token ? token : null,
-    status: user ? "succeeded" : "idle",
+    isAuthenticated: userData ? true : false,
+    user: userData ? userData.user : null,
+    token: userData ? userData.token : null,
+    status: userData ? "succeeded" : "idle",
     error: null,
   },
   reducers: {

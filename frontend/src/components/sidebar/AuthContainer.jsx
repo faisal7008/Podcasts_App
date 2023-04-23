@@ -1,20 +1,23 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { logout } from "../features/userSlice";
+import { logout } from "../../features/userSlice";
 
 export default function AuthContainer({ current, setCurrent }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isAuthenticated } = useSelector((state) => state.auth);
-
+  const handleClick = (path) => {
+    setCurrent(path);
+    navigate(path);
+  };
   return (
     <div className="relative h-full">
       {isAuthenticated ? (
         <div className=" flex flex-col justify-between h-full">
           <ul className="pt-10">
             <li
-              onClick={() => setCurrent("mypodcasts")}
+              onClick={() => handleClick("podcasts")}
               className="flex w-full justify-between text-slate-300 hover:text-color-font cursor-pointer items-center mb-6 ml-2"
             >
               <div className="flex items-center gap-2">
@@ -26,7 +29,7 @@ export default function AuthContainer({ current, setCurrent }) {
 
                 <span
                   className={`text-sm ${
-                    current === "mypodcasts"
+                    current === "podcasts"
                       ? "font-bold text-color-font"
                       : "font-semibold"
                   }`}
@@ -36,7 +39,7 @@ export default function AuthContainer({ current, setCurrent }) {
               </div>
             </li>
             <li
-              onClick={() => setCurrent("favourites")}
+              onClick={() => handleClick("favourites")}
               className="flex w-full justify-between text-slate-300 hover:text-color-font cursor-pointer items-center mb-6 ml-2"
             >
               <div className="flex items-center gap-2">

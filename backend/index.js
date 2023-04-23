@@ -8,9 +8,12 @@ const playbackRouter = require("./routes/playbackRoutes");
 
 const app = express();
 
-// Middleware
-app.use(cors());
-app.use(express.json());
+// cors
+app.use(cors({ origin: true, credentials: true }));
+
+// Init Middleware
+app.use(express.json({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 
 // Connect to MongoDB
 mongoose.connect("mongodb://localhost/mypodcastsdb", {
@@ -27,4 +30,4 @@ app.use("/podcasts", podcastRouter);
 app.use("/playbacks", playbackRouter);
 
 // Start server
-app.listen(9000, () => console.log("Server started"));
+app.listen(process.env.PORT || 9000, () => console.log("Server started"));

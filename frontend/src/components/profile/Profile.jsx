@@ -1,5 +1,5 @@
 import React from "react";
-import { logout } from "../features/userSlice";
+import { logout } from "../../features/userSlice";
 
 export default function Profile() {
   return (

@@ -2,18 +2,13 @@ import React, { useRef, useEffect } from "react";
 import Plyr from "plyr";
 import "plyr/dist/plyr.css";
 
-const AudioPlayer = ({ src }) => {
+const VideoPlayer = ({ src }) => {
   const playerRef = useRef(null);
 
   useEffect(() => {
     const options = {
       controls: ["play", "progress", "current-time", "mute", "volume"],
-      colors: {
-        controls: "#4F4557",
-        // This is the color of the progress bar
-        // This example uses red (#ff0000)
-        progress: "#4F4557",
-      },
+      fullscreen: { enabled: true },
     };
     const player = new Plyr(playerRef.current, options);
 
@@ -23,12 +18,12 @@ const AudioPlayer = ({ src }) => {
   }, []);
 
   return (
-    <div>
-      <audio ref={playerRef}>
-        <source src={src} type="audio/mp3" />
-      </audio>
+    <div className="w-full h-full fixed bottom-0 rounded-t-lg shadow-t-lg">
+      <video ref={playerRef}>
+        <source src={src} type="video/mp4" />
+      </video>
     </div>
   );
 };
 
-export default AudioPlayer;
+export default VideoPlayer;

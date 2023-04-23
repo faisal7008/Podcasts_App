@@ -28,6 +28,12 @@ const podcastSchema = new mongoose.Schema({
   },
   imageUrl: {
     type: String,
+    // required: true,
+  },
+  // Reference to the user who added the podcast
+  addedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
     required: true,
   },
 });
