@@ -13,9 +13,13 @@ const mediaSlice = createSlice({
       state.mediaUrl = action.payload.path;
       state.type = action.payload.type;
     },
+    reset(state, action) {
+      state.mediaUrl = null;
+      state.type = null;
+    },
   },
 });
 
-export const { setMediaUrl } = mediaSlice.actions;
+export const { setMediaUrl, reset } = mediaSlice.actions;
 
 export default mediaSlice.reducer;

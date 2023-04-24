@@ -2,20 +2,21 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addPodcast } from "../../features/podcastSlice";
 import Loader from "../handlers/Loader";
-// import { handleUpload } from "../../utils/cloudinaryApi";
+import { uploadPodcast } from "../../features/podcastSlice";
 
 const cloudName = process.env.REACT_APP_CLOUD_NAME;
 
 export default function AddPodcast() {
   const dispatch = useDispatch();
-  const { status } = useSelector((state) => state.podcasts);
+  const { status, fileUrl } = useSelector((state) => state.podcasts);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [type, setType] = useState("");
+  const [mediaUrl, setMediaUrl] = useState("");
   const [speaker, setSpeaker] = useState("");
   const [file, setFile] = useState(null);
-  const [fileUrl, setFileUrl] = useState(null);
+  // const [fileUrl, setFileUrl] = useState(null);
 
   // const handleUpload = async () => {
   //   const formData = new FormData();
@@ -37,38 +38,38 @@ export default function AddPodcast() {
   //       console.error(error);
   //     });
   // };
-  const handleUpload = async () => {
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("resource_type", type); // or 'audio' for audio files
-    formData.append("upload_preset", "upload_podcasts"); // create an upload preset in your Cloudinary account
+  // const handleUpload = async () => {
+  //   const formData = new FormData();
+  //   formData.append("file", file);
+  //   formData.append("resource_type", type); // or 'audio' for audio files
+  //   formData.append("upload_preset", "upload_podcasts"); // create an upload preset in your Cloudinary account
 
-    try {
-      const response = await fetch(
-        `https://api.cloudinary.com/v1_1/${cloudName}/upload`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-      const data = await response.json();
-      console.log(data);
-      return data;
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  //   try {
+  //     const response = await fetch(
+  //       `https://api.cloudinary.com/v1_1/${cloudName}/upload`,
+  //       {
+  //         method: "POST",
+  //         body: formData,
+  //       }
+  //     );
+  //     const data = await response.json();
+  //     console.log(data);
+  //     return data;
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const fileData = await handleUpload();
+    dispatch(uploadPodcast({ file, type }));
     const podcastData = {
       name,
       description,
       category,
       type,
       speaker,
-      fileUrl: fileData.url, // Use fileData.url to set the fileUrl
+      fileUrl, // Use fileData.url to set the fileUrl
     };
     dispatch(addPodcast(podcastData));
     console.log(podcastData);
@@ -96,7 +97,7 @@ export default function AddPodcast() {
         className="hs-overlay hidden w-full h-full fixed -top-5 left-0 z-[60] overflow-x-hidden overflow-y-auto"
       >
         <div className="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all sm:max-w-full sm:w-full m-3 sm:mx-auto min-h-[calc(100%-3.5rem)] flex justify-center items-center">
-          <div className="relative flex p-6 flex-col max-h-[95vh] w-2/5 bg-white border shadow-sm rounded h-5/6">
+          <div className="relative flex p-6 flex-col max-h-[95vh] w-4/5 md:w-3/5 lg:w-2/5  bg-white border shadow-sm rounded h-5/6">
             <div className="flex justify-between mb-4">
               <h1 className="font-semibold tracking-wide text-slate-800 text-xl">
                 Add Podcast
@@ -263,6 +264,28 @@ export default function AddPodcast() {
     "
                   />
                 </label>
+              </div>
+              <div className="w-full mb-4 flex items-center justify-between">
+                <hr className="w-full bg-gray-400" />
+                <p className="text-base font-medium leading-4 px-2.5 text-gray-400">
+                  OR
+                </p>
+                <hr className="w-full bg-gray-400  " />
+              </div>
+              <div className="mb-4">
+                <label
+                  for="title"
+                  className="block mb-2 text-xs font-semibold text-gray-900 dark:text-white"
+                >
+                  Paste the media url <span className=" text-rose-600">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="title"
+                  onChange={(e) => setMediaUrl(e.target.value)}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-stone-500 focus:border-stone-500 block w-full p-2.5"
+                  placeholder="Paste the media url"
+                />
               </div>
 
               <button

@@ -17,6 +17,8 @@ import { useEffect } from "react";
 import { getAllPodcasts } from "./features/podcastSlice";
 import AudioPlayer from "./components/player/AudioPlayer";
 import VideoPlayer from "./components/player/VideoPlayer";
+import DisplayVideo from "./components/player/DisplayVideo";
+import DisplayAudio from "./components/player/DisplayAudio";
 
 function App() {
   const dispatch = useDispatch();
@@ -50,8 +52,10 @@ function App() {
           <Route path="/signup" element={<Signup />} />
         </Routes>
       </Router>
-      {mediaUrl && type && type === "audio" && <AudioPlayer src={mediaUrl} />}
-      {mediaUrl && type && type === "video" && <VideoPlayer src={mediaUrl} />}
+      {/* {mediaUrl && type && type === "audio" && <AudioPlayer src={mediaUrl} />} */}
+      {/* {mediaUrl && type && type === "video" && <VideoPlayer src={mediaUrl} />} */}
+      {mediaUrl && type && type === "video" && <DisplayVideo src={mediaUrl} />}
+      {mediaUrl && type && type === "audio" && <DisplayAudio src={mediaUrl} />}
     </div>
   );
 }
