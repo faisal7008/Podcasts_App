@@ -6,6 +6,7 @@ import { getAllPodcasts } from "../features/podcastSlice";
 import VideoPlayer from "../components/player/VideoPlayer";
 import DisplayAudio from "../components/player/DisplayAudio";
 import DisplayVideo from "../components/player/DisplayVideo";
+import SearchContent from "../components/search/SearchContent";
 
 export default function Search() {
   const dispatch = useDispatch();
@@ -13,6 +14,17 @@ export default function Search() {
   useEffect(() => {
     dispatch(getAllPodcasts());
   }, []);
+  // const [searchTerm, setSearchTerm] = useState("");
+  // const { podcasts } = useSelector((state) => state.podcasts);
+  // const filterPodcasts = (searchTerm) => {
+  //   if (!searchTerm) {
+  //     return podcasts;
+  //   }
+  //   const filteredPodcasts = podcasts.filter((podcast) =>
+  //     podcast.title.toLowerCase().includes(searchTerm.toLowerCase())
+  //   );
+  //   return filteredPodcasts;
+  // };
   return (
     <div className=" w-full h-full p-8">
       <div className="grid lg:grid-cols-2 mb-2">
@@ -31,6 +43,7 @@ export default function Search() {
       {/* <VideoPlayer src={"https://www.youtube.com/watch?v=o5F8MOz_IDw"} /> */}
       {/* <DisplayAudio />
       <DisplayVideo /> */}
+      <SearchContent />
     </div>
   );
 }
