@@ -9,12 +9,12 @@ export const getAllPodcasts = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.token;
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-      const response = await axios.get(api_url + "/podcasts", config);
+      // const config = {
+      //   headers: {
+      //     Authorization: `Bearer ${token}`,
+      //   },
+      // };
+      const response = await axios.get(api_url + "/podcasts");
       return response.data;
     } catch (error) {
       console.log(error.message);
@@ -111,7 +111,6 @@ const podcastsSlice = createSlice({
     });
     builder.addCase(uploadPodcast.fulfilled, (state, action) => {
       state.status = "succeeded";
-      state.podcasts.push(action.payload);
     });
     builder.addCase(uploadPodcast.rejected, (state, action) => {
       state.status = "failed";

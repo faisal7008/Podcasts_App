@@ -12,7 +12,7 @@ const auth = require("../middlewares/authMiddleware");
 // http://localhost:9000/podcasts
 
 router.post("/", auth, addPodcast);
-router.get("/", auth, getAllPodcasts);
+router.get("/", getAllPodcasts);
 router.put("/:id", auth, updatePodcast);
 router.delete("/:id", auth, deletePodcast);
 // router.put("/:id/like", auth, likePodcast);
