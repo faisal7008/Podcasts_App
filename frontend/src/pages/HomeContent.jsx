@@ -12,13 +12,15 @@ export default function HomeContent() {
   const dispatch = useDispatch();
   const { isAuthenticated } = useSelector((state) => state.auth);
   const { podcasts } = useSelector((state) => state.podcasts);
+  const videoPodcasts = podcasts.filter((podcast) => podcast.type === "video");
+  const audioPodcasts = podcasts.filter((podcast) => podcast.type === "audio");
   // const [allPodcasts, setAllPodcasts] = useState(null);
 
   return (
     <div className="flex flex-col gap-4 w-full py-8 h-full overflow-auto px-6">
       <h2 className="text-2xl font-semibold text-color-font">Popular</h2>
       <div className="grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-5 mb-2">
-        {podcasts?.map((podcast) => (
+        {podcasts.slice(0, 5)?.map((podcast) => (
           <PopularCard
             key={podcast._id}
             title={podcast.name}
@@ -30,19 +32,27 @@ export default function HomeContent() {
       </div>
       <h2 className="text-2xl font-semibold text-color-font">Video Podcasts</h2>
       <div className="grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-5 mb-2">
-        <PopularCard />
-        <PopularCard />
-        <PopularCard />
-        <PopularCard />
-        <PopularCard />
+        {videoPodcasts.map((podcast) => (
+          <PopularCard
+            key={podcast._id}
+            title={podcast.name}
+            desc={podcast.description}
+            fileUrl={podcast.fileUrl}
+            type={podcast.type}
+          />
+        ))}
       </div>
       <h2 className="text-2xl font-semibold text-color-font">Audio Podcasts</h2>
       <div className="grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-5 mb-2">
-        <PopularCard />
-        <PopularCard />
-        <PopularCard />
-        <PopularCard />
-        <PopularCard />
+        {audioPodcasts.map((podcast) => (
+          <PopularCard
+            key={podcast._id}
+            title={podcast.name}
+            desc={podcast.description}
+            fileUrl={podcast.fileUrl}
+            type={podcast.type}
+          />
+        ))}
       </div>
       {/* {path && <AudioPlayer src={path} />} */}
     </div>
