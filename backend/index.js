@@ -16,13 +16,19 @@ app.use(express.json({ extended: false }));
 app.use(express.urlencoded({ extended: true }));
 
 // Connect to MongoDB
-mongoose.connect("mongodb://localhost/mypodcastsdb", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-const db = mongoose.connection;
-db.on("error", (error) => console.error(error));
-db.once("open", () => console.log("Connected to database"));
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+    });
+    console.log("MongoDB is Connected...");
+  } catch (err) {
+    console.error(err.message);
+    process.exit(1);
+  }
+};
+
+connectDB();
 
 // Routes
 app.use("/users", userRouter);

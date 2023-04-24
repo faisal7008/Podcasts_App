@@ -34,7 +34,7 @@ export const addPodcast = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       };
-      const response = await axios.post(api_url + "/podcasts", config, podcast);
+      const response = await axios.post(api_url + "/podcasts", podcast, config);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -62,7 +62,9 @@ const podcastsSlice = createSlice({
     });
     builder.addCase(getAllPodcasts.rejected, (state, action) => {
       state.status = "failed";
-      state.error = action.error.message;
+      state.error = action.payload
+        ? action.payload.message
+        : action.error.message;
     });
 
     // Add podcast
@@ -76,7 +78,9 @@ const podcastsSlice = createSlice({
     });
     builder.addCase(addPodcast.rejected, (state, action) => {
       state.status = "failed";
-      state.error = action.error.message;
+      state.error = action.payload
+        ? action.payload.message
+        : action.error.message;
     });
   },
 });

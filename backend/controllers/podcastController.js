@@ -1,5 +1,4 @@
 const Podcast = require("../models/Podcast");
-const cloudinary = require("../utils/cloudinary");
 
 // @desc    get all podcasts
 // @route   GET /podcasts

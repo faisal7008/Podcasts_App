@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addPodcast } from "../../features/podcastSlice";
-import Loader from "../handlers/Loader";
 // import { handleUpload } from "../../utils/cloudinaryApi";
 
 const cloudName = process.env.REACT_APP_CLOUD_NAME;
 
 export default function AddPodcast() {
   const dispatch = useDispatch();
-  const { status } = useSelector((state) => state.podcasts);
+  const { user } = useSelector((state) => state.auth);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
@@ -47,6 +46,7 @@ export default function AddPodcast() {
       type,
       speaker,
       fileUrl,
+      addedBy: user._id,
     };
     console.log(podcastData);
     dispatch(addPodcast(podcastData));
@@ -232,7 +232,7 @@ export default function AddPodcast() {
                 type="submit"
                 className="mt-2 text-white inline-flex justify-center items-center bg-stone-700 hover:bg-stone-800 w-full focus:ring-4 focus:ring-stone-300 font-medium rounded text-sm px-5 py-2.5 mr-2"
               >
-                {status === "loading" ? <Loader /> : <>Add</>}
+                Add
               </button>
             </form>
           </div>
