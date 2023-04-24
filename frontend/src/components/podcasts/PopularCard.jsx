@@ -42,31 +42,26 @@ export default function PopularCard({ title, desc, fileUrl, type }) {
                   </svg>
                 </button>
               </div>
-              <h4 className="text-gray-200 font-bold">{title}</h4>
-              <p className="text-gray-300 text-sm">{desc}</p>
-            </div>
-            {/* <div>
-              <div className="flex items-center justify-end text-gray-800">
-                <div className="w-8 h-8 rounded-full bg-gray-800 text-white flex items-center justify-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="icon icon-tabler icon-tabler-pencil"
-                    width={20}
-                    height={20}
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    fill="none"
+              <div className="flex mt-1 items-center justify-between text-color-font cursor-pointer">
+                <h4 className="text-gray-200 font-bold">{title}</h4>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                  >
-                    <path stroke="none" d="M0 0h24v24H0z" />
-                    <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
-                    <line x1="13.5" y1="6.5" x2="17.5" y2="10.5" />
-                  </svg>
-                </div>
+                    d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                  />
+                </svg>
               </div>
-            </div> */}
+              <p className="text-gray-300 text-sm">{desc}</p>
+            </div>
+            <div></div>
           </div>
         </div>
       </div>

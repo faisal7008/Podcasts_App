@@ -3,6 +3,7 @@ import SearchBar from "../components/search/SearchBar";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllPodcasts } from "../features/podcastSlice";
+import VideoPlayer from "../components/player/VideoPlayer";
 
 export default function Search() {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ export default function Search() {
           Get Started
         </Link>
       </div>
+      {/* <VideoPlayer src={"https://www.youtube.com/watch?v=o5F8MOz_IDw"} /> */}
     </div>
   );
 }

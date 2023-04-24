@@ -13,10 +13,7 @@ export default function HomeContent() {
   const { isAuthenticated } = useSelector((state) => state.auth);
   const { podcasts } = useSelector((state) => state.podcasts);
   // const [allPodcasts, setAllPodcasts] = useState(null);
-  useEffect(() => {
-    dispatch(getAllPodcasts());
-    // setAllPodcasts(podcasts);
-  }, []);
+
   return (
     <div className="flex flex-col gap-4 w-full py-8 h-full overflow-auto px-6">
       <h2 className="text-2xl font-semibold text-color-font">Popular</h2>

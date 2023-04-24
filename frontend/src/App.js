@@ -19,9 +19,12 @@ import AudioPlayer from "./components/player/AudioPlayer";
 import VideoPlayer from "./components/player/VideoPlayer";
 
 function App() {
+  const dispatch = useDispatch();
   const { isAuthenticated } = useSelector((state) => state.auth);
   const { mediaUrl, type } = useSelector((state) => state.media);
-
+  useEffect(() => {
+    dispatch(getAllPodcasts());
+  }, []);
   return (
     <div className="app bg-color-dark h-screen">
       <Router>

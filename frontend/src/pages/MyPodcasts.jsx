@@ -5,6 +5,9 @@ import AddPodcast from "../components/podcasts/AddPodcast";
 
 export default function MyPodcasts() {
   const { user } = useSelector((state) => state.auth);
+  const { podcasts } = useSelector((state) => state.podcasts);
+  const videoPodcasts = podcasts.filter((podcast) => podcast.type === "video");
+  const audioPodcasts = podcasts.filter((podcast) => podcast.type === "audio");
   return (
     <div className="flex flex-col gap-4 w-full py-10 h-full overflow-auto px-6">
       <div className=" flex justify-between items-center ">
@@ -30,19 +33,27 @@ export default function MyPodcasts() {
       </div>
       <h2 className="text-xl font-semibold text-color-font">Video Podcasts</h2>
       <div className="grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-5 mb-2">
-        <PopularCard />
-        <PopularCard />
-        <PopularCard />
-        <PopularCard />
-        <PopularCard />
+        {videoPodcasts.map((podcast) => (
+          <PopularCard
+            key={podcast._id}
+            title={podcast.name}
+            desc={podcast.description}
+            fileUrl={podcast.fileUrl}
+            type={podcast.type}
+          />
+        ))}
       </div>
       <h2 className="text-xl font-semibold text-color-font">Audio Podcasts</h2>
       <div className="grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-5 mb-2">
-        <PopularCard />
-        <PopularCard />
-        <PopularCard />
-        <PopularCard />
-        <PopularCard />
+        {audioPodcasts.map((podcast) => (
+          <PopularCard
+            key={podcast._id}
+            title={podcast.name}
+            desc={podcast.description}
+            fileUrl={podcast.fileUrl}
+            type={podcast.type}
+          />
+        ))}
       </div>
       <AddPodcast />
     </div>
