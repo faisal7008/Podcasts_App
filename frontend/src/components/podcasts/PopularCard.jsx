@@ -1,15 +1,26 @@
 import React from "react";
-import cardImg from "../assets/podcast-card.png";
+import cardImg from "../../assets/podcast-card.png";
+import { useDispatch } from "react-redux";
+import { setMediaUrl } from "../../features/mediaSlice";
 // import cardImg from "../assets/podcast-img.jpg";
 
-export default function PopularCard() {
+export default function PopularCard({ title, desc, fileUrl, type }) {
+  const dispatch = useDispatch();
+  function handleClick() {
+    dispatch(setMediaUrl({ path: fileUrl, type: type }));
+  }
   return (
     <div>
       <div className="flex w-full items-center justify-center">
         <div>
           <div className="max-w-xs flex flex-col justify-between bg-color-bg hover:bg-color-card rounded-lg border-gray-400 py-4 px-4">
             <div className="flex flex-col gap-2">
-              <div className="group relative">
+              <div
+                // tabIndex={-1}
+                role="button"
+                onClick={handleClick}
+                className="group relative"
+              >
                 <img
                   src={cardImg}
                   className=" w-full h-full group-hover:opacity-90 shadow rounded-lg"
@@ -31,8 +42,8 @@ export default function PopularCard() {
                   </svg>
                 </button>
               </div>
-              <h4 className="text-gray-200 font-bold">Title</h4>
-              <p className="text-gray-300 text-sm">description</p>
+              <h4 className="text-gray-200 font-bold">{title}</h4>
+              <p className="text-gray-300 text-sm">{desc}</p>
             </div>
             {/* <div>
               <div className="flex items-center justify-end text-gray-800">

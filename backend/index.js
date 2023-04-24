@@ -1,25 +1,39 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const contactRouter = require('./routes/contactRoutes');
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const dotenv = require("dotenv").config();
+const userRouter = require("./routes/userRoutes");
+const podcastRouter = require("./routes/podcastRoutes");
+const playbackRouter = require("./routes/playbackRoutes");
 
 const app = express();
 
-// Middleware
-app.use(cors());
-app.use(express.json());
+// cors
+app.use(cors({ origin: true, credentials: true }));
+
+// Init Middleware
+app.use(express.json({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost/contactsdb', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-const db = mongoose.connection;
-db.on('error', (error) => console.error(error));
-db.once('open', () => console.log('Connected to database'));
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+    });
+    console.log("MongoDB is Connected...");
+  } catch (err) {
+    console.error(err.message);
+    process.exit(1);
+  }
+};
+
+connectDB();
 
 // Routes
-app.use('/contacts', contactRouter);
+app.use("/users", userRouter);
+app.use("/podcasts", podcastRouter);
+app.use("/playbacks", playbackRouter);
 
 // Start server
-app.listen(9000, () => console.log('Server started'));
+app.listen(process.env.PORT || 9000, () => console.log("Server started"));

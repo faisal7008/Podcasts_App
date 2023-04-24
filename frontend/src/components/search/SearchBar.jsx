@@ -31,7 +31,7 @@ export default function SearchBar() {
           type="search"
           id="default-search"
           class="block w-full p-4 pl-12 text-sm text-gray-900 border-none rounded-full bg-gray-50"
-          placeholder="Search Mockups, Logos..."
+          placeholder="Search Audios, Videos..."
           required
         />
         {/* <button

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import logo from "../assets/icons8-podcasts-96.png";
+// import logo from "../assets/icons8-podcasts-96.png";
 import SidebarContent from "./SidebarContent";
 
 export default function Sidebar() {

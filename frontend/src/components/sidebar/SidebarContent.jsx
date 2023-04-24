@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import AuthContainer from "./AuthContainer";
 
 export default function SidebarContent() {
+  const [current, setCurrent] = useState("");
+  const navigate = useNavigate();
+  const handleClick = (path) => {
+    setCurrent(path);
+    navigate(path);
+  };
+  // useEffect(() => {}, [current]);
   return (
-    <div className="px-6 py-6">
+    <div className="px-6 py-6 flex flex-col h-full">
       <div className="w-full flex gap-1 justify-center items-center">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -38,7 +48,10 @@ export default function SidebarContent() {
         </h1>
       </div>
       <ul className="mt-6">
-        <li className="flex w-full justify-between text-slate-300 hover:text-color-font cursor-pointer items-center mb-6 ml-2">
+        <li
+          onClick={() => handleClick("")}
+          className="flex w-full justify-between text-slate-300 hover:text-color-font cursor-pointer items-center mb-6 ml-2"
+        >
           <div className="flex items-center gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -46,7 +59,7 @@ export default function SidebarContent() {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="w-6 h-6"
+              className={`w-6 h-6 ${current !== "" ? "" : "hidden"}`}
             >
               <path
                 strokeLinecap="round"
@@ -58,16 +71,25 @@ export default function SidebarContent() {
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
               fill="currentColor"
-              class="w-6 h-6 hidden"
+              className={`w-6 h-6 ${current === "" ? "" : "hidden"}`}
             >
               <path d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z" />
               <path d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z" />
             </svg>
-            <span className=" font-semibold text-sm">Home</span>
+            <span
+              className={`text-sm ${
+                current === "" ? "font-bold text-color-font" : "font-semibold"
+              }`}
+            >
+              Home
+            </span>
           </div>
         </li>
 
-        <li className="flex w-full justify-between text-slate-300 hover:text-color-font cursor-pointer items-center mb-6 ml-2">
+        <li
+          onClick={() => handleClick("search")}
+          className="flex w-full justify-between text-slate-300 hover:text-color-font cursor-pointer items-center mb-6 ml-2"
+        >
           <div className="flex items-center gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -82,11 +104,22 @@ export default function SidebarContent() {
               />
             </svg>
 
-            <span className=" font-semibold text-sm">Search</span>
+            <span
+              className={`text-sm ${
+                current === "search"
+                  ? "font-bold text-color-font"
+                  : "font-semibold"
+              }`}
+            >
+              Search
+            </span>
           </div>
         </li>
 
-        <li className="flex w-full justify-between text-slate-300 hover:text-color-font cursor-pointer items-center mb-6 ml-2">
+        <li
+          onClick={() => handleClick("library")}
+          className="flex w-full justify-between text-slate-300 hover:text-color-font cursor-pointer items-center mb-6 ml-2"
+        >
           <div className="flex items-center gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -94,7 +127,7 @@ export default function SidebarContent() {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="w-6 h-6"
+              className={`w-6 h-6 ${current !== "library" ? "" : "hidden"}`}
             >
               <path
                 strokeLinecap="round"
@@ -106,23 +139,24 @@ export default function SidebarContent() {
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
               fill="currentColor"
-              className="w-6 h-6 hidden"
+              className={`w-6 h-6 ${current === "library" ? "" : "hidden"}`}
             >
               <path d="M19.906 9c.382 0 .749.057 1.094.162V9a3 3 0 00-3-3h-3.879a.75.75 0 01-.53-.22L11.47 3.66A2.25 2.25 0 009.879 3H6a3 3 0 00-3 3v3.162A3.756 3.756 0 014.094 9h15.812zM4.094 10.5a2.25 2.25 0 00-2.227 2.568l.857 6A2.25 2.25 0 004.951 21H19.05a2.25 2.25 0 002.227-1.932l.857-6a2.25 2.25 0 00-2.227-2.568H4.094z" />
             </svg>
 
-            <span className=" font-semibold text-sm">Your library</span>
+            <span
+              className={`text-sm ${
+                current === "library"
+                  ? "font-bold text-color-font"
+                  : "font-semibold"
+              }`}
+            >
+              Your library
+            </span>
           </div>
         </li>
       </ul>
-      <div className="flex flex-col h-full gap-3">
-        <button className="px-5 py-3 hover:translate-x-1 transition-all bg-color-font text-color-dark font-mono font-semibold rounded-full">
-          Log in
-        </button>
-        <button className="x-5 py-3 hover:translate-x-1 transition-all bg-color-card text-color-font font-mono font-semibold rounded-full">
-          Sign up
-        </button>
-      </div>
+      <AuthContainer current={current} setCurrent={setCurrent} />
     </div>
   );
 }
