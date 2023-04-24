@@ -1,11 +1,12 @@
 import React from "react";
 import cardImg from "../../assets/podcast-card.png";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setMediaUrl } from "../../features/mediaSlice";
 // import cardImg from "../assets/podcast-img.jpg";
 
 export default function PopularCard({ title, desc, fileUrl, type }) {
   const dispatch = useDispatch();
+  const { status } = useSelector((state) => state.podcasts);
   function handleClick() {
     dispatch(setMediaUrl({ path: fileUrl, type: type }));
   }
@@ -20,6 +21,9 @@ export default function PopularCard({ title, desc, fileUrl, type }) {
                 role="button"
                 onClick={handleClick}
                 className="group relative"
+                data-hs-overlay={
+                  type === "audio" ? "#display-audio" : "#display-video"
+                }
               >
                 <img
                   src={cardImg}

@@ -32,8 +32,8 @@ const AudioPlayer = ({ src }) => {
   }, []);
 
   return (
-    <div className="w-full fixed bottom-0 rounded-t-lg shadow-t-lg">
-      <audio ref={playerRef}>
+    <div className="p-1">
+      <audio ref={playerRef} className=" bg-black">
         <source src={src} type="audio/mp3" />
       </audio>
     </div>

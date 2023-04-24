@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllPodcasts } from "../features/podcastSlice";
 import VideoPlayer from "../components/player/VideoPlayer";
+import DisplayAudio from "../components/player/DisplayAudio";
+import DisplayVideo from "../components/player/DisplayVideo";
 
 export default function Search() {
   const dispatch = useDispatch();
@@ -27,6 +29,8 @@ export default function Search() {
         </Link>
       </div>
       {/* <VideoPlayer src={"https://www.youtube.com/watch?v=o5F8MOz_IDw"} /> */}
+      {/* <DisplayAudio />
+      <DisplayVideo /> */}
     </div>
   );
 }

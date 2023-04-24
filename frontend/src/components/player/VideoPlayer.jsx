@@ -18,7 +18,7 @@ const VideoPlayer = ({ src }) => {
   }, []);
 
   return (
-    <div className="w-full h-full fixed bottom-0 rounded-t-lg shadow-t-lg">
+    <div className="p-1">
       <video ref={playerRef}>
         <source src={src} type="video/mp4" />
       </video>

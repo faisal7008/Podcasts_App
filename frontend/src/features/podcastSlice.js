@@ -24,7 +24,7 @@ export const getAllPodcasts = createAsyncThunk(
 );
 
 // upload podcasts
-const uploadPodcast = createAsyncThunk(
+export const uploadPodcast = createAsyncThunk(
   "podcasts/upload",
   async ({ file, type }, thunkAPI) => {
     try {
@@ -33,10 +33,12 @@ const uploadPodcast = createAsyncThunk(
       formData.append("resource_type", type); // or 'audio' for audio files
       formData.append("upload_preset", "upload_podcasts"); // create an upload preset in your Cloudinary account
 
-      const response = axios.post(
+      const response = await axios.post(
         `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/upload`,
         formData
       );
+      // const data = await response.json();
+      console.log(response.data);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -67,6 +69,7 @@ const podcastsSlice = createSlice({
   name: "podcasts",
   initialState: {
     podcasts: [],
+    fileUrl: null,
     status: "idle",
     error: null,
   },
@@ -111,6 +114,7 @@ const podcastsSlice = createSlice({
     });
     builder.addCase(uploadPodcast.fulfilled, (state, action) => {
       state.status = "succeeded";
+      state.fileUrl = action.payload.url;
     });
     builder.addCase(uploadPodcast.rejected, (state, action) => {
       state.status = "failed";

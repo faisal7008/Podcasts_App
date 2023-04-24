@@ -8,6 +8,7 @@ export default function MyPodcasts() {
   const { podcasts } = useSelector((state) => state.podcasts);
   const videoPodcasts = podcasts.filter((podcast) => podcast.type === "video");
   const audioPodcasts = podcasts.filter((podcast) => podcast.type === "audio");
+
   return (
     <div className="flex flex-col gap-4 w-full py-10 h-full overflow-auto px-6">
       <div className=" flex justify-between items-center ">

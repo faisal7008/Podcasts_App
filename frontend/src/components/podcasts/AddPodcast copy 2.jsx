@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addPodcast } from "../../features/podcastSlice";
+import Loader from "../handlers/Loader";
 // import { handleUpload } from "../../utils/cloudinaryApi";
 
 const cloudName = process.env.REACT_APP_CLOUD_NAME;
 
 export default function AddPodcast() {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
+  const { status } = useSelector((state) => state.podcasts);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
@@ -16,41 +17,77 @@ export default function AddPodcast() {
   const [file, setFile] = useState(null);
   const [fileUrl, setFileUrl] = useState(null);
 
+  // const handleUpload = async () => {
+  //   const formData = new FormData();
+  //   formData.append("file", file);
+  //   formData.append("resource_type", type); // or 'audio' for audio files
+  //   formData.append("upload_preset", "upload_podcasts"); // create an upload preset in your Cloudinary account
+
+  //   await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/upload`, {
+  //     method: "POST",
+  //     body: formData,
+  //   })
+  //     .then((response) => response.json())
+  //     .then(async (data) => {
+  //       console.log(data);
+  //       await setFileUrl(data.url);
+  //       // return data;
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // };
   const handleUpload = async () => {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("resource_type", type); // or 'audio' for audio files
     formData.append("upload_preset", "upload_podcasts"); // create an upload preset in your Cloudinary account
 
-    await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/upload`, {
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then(async (data) => {
-        console.log(data);
-        await setFileUrl(data.url);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    try {
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/${cloudName}/upload`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      const data = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await handleUpload();
+    const fileData = await handleUpload();
     const podcastData = {
       name,
       description,
       category,
       type,
       speaker,
-      fileUrl,
-      addedBy: user._id,
+      fileUrl: fileData.url, // Use fileData.url to set the fileUrl
     };
-    console.log(podcastData);
     dispatch(addPodcast(podcastData));
+    console.log(podcastData);
   };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const fileData = await handleUpload();
+  //   const podcastData = {
+  //     name,
+  //     description,
+  //     category,
+  //     type,
+  //     speaker,
+  //     fileUrl,
+  //   };
+  //   dispatch(addPodcast(podcastData));
+  //   console.log(podcastData);
+  // };
 
   return (
     <div>
@@ -232,7 +269,7 @@ export default function AddPodcast() {
                 type="submit"
                 className="mt-2 text-white inline-flex justify-center items-center bg-stone-700 hover:bg-stone-800 w-full focus:ring-4 focus:ring-stone-300 font-medium rounded text-sm px-5 py-2.5 mr-2"
               >
-                Add
+                {status === "loading" ? <Loader /> : <>Add</>}
               </button>
             </form>
           </div>
