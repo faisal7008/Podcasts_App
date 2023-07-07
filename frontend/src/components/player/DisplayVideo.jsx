@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import VideoPlayer from "./VideoPlayer";
 import { useDispatch } from "react-redux";
 import { reset } from "../../features/mediaSlice";
+import NetPlayer from "netplayer";
 
 export default function DisplayVideo({ src }) {
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ export default function DisplayVideo({ src }) {
 
       <div
         id="display-video"
-        class="hs-overlay hidden w-full h-full fixed top-0 left-0 z-[60] overflow-x-hidden overflow-y-auto"
+        class="hs-overlay hidden w-full h-full fixed top-0 left-0 z-[60] scroll-container overflow-x-hidden overflow-y-auto"
       >
         <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all sm:w-full m-0 p-0 min-h-[calc(100%-3.5rem)] flex justify-center items-center">
           <div class="flex flex-col bg-white border shadow-sm rounded-xl w-full mx-2 md:mx-0 md:w-5/6">
@@ -59,7 +60,16 @@ export default function DisplayVideo({ src }) {
                 </svg>
               </button>
             </div>
-            <VideoPlayer src={src} />
+            {/* <VideoPlayer src={src} /> */}
+            <NetPlayer
+
+  sources={[
+    {
+      file: 'http://res.cloudinary.com/dopuxe0m5/video/upload/v1682346516/podcasts/zxjkmfyoqa0sve2pxjvx.mp4',
+      label: '1080p',
+    }
+  ]}
+/>
           </div>
         </div>
       </div>

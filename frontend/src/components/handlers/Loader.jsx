@@ -3,7 +3,7 @@ import React from "react";
 export default function Loader() {
   return (
     <div
-      class="animate-spin inline-block w-5 h-5 border-[3px] border-current border-t-transparent text-color-font rounded-full"
+      class="animate-spin inline-block w-4 h-4 border-2 border-current border-t-transparent text-color-font rounded-full"
       role="status"
       aria-label="loading"
     >

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../features/userSlice";
 import ErrorContainer from "../components/handlers/ErrorContainer";
+import Loader from "../components/handlers/Loader";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -29,13 +30,14 @@ export default function Login() {
       {/* <ErrorContainer /> */}
       <Link
         to="/"
-        className=" absolute bg-color-font rounded-full p-2 top-4 left-4"
+        className=" absolute bg-color-font rounded-full p-1 top-4 left-4"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
+          strokeWidth={2}
           fill="currentColor"
-          className="w-5 h-5"
+          className="w-4 h-4 text-color-dark"
         >
           <path
             fillRule="evenodd"
@@ -53,7 +55,7 @@ export default function Login() {
             width="384"
             height="384"
             viewBox="0,0,256,256"
-            className=" h-16 w-16"
+            className="w-12 h-12 lg:h-16 lg:w-16"
           >
             <g
               fill="#f4eee0"
@@ -75,7 +77,7 @@ export default function Login() {
               </g>
             </g>
           </svg>
-          <h1 className=" text-3xl text-color-font font-mono tracking-tight font-semibold">
+          <h1 className="text-2xl md:text-3xl text-color-font font-mono tracking-tight font-semibold">
             Podcasts
           </h1>
         </div>
@@ -83,16 +85,16 @@ export default function Login() {
           <p
             tabIndex={0}
             aria-label="Login to your account"
-            className="text-2xl font-extrabold leading-6 text-gray-800"
+            className="text-lg md:text-2xl font-extrabold leading-6 text-gray-800"
           >
             Login to your account
           </p>
-          <p className="text-sm mt-4 font-medium leading-none text-gray-500">
+          <p className="text-xs md:text-sm mt-3 font-medium leading-none text-gray-500">
             Don't have an account?{" "}
             <span
               tabIndex={0}
               aria-label="Sign up here"
-              className="text-sm font-medium leading-none underline text-gray-800 cursor-pointer"
+              className="text-xs md:text-sm font-medium leading-none underline text-gray-800 cursor-pointer"
             >
               {" "}
               <Link to={"/signup"}> Sign up here </Link>
@@ -100,7 +102,7 @@ export default function Login() {
           </p>
           <button
             aria-label="Continue with google"
-            className="focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 border rounded-lg border-gray-700 flex justify-center items-center w-full mt-10"
+            className="focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 bg-color-font border rounded-lg border-gray-700 flex justify-center items-center w-full mt-6"
           >
             <svg
               width={19}
@@ -126,20 +128,20 @@ export default function Login() {
                 fill="#EB4335"
               />
             </svg>
-            <p className="text-base font-medium ml-4 text-gray-700">
+            <p className="text-sm md:text-base font-medium ml-4 text-gray-700">
               Continue with Google
             </p>
           </button>
           <div className="w-full flex items-center justify-between py-5">
             <hr className="w-full bg-gray-400" />
-            <p className="text-base font-medium leading-4 px-2.5 text-gray-400">
+            <p className="text-sm md:text-base font-medium leading-4 px-2.5 text-gray-400">
               OR
             </p>
             <hr className="w-full bg-gray-400  " />
           </div>
           <form onSubmit={handleSubmit}>
             <div>
-              <label className="text-sm font-medium leading-none text-gray-800">
+              <label className="text-xs md:text-sm font-medium leading-none text-gray-800">
                 Email
               </label>
               <input
@@ -147,11 +149,11 @@ export default function Login() {
                 aria-label="enter email adress"
                 onChange={(e) => setEmail(e.target.value)}
                 type="email"
-                className="bg-gray-200 border focus:border-color-bg focus:ring-color-bg rounded focus:outline-none text-sm font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
+                className="bg-gray-200 border focus:border-color-bg focus:ring-color-bg rounded focus:outline-none text-xs md:text-sm font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
               />
             </div>
             <div className="mt-6  w-full">
-              <label className="text-sm font-medium leading-none text-gray-800">
+              <label className="text-xs md:text-sm font-medium leading-none text-gray-800">
                 Password
               </label>
               <div className="relative flex items-center justify-center">
@@ -160,7 +162,7 @@ export default function Login() {
                   aria-label="enter Password"
                   onChange={(e) => setPassword(e.target.value)}
                   type="password"
-                  className="bg-gray-200 border focus:border-color-bg focus:ring-color-bg rounded focus:outline-none text-sm font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
+                  className="bg-gray-200 border focus:border-color-bg focus:ring-color-bg rounded focus:outline-none text-xs md:text-sm font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
                 />
               </div>
             </div>
@@ -169,7 +171,7 @@ export default function Login() {
                 type="submit"
                 className="focus:ring-2 focus:ring-offset-2 focus:ring-color-bg text-sm font-semibold leading-none text-white focus:outline-none bg-color-bg border rounded hover:bg-color-card py-4 w-full"
               >
-                Log in
+                {status === "loading" ? <Loader /> : <>Log in</>}
               </button>
             </div>
           </form>

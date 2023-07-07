@@ -58,7 +58,7 @@ export default function AuthContainer({ current, setCurrent }) {
           </ul>
           <ul>
             <li
-              onClick={() => setCurrent("profile")}
+              onClick={() => handleClick("profile")}
               className="flex w-full justify-between text-slate-300 hover:text-color-font cursor-pointer items-center mb-6 ml-2"
             >
               <div className="flex items-center gap-2">
@@ -101,7 +101,7 @@ export default function AuthContainer({ current, setCurrent }) {
               </div>
             </li>
             <li
-              onClick={() => setCurrent("settings")}
+              onClick={() => handleClick("settings")}
               className="flex w-full justify-between text-slate-300 hover:text-color-font cursor-pointer items-center mb-6 ml-2"
             >
               <div className="flex items-center gap-2">
@@ -189,13 +189,13 @@ export default function AuthContainer({ current, setCurrent }) {
         <div className="flex flex-col h-full gap-3">
           <button
             onClick={() => navigate("/login")}
-            className="px-5 py-3 hover:translate-x-1 transition-all bg-color-font text-color-dark font-mono font-semibold rounded-full"
+            className="px-4 py-2 md:px-5 md:py-3 hover:translate-x-1 transition-all bg-color-font text-color-dark font-mono text-xs md:text-sm font-semibold rounded-full"
           >
             Log in
           </button>
           <button
             onClick={() => navigate("/signup")}
-            className="x-5 py-3 hover:translate-x-1 transition-all bg-color-card text-color-font font-mono font-semibold rounded-full"
+            className="px-4 py-2 md:px-5 md:py-3 hover:translate-x-1 transition-all bg-color-card text-color-font font-mono text-xs md:text-sm font-semibold rounded-full"
           >
             Sign up
           </button>

@@ -19,6 +19,10 @@ import AudioPlayer from "./components/player/AudioPlayer";
 import VideoPlayer from "./components/player/VideoPlayer";
 import DisplayVideo from "./components/player/DisplayVideo";
 import DisplayAudio from "./components/player/DisplayAudio";
+import PlayAudio from "./pages/PlayAudio";
+import PlayVideo from "./pages/PlayVideo";
+import ViewAll from "./components/podcasts/ViewAll";
+import ComingSoon from "./pages/ComingSoon";
 
 function App() {
   const dispatch = useDispatch();
@@ -33,8 +37,11 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />}>
             <Route path="/" element={<HomeContent />} />
+              <Route path="/:type" element={<ViewAll/>} />
             <Route path="/search" element={<Search />} />
-            <Route path="/library" element={<Library />} />
+            <Route path="/library" element={<ComingSoon />} />
+            <Route path="/play-audio" element={<PlayAudio />}/>
+            <Route path="/play-video" element={<PlayVideo />}/>
             <Route
               path="/podcasts"
               element={
@@ -45,6 +52,18 @@ function App() {
               path="/favourites"
               element={
                 isAuthenticated ? <Favourites /> : <Navigate to={"/login"} />
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                isAuthenticated ? <ComingSoon /> : <Navigate to={"/login"} />
+              }
+            />
+            <Route
+              path="/settings"
+              element={
+                isAuthenticated ? <ComingSoon /> : <Navigate to={"/login"} />
               }
             />
           </Route>

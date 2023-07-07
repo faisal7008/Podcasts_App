@@ -3,6 +3,8 @@ import { CloudinaryContext, Video, Audio } from "cloudinary-react";
 import { Cloudinary } from "cloudinary-core";
 import VideoPlayer from "../components/player/VideoPlayer";
 import AudioPlayer from "../components/player/AudioPlayer";
+import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from "pure-react-carousel";
+import "pure-react-carousel/dist/react-carousel.es.css";
 
 const cloudName = process.env.REACT_APP_CLOUD_NAME;
 const apiKey = process.env.REACT_APP_CLOUDINARY_API_KEY;
@@ -45,27 +47,7 @@ const Library = () => {
 
   return (
     <div>
-      <input type="file" onChange={handleFileUpload} />
-      <button onClick={handleUpload}>Upload</button>
-      <CloudinaryContext cloudName={cloudName} cl={cloudinary}>
-        {file && (
-          <>
-            {/* <Video publicId={file.name} controls /> */}
-            {/* or */}
-            <Audio publicId={file.name} controls />
-          </>
-        )}
-      </CloudinaryContext>
-      <AudioPlayer
-        src={
-          "https://res.cloudinary.com/dopuxe0m5/video/upload/v1682245846/podcasts/ztvdzijeewxgyxwdwukd.mp3"
-        }
-      />
-      {/* <video
-        className="absolute top-0 left-0"
-        src="https://res.cloudinary.com/dopuxe0m5/video/upload/v1682244796/podcasts/x97i3u4in2zgcxyoaeds.mp4"
-        controls
-      /> */}
+        
     </div>
   );
 };

@@ -1,35 +1,73 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Loader from "../handlers/Loader";
-import axios from "axios";
 import { addPodcast } from "../../features/podcastSlice";
-import UploadPodcast from "./UploadPodcast";
-import { current } from "@reduxjs/toolkit";
+import Loader from "../handlers/Loader";
+import { uploadPodcast } from "../../features/podcastSlice";
+
+const cloudName = process.env.REACT_APP_CLOUD_NAME;
 
 export default function AddPodcast() {
   const dispatch = useDispatch();
-  const closeBtn = useRef()
-  const { status } = useSelector((state) => state.podcasts);
+  const { status, fileUrl, uploadStatus } = useSelector(
+    (state) => state.podcasts
+  );
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [type, setType] = useState("");
+  const [mediaUrl, setMediaUrl] = useState("");
   const [speaker, setSpeaker] = useState("");
   const [file, setFile] = useState(null);
-  const [fileUrl, setFileUrl] = useState(null);
-  
-  const resetState = () => {
-    setName("")
-    setCategory("")
-    setDescription("")
-    setType("")
-    setSpeaker("")
-    setFile(null)
-    setFileUrl("")
-  }
+  // const [fileUrl, setFileUrl] = useState(null);
 
+  // const handleUpload = async () => {
+  //   const formData = new FormData();
+  //   formData.append("file", file);
+  //   formData.append("resource_type", type); // or 'audio' for audio files
+  //   formData.append("upload_preset", "upload_podcasts"); // create an upload preset in your Cloudinary account
+
+  //   await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/upload`, {
+  //     method: "POST",
+  //     body: formData,
+  //   })
+  //     .then((response) => response.json())
+  //     .then(async (data) => {
+  //       console.log(data);
+  //       await setFileUrl(data.url);
+  //       // return data;
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // };
+  // const handleUpload = async () => {
+  //   const formData = new FormData();
+  //   formData.append("file", file);
+  //   formData.append("resource_type", type); // or 'audio' for audio files
+  //   formData.append("upload_preset", "upload_podcasts"); // create an upload preset in your Cloudinary account
+
+  //   try {
+  //     const response = await fetch(
+  //       `https://api.cloudinary.com/v1_1/${cloudName}/upload`,
+  //       {
+  //         method: "POST",
+  //         body: formData,
+  //       }
+  //     );
+  //     const data = await response.json();
+  //     console.log(data);
+  //     return data;
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  // console.log(file)
+  // const filetype = file?.type?.split('/')[0]
+  // console.log(filetype)
   const handleSubmit = async (e) => {
     e.preventDefault();
+    dispatch(uploadPodcast({ file }));
     const podcastData = {
       name,
       description,
@@ -38,17 +76,32 @@ export default function AddPodcast() {
       speaker,
       fileUrl, // Use fileData.url to set the fileUrl
     };
-    dispatch(addPodcast(podcastData));
-    closeBtn?.current?.click()
-    resetState()
-    // console.log(podcastData);
+    console.log(podcastData);
+    // if(podcastData && fileUrl){
+    //   dispatch(addPodcast(podcastData));
+    // }
   };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const fileData = await handleUpload();
+  //   const podcastData = {
+  //     name,
+  //     description,
+  //     category,
+  //     type,
+  //     speaker,
+  //     fileUrl,
+  //   };
+  //   dispatch(addPodcast(podcastData));
+  //   console.log(podcastData);
+  // };
 
   return (
     <div>
       <div
         id="add-podcast"
-        className="hs-overlay hidden w-full h-full fixed -top-5 left-0 z-[60] scroll-container overflow-x-hidden overflow-y-auto"
+        className="hs-overlay hidden w-full h-full fixed -top-5 left-0 z-[60] overflow-x-hidden overflow-y-auto"
       >
         <div className="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all sm:max-w-full sm:w-full m-3 sm:mx-auto min-h-[calc(100%-3.5rem)] flex justify-center items-center">
           <div className="relative flex p-6 flex-col max-h-[95vh] w-full md:w-3/5 lg:w-2/5  bg-white border shadow-sm rounded h-5/6">
@@ -59,7 +112,6 @@ export default function AddPodcast() {
               <button
                 type="button"
                 className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                ref={closeBtn}
                 data-hs-overlay="#add-podcast"
               >
                 <svg
@@ -140,7 +192,7 @@ export default function AddPodcast() {
                   <option value={"Comedy"}>Comedy</option>
                 </select>
               </div>
-              {/* 
+
               <div className="mb-4">
                 <label
                   for="title"
@@ -182,7 +234,7 @@ export default function AddPodcast() {
                     </label>
                   </div>
                 </div>
-              </div> */}
+              </div>
 
               <div className="mb-4">
                 <label
@@ -200,12 +252,56 @@ export default function AddPodcast() {
                   required
                 />
               </div>
-<UploadPodcast file={file} setFile={setFile} setFileUrl={setFileUrl}/>
+
+              <div className="mb-4">
+                <label
+                  for="title"
+                  className="block mb-2 text-xs font-semibold text-gray-900"
+                >
+                  Upload the file <span className=" text-rose-600">*</span>
+                </label>
+                <label className="block">
+                  <span className="sr-only">Upload file</span>
+                  <input
+                    type="file"
+                    onChange={(e) => setFile(e.target.files[0])}
+                    accept="audio/*,video/*"
+                    className="block w-full text-sm text-gray-500
+      file:mr-4 file:py-2 file:px-4
+      file:rounded-md file:border-0
+      file:text-sm file:font-semibold
+      file:bg-stone-500 file:text-white
+      hover:file:bg-stone-600
+    "
+                  />
+                </label>
+              </div>
+              {/* <div className="w-full mb-4 flex items-center justify-between">
+                <hr className="w-full bg-gray-400" />
+                <p className="text-base font-medium leading-4 px-2.5 text-gray-400">
+                  OR
+                </p>
+                <hr className="w-full bg-gray-400  " />
+              </div>
+              <div className="mb-4">
+                <label
+                  for="title"
+                  className="block mb-2 text-xs font-semibold text-gray-900"
+                >
+                  Paste the media url <span className=" text-rose-600">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="title"
+                  onChange={(e) => setMediaUrl(e.target.value)}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-stone-500 focus:border-stone-500 block w-full p-2.5"
+                  placeholder="Paste the media url"
+                />
+              </div> */}
 
               <button
                 type="submit"
-                className="mt-2 text-white inline-flex justify-center items-center bg-stone-700 hover:bg-stone-800 w-full focus:ring-4 focus:ring-stone-300 font-medium rounded text-sm px-5 py-2.5 mr-2 disabled:bg-stone-500"
-                disabled={!fileUrl || !name || !description || !speaker || !category}
+                className="mt-2 text-white inline-flex justify-center items-center bg-stone-700 hover:bg-stone-800 w-full focus:ring-4 focus:ring-stone-300 font-medium rounded text-sm px-5 py-2.5 mr-2"
               >
                 {status === "loading" ? <Loader /> : <>Add</>}
               </button>

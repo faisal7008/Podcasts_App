@@ -1,0 +1,13 @@
+.slick-prev {
+  left: 0px;
+  z-index: 1;
+}
+
+.slick-next {
+  right: 0px;
+  z-index: 1;
+}
+.slick-prev:before,
+.slick-next:before {
+  font-size: 24px;
+}

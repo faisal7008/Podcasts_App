@@ -5,6 +5,7 @@ module.exports = {
     "./app/**/*.{js,ts,jsx,tsx}",
     "node_modules/preline/dist/*.js",
   ],
+  darkMode: 'false',
   theme: {
     extend: {
       colors: {

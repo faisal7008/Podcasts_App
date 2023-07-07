@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signup } from "../features/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+import Loader from "../components/handlers/Loader";
 
 export default function Signup() {
   const dispatch = useDispatch();
@@ -27,13 +28,14 @@ export default function Signup() {
     <div className="h-full bg-gradient-to-tl from-color-dark to-color-bg w-full py-16 px-4">
       <Link
         to="/"
-        className=" absolute bg-color-font rounded-full p-2 top-4 left-4"
+        className=" absolute bg-color-font rounded-full p-1 top-4 left-4"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
+          strokeWidth={2}
           fill="currentColor"
-          className="w-5 h-5"
+          className="w-4 h-4 text-color-dark"
         >
           <path
             fillRule="evenodd"
@@ -43,7 +45,7 @@ export default function Signup() {
         </svg>
       </Link>
       <div className="flex flex-col gap-4 items-center justify-center">
-        <div className="w-full flex gap-1 justify-center items-center">
+      <div className="w-full flex gap-1 justify-center items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             x="0px"
@@ -51,7 +53,7 @@ export default function Signup() {
             width="384"
             height="384"
             viewBox="0,0,256,256"
-            className=" h-16 w-16"
+            className="w-12 h-12 lg:h-16 lg:w-16"
           >
             <g
               fill="#f4eee0"
@@ -73,7 +75,7 @@ export default function Signup() {
               </g>
             </g>
           </svg>
-          <h1 className=" text-3xl text-color-font font-mono tracking-tight font-semibold">
+          <h1 className="text-2xl md:text-3xl text-color-font font-mono tracking-tight font-semibold">
             Podcasts
           </h1>
         </div>
@@ -85,12 +87,12 @@ export default function Signup() {
           >
             Create your account
           </p>
-          <p className="text-sm mt-4 font-medium leading-none text-gray-500">
+          <p className="text-xs md:text-sm mt-4 font-medium leading-none text-gray-500">
             Already have an account?{" "}
             <span
               tabIndex={0}
               aria-label="Sign up here"
-              className="text-sm font-medium leading-none underline text-gray-800 cursor-pointer"
+              className="text-xs md:text-sm font-medium leading-none underline text-gray-800 cursor-pointer"
             >
               {" "}
               <Link to={"/login"}> Login here </Link>
@@ -98,7 +100,7 @@ export default function Signup() {
           </p>
           <form onSubmit={handleSubmit}>
             <div className="mt-6">
-              <label className="text-sm font-medium leading-none text-gray-800">
+              <label className="text-xs md:text-sm font-medium leading-none text-gray-800">
                 Fullname
               </label>
               <input
@@ -106,11 +108,11 @@ export default function Signup() {
                 aria-label="enter fullname"
                 type="text"
                 onChange={(e) => setName(e.target.value)}
-                className="bg-gray-200 border focus:border-color-bg focus:ring-color-bg rounded focus:outline-none text-sm font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
+                className="bg-gray-200 border focus:border-color-bg focus:ring-color-bg rounded focus:outline-none text-xs md:text-sm font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
               />
             </div>
             <div className="mt-6">
-              <label className="text-sm font-medium leading-none text-gray-800">
+              <label className="text-xs md:text-sm font-medium leading-none text-gray-800">
                 Email
               </label>
               <input
@@ -118,11 +120,11 @@ export default function Signup() {
                 aria-label="enter email adress"
                 type="email"
                 onChange={(e) => setEmail(e.target.value)}
-                className="bg-gray-200 border focus:border-color-bg focus:ring-color-bg rounded focus:outline-none text-sm font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
+                className="bg-gray-200 border focus:border-color-bg focus:ring-color-bg rounded focus:outline-none text-xs md:text-sm font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
               />
             </div>
             <div className="mt-6">
-              <label className="text-sm font-medium leading-none text-gray-800">
+              <label className="text-xs md:text-sm font-medium leading-none text-gray-800">
                 Password
               </label>
               <div className="relative flex items-center justify-center">
@@ -131,7 +133,7 @@ export default function Signup() {
                   aria-label="enter Password"
                   type="password"
                   onChange={(e) => setPassword(e.target.value)}
-                  className="bg-gray-200 border focus:border-color-bg focus:ring-color-bg rounded focus:outline-none text-sm font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
+                  className="bg-gray-200 border focus:border-color-bg focus:ring-color-bg rounded focus:outline-none text-xs md:text-sm font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2"
                 />
               </div>
             </div>
@@ -141,7 +143,7 @@ export default function Signup() {
                 type="submit"
                 className="focus:ring-2 focus:ring-offset-2 focus:ring-color-bg text-sm font-semibold leading-none text-white focus:outline-none bg-color-bg border rounded hover:bg-color-card py-4 w-full"
               >
-                Sign up
+                {status === "loading" ? <Loader /> : <>Sign up</>}
               </button>
             </div>
           </form>

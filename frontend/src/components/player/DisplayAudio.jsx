@@ -1,5 +1,8 @@
 import React from "react";
-import AudioPlayer from "./AudioPlayer";
+// import AudioPlayer from "./AudioPlayer";
+import AudioPlayer from 'react-h5-audio-player';
+import 'react-h5-audio-player/lib/styles.css';
+import './audioplayer.css'
 
 export default function DisplayAudio({ src }) {
   return (
@@ -14,7 +17,7 @@ export default function DisplayAudio({ src }) {
 
       <div
         id="display-audio"
-        class="hs-overlay hidden w-full h-full fixed top-0 left-0 z-[60] overflow-x-hidden overflow-y-auto"
+        class="hs-overlay hidden w-full h-full fixed top-0 left-0 z-[60] scroll-container overflow-x-hidden overflow-y-auto"
       >
         <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all sm:w-full m-3 sm:mx-auto min-h-[calc(100%-3.5rem)] flex justify-center items-end">
           <div class="flex flex-col bg-white border shadow-sm rounded-xl md:w-4/5 dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
@@ -44,7 +47,19 @@ export default function DisplayAudio({ src }) {
                 </svg>
               </button>
             </div>
-            <AudioPlayer src={src} />
+            {/* <AudioPlayer src={src} /> */}
+            <div  className=" bg-color-bg rounded-lg p-5">
+              <h2 className=" text-sm font-medium text-white">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eligendi non ipsam, quaerat itaque, illo harum quidem alias architecto eius facere ab soluta earum reprehenderit odio id error porro. Totam, quaerat.</h2>
+            <AudioPlayer
+            // customIcons={}
+            children={<h2> Hello </h2>}
+            className=" bg-color-bg shadow-none"
+              autoPlay
+              src={src}
+              onPlay={e => console.log("onPlay")}
+              // other props here
+            />
+          </div>
           </div>
         </div>
       </div>

@@ -26,10 +26,12 @@ export const getAllPodcasts = createAsyncThunk(
 // upload podcasts
 export const uploadPodcast = createAsyncThunk(
   "podcasts/upload",
-  async ({ file, type }, thunkAPI) => {
+  async ({ file }, thunkAPI) => {
     try {
       const formData = new FormData();
       formData.append("file", file);
+      const type = file.type.split('/')[0]
+      // console.log(type)
       formData.append("resource_type", type); // or 'audio' for audio files
       formData.append("upload_preset", "upload_podcasts"); // create an upload preset in your Cloudinary account
 
@@ -69,11 +71,27 @@ const podcastsSlice = createSlice({
   name: "podcasts",
   initialState: {
     podcasts: [],
+    audioPodcast: null,
+    videoPodcast: null,
     fileUrl: null,
+    uploadStatus: "idle",
     status: "idle",
     error: null,
   },
-  reducers: {},
+  reducers: {
+    setAudioPodcast(state, action) {
+      state.audioPodcast = action.payload;
+    },
+    setVideoPodcast(state, action) {
+      state.videoPodcast = action.payload;
+    },
+    resetAudio(state, action) {
+      state.audioPodcast = null;
+    },
+    resetVideo(state, action) {
+      state.videoPodcast = null;
+    },
+  },
   extraReducers: (builder) => {
     // Fetch podcasts
     builder.addCase(getAllPodcasts.pending, (state) => {
@@ -109,15 +127,15 @@ const podcastsSlice = createSlice({
 
     // Upload podcast
     builder.addCase(uploadPodcast.pending, (state) => {
-      state.status = "loading";
+      state.uploadStatus = "loading";
       state.error = null;
     });
     builder.addCase(uploadPodcast.fulfilled, (state, action) => {
-      state.status = "succeeded";
+      state.uploadStatus = "succeeded";
       state.fileUrl = action.payload.url;
     });
     builder.addCase(uploadPodcast.rejected, (state, action) => {
-      state.status = "failed";
+      state.uploadStatus = "failed";
       state.error = action.payload
         ? action.payload.message
         : action.error.message;
@@ -125,4 +143,5 @@ const podcastsSlice = createSlice({
   },
 });
 
+export const { setAudioPodcast, setVideoPodcast, resetAudio, resetVideo } = podcastsSlice.actions;
 export default podcastsSlice.reducer;

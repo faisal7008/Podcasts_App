@@ -21,7 +21,7 @@ export default function SidebarContent() {
           width="384"
           height="384"
           viewBox="0,0,256,256"
-          className=" h-16 w-16"
+          className="w-12 h-12 lg:h-16 lg:w-16"
         >
           <g
             fill="#f4eee0"
@@ -43,7 +43,7 @@ export default function SidebarContent() {
             </g>
           </g>
         </svg>
-        <h1 className=" text-3xl text-color-font font-mono tracking-tight font-semibold">
+        <h1 className="text-2xl lg:text-3xl text-color-font font-mono tracking-tight font-semibold">
           Podcasts
         </h1>
       </div>
@@ -59,7 +59,7 @@ export default function SidebarContent() {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className={`w-6 h-6 ${current !== "" ? "" : "hidden"}`}
+              className={`w-4 sm:w-6 ${current !== "" ? "" : "hidden"}`}
             >
               <path
                 strokeLinecap="round"
@@ -71,13 +71,13 @@ export default function SidebarContent() {
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
               fill="currentColor"
-              className={`w-6 h-6 ${current === "" ? "" : "hidden"}`}
+              className={`w-4 sm:w-6 ${current === "" ? "" : "hidden"}`}
             >
               <path d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z" />
               <path d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z" />
             </svg>
             <span
-              className={`text-sm ${
+              className={`text-xs md:text-sm ${
                 current === "" ? "font-bold text-color-font" : "font-semibold"
               }`}
             >
@@ -95,7 +95,7 @@ export default function SidebarContent() {
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
               fill="currentColor"
-              className="w-6 h-6"
+              className="w-4 sm:w-6"
             >
               <path
                 fillRule="evenodd"
@@ -105,7 +105,7 @@ export default function SidebarContent() {
             </svg>
 
             <span
-              className={`text-sm ${
+              className={`text-xs md:text-sm ${
                 current === "search"
                   ? "font-bold text-color-font"
                   : "font-semibold"
@@ -127,7 +127,7 @@ export default function SidebarContent() {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className={`w-6 h-6 ${current !== "library" ? "" : "hidden"}`}
+              className={`w-4 sm:w-6 ${current !== "library" ? "" : "hidden"}`}
             >
               <path
                 strokeLinecap="round"
@@ -139,13 +139,13 @@ export default function SidebarContent() {
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
               fill="currentColor"
-              className={`w-6 h-6 ${current === "library" ? "" : "hidden"}`}
+              className={`w-4 sm:w-6 ${current === "library" ? "" : "hidden"}`}
             >
               <path d="M19.906 9c.382 0 .749.057 1.094.162V9a3 3 0 00-3-3h-3.879a.75.75 0 01-.53-.22L11.47 3.66A2.25 2.25 0 009.879 3H6a3 3 0 00-3 3v3.162A3.756 3.756 0 014.094 9h15.812zM4.094 10.5a2.25 2.25 0 00-2.227 2.568l.857 6A2.25 2.25 0 004.951 21H19.05a2.25 2.25 0 002.227-1.932l.857-6a2.25 2.25 0 00-2.227-2.568H4.094z" />
             </svg>
 
             <span
-              className={`text-sm ${
+              className={`text-xs md:text-sm ${
                 current === "library"
                   ? "font-bold text-color-font"
                   : "font-semibold"
