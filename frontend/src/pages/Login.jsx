@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../features/userSlice";
-import ErrorContainer from "../components/handlers/ErrorContainer";
+// import ErrorContainer from "../components/handlers/ErrorContainer";
 import Loader from "../components/handlers/Loader";
+import LoginWithGoogle from "../utils/LoginWithGoogle";
+import {gapi} from "gapi-script"
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -17,6 +19,16 @@ export default function Login() {
       navigate("/");
     }
   }, [isAuthenticated]);
+
+  useEffect(() => {
+    const start = () => {
+      gapi.client.init({
+        clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+        scope: ""
+      })
+    }
+    gapi.load('client:auth2', start)
+  })
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -100,7 +112,7 @@ export default function Login() {
               <Link to={"/signup"}> Sign up here </Link>
             </span>
           </p>
-          <button
+          {/* <div
             aria-label="Continue with google"
             className="focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-gray-700 py-3.5 px-4 bg-color-font border rounded-lg border-gray-700 flex justify-center items-center w-full mt-6"
           >
@@ -131,7 +143,8 @@ export default function Login() {
             <p className="text-sm md:text-base font-medium ml-4 text-gray-700">
               Continue with Google
             </p>
-          </button>
+          </div> */}
+          <LoginWithGoogle/>
           <div className="w-full flex items-center justify-between py-5">
             <hr className="w-full bg-gray-400" />
             <p className="text-sm md:text-base font-medium leading-4 px-2.5 text-gray-400">

@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../features/userSlice";
+import LogoutWithGoogle from "../../utils/LogoutWithGoogle";
 
 export default function AuthContainer({ current, setCurrent }) {
   const navigate = useNavigate();
@@ -199,6 +200,7 @@ export default function AuthContainer({ current, setCurrent }) {
           >
             Sign up
           </button>
+          <LogoutWithGoogle/>
         </div>
       )}
     </div>

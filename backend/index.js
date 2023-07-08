@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const dotenv = require("dotenv").config();
+require("dotenv").config();
 const userRouter = require("./routes/userRoutes");
 const podcastRouter = require("./routes/podcastRoutes");
 const playbackRouter = require("./routes/playbackRoutes");
