@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 // import logo from "../assets/icons8-podcasts-96.png";
 import SidebarContent from "./SidebarContent";
 import { useDispatch } from "react-redux";
@@ -6,10 +6,23 @@ import { setHidePlayer } from "../../features/podcastSlice";
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
-  const dispatch = useDispatch()
-  // useEffect(() => {
-  //   console.log(isOpen);
-  // }, [isOpen]);
+  const dispatch = useDispatch();
+
+  const sidebarRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   return (
     <div onClick={() => dispatch(setHidePlayer(true))}>
@@ -18,7 +31,8 @@ export default function Sidebar() {
         <SidebarContent />
       </div>
       <div
-        className={`fixed inset-y-0 left-0 w-52 md:w-64 bg-slate-900 shadow-lg transform transition-transform duration-300 ease-in-out z-50 ${
+        ref={sidebarRef}
+        className={`fixed inset-y-0 left-0 w-52 md:w-64 bg-slate-900 shadow-lg transform transition-transform duration-300 ease-in-out z-[1500] ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
         id="mobile-nav"
@@ -29,15 +43,19 @@ export default function Sidebar() {
           onClick={() => setIsOpen((flag) => !flag)}
         >
           <svg
-              xmlns='http://www.w3.org/2000/svg'
-              fill='none'
-              viewBox='0 0 24 24'
-              strokeWidth={2}
-              stroke='currentColor'
-              className={`w-6 h-6 ${isOpen && 'rotate-180'}`}
-            >
-              <path strokeLinecap='round' strokeLinejoin='round' d='M8.25 4.5l7.5 7.5-7.5 7.5' />
-            </svg>
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={2}
+            stroke="currentColor"
+            className={`w-6 h-6 ${isOpen && "rotate-180"}`}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M8.25 4.5l7.5 7.5-7.5 7.5"
+            />
+          </svg>
         </button>
         <SidebarContent />
       </div>
