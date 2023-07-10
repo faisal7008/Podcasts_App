@@ -74,6 +74,7 @@ const podcastsSlice = createSlice({
     audioPodcast: null,
     videoPodcast: null,
     fileUrl: null,
+    hidePlayer: false,
     uploadStatus: "idle",
     status: "idle",
     error: null,
@@ -85,12 +86,15 @@ const podcastsSlice = createSlice({
     setVideoPodcast(state, action) {
       state.videoPodcast = action.payload;
     },
+    setHidePlayer(state, action) {
+      state.hidePlayer = action.payload
+    },
     resetAudio(state, action) {
       state.audioPodcast = null;
     },
     resetVideo(state, action) {
       state.videoPodcast = null;
-    },
+    }
   },
   extraReducers: (builder) => {
     // Fetch podcasts
@@ -143,5 +147,5 @@ const podcastsSlice = createSlice({
   },
 });
 
-export const { setAudioPodcast, setVideoPodcast, resetAudio, resetVideo } = podcastsSlice.actions;
+export const { setAudioPodcast, setVideoPodcast, setHidePlayer, resetAudio, resetVideo } = podcastsSlice.actions;
 export default podcastsSlice.reducer;

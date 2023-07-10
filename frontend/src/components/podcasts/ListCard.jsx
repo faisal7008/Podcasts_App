@@ -3,25 +3,29 @@ import cardImg from "../../assets/podcast-card.png";
 import { useDispatch, useSelector } from "react-redux";
 import { setMediaUrl } from "../../features/mediaSlice";
 import { useNavigate } from "react-router-dom";
-import { setAudioPodcast, setVideoPodcast } from "../../features/podcastSlice";
-// import cardImg from "../assets/podcast-img.jpg";
+import { resetAudio, resetVideo, setAudioPodcast, setHidePlayer, setVideoPodcast } from "../../features/podcastSlice";
 
-export default function ListCard({ title, desc, fileUrl, type, speaker }) {
+export default function ListCard({podcast}) {
+  const { name: title, description: desc, fileUrl, type, speaker } = podcast
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { status } = useSelector((state) => state.podcasts);
   function handleClick() {
     // dispatch(setMediaUrl({ path: fileUrl, type: type }));
-    if (title && desc && fileUrl && type) {
+    if(title && desc && fileUrl && type){
       if (type === "audio") {
-        dispatch(setAudioPodcast({ title, desc, fileUrl, type }));
-        navigate("/play-audio");
+        dispatch(setAudioPodcast(podcast));
+        dispatch(resetVideo())
+        // navigate("/play-audio");
+        // dispatch(setHidePlayer(false))
       } else {
-        dispatch(setVideoPodcast({ title, desc, fileUrl, type }));
-        navigate("/play-video");
+        dispatch(setVideoPodcast(podcast));
+        dispatch(resetAudio())
+        // navigate("/play-video");
+        // dispatch(setHidePlayer(false))
       }
     } else {
-      console.log("Provide complete data");
+      console.log('Provide complete data')
     }
   }
   return (

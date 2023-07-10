@@ -1,16 +1,18 @@
-import React from "react";
-import AudioPlayer from "react-h5-audio-player";
-import "react-h5-audio-player/lib/styles.css";
-import "../components/player/audioplayer.css";
+import React, { useEffect } from "react";
 import cardImg from "../assets/podcast-card.png";
 import NetPlayer from "netplayer";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import ListCard from "../components/podcasts/ListCard";
+import { resetAudio } from "../features/podcastSlice";
 
 export default function PlayVideo() {
   const navigate = useNavigate();
   const { podcasts, videoPodcast } = useSelector((state) => state.podcasts);
+  const dispatch = useDispatch()
+  // useEffect(() => {
+  //   dispatch(resetAudio())
+  // }, [videoPodcast])
   return (
     <div className="w-full py-8 h-full pl-6 pr-10 scroll-container overflow-auto lg:overflow-hidden">
       <div className="flex gap-3 items-center">
@@ -62,11 +64,7 @@ export default function PlayVideo() {
         {podcasts?.filter(pod => pod.type === 'video').slice(0,3)?.map((podcast) => (
           <ListCard
             key={podcast._id}
-            title={podcast.name}
-            desc={podcast.description}
-            fileUrl={podcast.fileUrl}
-            type={podcast.type}
-            speaker={podcast.speaker}
+            podcast={podcast}
           />
         ))}
       </div>

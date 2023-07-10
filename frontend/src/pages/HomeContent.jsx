@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from "react";
-import SearchBar from "../components/search/SearchBar";
 import PodcastCard from "../components/podcasts/PodcastCard";
-import Profile from "../components/profile/Profile";
-import VideoPlayer from "../components/player/VideoPlayer";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllPodcasts } from "../features/podcastSlice";
-import AudioPlayer from "../components/player/AudioPlayer";
-import CardCarousel from "../components/podcasts/CardCarousal";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -16,7 +10,7 @@ import "./slider.css";
 export default function HomeContent() {
   const dispatch = useDispatch();
   const { isAuthenticated } = useSelector((state) => state.auth);
-  const { podcasts } = useSelector((state) => state.podcasts);
+  const { podcasts, audioPodcast, videoPodcast } = useSelector((state) => state.podcasts);
 
   const popularPodcasts = podcasts?.slice(0, 10)
   const videoPodcasts = podcasts?.filter((pod) => pod.type === "video")
@@ -67,7 +61,7 @@ export default function HomeContent() {
   };
 
   return (
-    <div className="flex flex-col gap-4 w-full py-8 h-full scroll-container overflow-y-auto pl-6 pr-10">
+    <div className="flex flex-col gap-4 w-full py-8 min-h-full scroll-container overflow-y-auto pl-6 pr-10">
       <div className="flex justify-between items-center">
       <h2 className="text-base md:text-xl tracking-wider font-semibold text-color-font">Popular</h2>
       <Link
@@ -82,10 +76,7 @@ export default function HomeContent() {
         {popularPodcasts?.map((podcast) => (
           <PodcastCard
             key={podcast._id}
-            title={podcast.name}
-            desc={podcast.description}
-            fileUrl={podcast.fileUrl}
-            type={podcast.type}
+            podcast={podcast}
           />
         ))}
       </Slider>
@@ -104,10 +95,7 @@ export default function HomeContent() {
           ?.map((podcast) => (
             <PodcastCard
               key={podcast._id}
-              title={podcast.name}
-              desc={podcast.description}
-              fileUrl={podcast.fileUrl}
-              type={podcast.type}
+              podcast={podcast}
             />
           ))}
       </Slider>
@@ -126,14 +114,15 @@ export default function HomeContent() {
           ?.map((podcast) => (
             <PodcastCard
               key={podcast._id}
-              title={podcast.name}
-              desc={podcast.description}
-              fileUrl={podcast.fileUrl}
-              type={podcast.type}
+              podcast={podcast}
             />
           ))}
       </Slider>
       {/* {path && <AudioPlayer src={path} />} */}
+      {/* {audioPodcast?.fileUrl && <><br /><br /><br /><br /></>} */}
+      {/* <br />
+      <br />
+      <br /> */}
     </div>
   );
 }

@@ -1,10 +1,4 @@
 import React from "react";
-import SearchBar from "../search/SearchBar";
-import PopularCard from "../podcasts/PodcastCard";
-import Profile from "../profile/Profile";
-import VideoPlayer from "../player/VideoPlayer";
-import "plyr/dist/plyr.css";
-import AudioPlayer from "../player/AudioPlayer";
 import HomeContent from "../../pages/HomeContent";
 
 export default function Main() {

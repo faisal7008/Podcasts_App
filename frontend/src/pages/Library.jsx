@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import { CloudinaryContext, Video, Audio } from "cloudinary-react";
 import { Cloudinary } from "cloudinary-core";
-import VideoPlayer from "../components/player/VideoPlayer";
-import AudioPlayer from "../components/player/AudioPlayer";
-import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext } from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
 
 const cloudName = process.env.REACT_APP_CLOUD_NAME;

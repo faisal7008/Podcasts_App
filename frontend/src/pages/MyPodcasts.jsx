@@ -5,6 +5,7 @@ import AddPodcast from "../components/podcasts/AddPodcast";
 import Slider from "react-slick";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import PodcastCard from "../components/podcasts/PodcastCard";
 
 export default function MyPodcasts() {
   const { user } = useSelector((state) => state.auth);
@@ -72,25 +73,19 @@ export default function MyPodcasts() {
       <h2 className="text-base md:text-xl tracking-wider font-semibold text-color-font">Video Podcasts</h2>
       <Slider className="w-full pl-8" {...settings}>
       {videoPodcasts?.map((podcast) => (
-          <PopularCard
-            key={podcast._id}
-            title={podcast.name}
-            desc={podcast.description}
-            fileUrl={podcast.fileUrl}
-            type={podcast.type}
-          />
+          <PodcastCard
+          key={podcast._id}
+          podcast={podcast}
+        />
         ))}
      </Slider>
      <h2 className="text-base md:text-xl tracking-wider font-semibold text-color-font">Audio Podcasts</h2>
       <Slider className="w-full pl-8" {...settings}>
       {audioPodcasts?.map((podcast) => (
-          <PopularCard
-            key={podcast._id}
-            title={podcast.name}
-            desc={podcast.description}
-            fileUrl={podcast.fileUrl}
-            type={podcast.type}
-          />
+          <PodcastCard
+          key={podcast._id}
+          podcast={podcast}
+        />
         ))}
      </Slider>
       <AddPodcast />

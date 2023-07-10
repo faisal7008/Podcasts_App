@@ -3,12 +3,7 @@ import SearchBar from "../components/search/SearchBar";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllPodcasts } from "../features/podcastSlice";
-import VideoPlayer from "../components/player/VideoPlayer";
-import DisplayAudio from "../components/player/DisplayAudio";
-import DisplayVideo from "../components/player/DisplayVideo";
-import NetPlayer from "netplayer";
 import CategoryCard from "../components/search/CategoryCard";
-import cardImg from "../assets/podcast-card.png";
 import ListCard from "../components/podcasts/ListCard";
 
 export default function Search() {
@@ -79,11 +74,7 @@ export default function Search() {
         {fiteredPodcasts?.map((podcast) => (
           <ListCard
             key={podcast._id}
-            title={podcast.name}
-            desc={podcast.description}
-            fileUrl={podcast.fileUrl}
-            type={podcast.type}
-            speaker={podcast.speaker}
+            podcast={podcast}
           />
         ))}
       </div>}

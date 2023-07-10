@@ -33,19 +33,13 @@ export default function ViewAll() {
         {podcastData?.map((podcast) => (
           <PodcastCard
             key={podcast._id}
-            title={podcast.name}
-            desc={podcast.description}
-            fileUrl={podcast.fileUrl}
-            type={podcast.type}
+            podcast={podcast}
           />
         ))}
         {podcastData?.map((podcast) => (
           <PodcastCard
             key={podcast._id}
-            title={podcast.name}
-            desc={podcast.description}
-            fileUrl={podcast.fileUrl}
-            type={podcast.type}
+            podcast={podcast}
           />
         ))}
       </div>
