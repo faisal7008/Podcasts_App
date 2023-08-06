@@ -2,6 +2,8 @@
 
 This is a full-stack web application built using the MERN (MongoDB, Express, React, Node.js) stack. The app allows users to browse, upload, and listen to podcasts.
 
+Deployed site: https://my-podcasts-app.netlify.app
+
 ## Features
 
 - User authentication and authorization with JWT (JSON Web Token) and bcrypt for password hashing.
