@@ -83,7 +83,7 @@ const deleteEpisode = async (req, res) => {
     if (!deletedEpisode) {
       return res.status(404).json({ message: "Episode not found" });
     }
-    res.status(200).json(deletedEpisode);
+    res.status(200).json({status: "deleted", deletedEpisode});
   } catch (err) {
     res.status(500).json({ message: "Server error" });
   }

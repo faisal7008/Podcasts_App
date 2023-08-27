@@ -36,7 +36,7 @@ const podcastSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
-});
+}, {timestamps: true});
 
 const Podcast = mongoose.model("Podcast", podcastSchema);
 

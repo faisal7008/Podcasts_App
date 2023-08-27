@@ -10,7 +10,7 @@ const episodeSchema = new mongoose.Schema({
     required: true,
   },
   duration: {
-    type: Date,
+    type: String,
     required: true,
   },
   podcastId: {
@@ -21,8 +21,11 @@ const episodeSchema = new mongoose.Schema({
   mediaUrl: {
     type: String,
     required: true,
+  },
+  imageUrl: {
+    type: String
   }
-});
+}, {timestamps: true});
 
 const Episode = mongoose.model("Episode", episodeSchema);
 

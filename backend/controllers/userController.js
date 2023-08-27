@@ -85,6 +85,7 @@ const getMe = async (req, res) => {
   try {
     // Fetch the authenticated user's information
     const user = await User.findById(req.user.userId).select("-password");
+    // console.log(req.user.userId);
     res.json(user);
   } catch (err) {
     console.error(err);
