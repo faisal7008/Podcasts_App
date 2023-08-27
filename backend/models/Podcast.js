@@ -22,10 +22,10 @@ const podcastSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  fileUrl: {
-    type: String,
-    required: true,
-  },
+  episodes: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Episode",
+  }],
   imageUrl: {
     type: String,
     // required: true,

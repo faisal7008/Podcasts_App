@@ -58,14 +58,14 @@ const getPodcast = async (req, res) => {
 
 // @desc    add a podcast
 // @route   POST /podcasts
-// @access  Public
+// @access  Private
 
 const addPodcast = async (req, res) => {
-  const { name, description, category, type, speaker, fileUrl, imageUrl } =
+  const { name, description, category, type, speaker, imageUrl } =
     req.body;
   try {
     // Check if the user entered all the details
-    if (!name || !description || !category || !type || !speaker || !fileUrl) {
+    if (!name || !description || !category || !type || !speaker) {
       return res
         .status(401)
         .json({ message: "Please fill the necessary details" });
@@ -77,7 +77,6 @@ const addPodcast = async (req, res) => {
       category,
       type,
       speaker,
-      fileUrl,
       imageUrl,
       addedBy: req.user.userId,
     });
