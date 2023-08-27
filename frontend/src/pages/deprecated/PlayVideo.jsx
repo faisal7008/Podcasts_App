@@ -3,18 +3,19 @@ import cardImg from "../assets/podcast-card.png";
 import NetPlayer from "netplayer";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import ListCard from "../components/podcasts/ListCard";
-import { resetAudio } from "../features/podcastSlice";
+import ListCard from "../../components/podcasts/ListCard";
+
+const userimage =
+  'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80';
+
 
 export default function PlayVideo() {
   const navigate = useNavigate();
-  const { podcasts, videoPodcast } = useSelector((state) => state.podcasts);
+  const { podcasts, podcast } = useSelector((state) => state.podcasts);
+  const { episodes } = useSelector(state => state.episodes)
   const dispatch = useDispatch()
-  // useEffect(() => {
-  //   dispatch(resetAudio())
-  // }, [videoPodcast])
   return (
-    <div className="w-full py-8 h-full pl-6 pr-10 scroll-container overflow-auto lg:overflow-hidden">
+    <div className="w-full h-full p-4 md:p-8 scroll-container overflow-auto lg:overflow-hidden">
       <div className="flex gap-3 items-center">
         <div onClick={() => navigate(-1)} className="p-1.5 cursor-pointer rounded-full hover:bg-color-card">
           <svg
@@ -42,7 +43,7 @@ export default function PlayVideo() {
               // style={{ maxHeight: "500px" }}
               sources={[
                 {
-                  file: `${videoPodcast.fileUrl}`,
+                  file: `${podcast.fileUrl}`,
                   label: "1080p",
                 },
               ]}
@@ -51,20 +52,40 @@ export default function PlayVideo() {
           </div>
           <div className=" flex justify-between">
             <h2 className=" text-lg mb-5 text-color-font">
-              {videoPodcast.title}
+              {podcast.title}
             </h2>
             <h2 className=" text-lg mb-5 text-color-font">
-              {videoPodcast.desc}
+              {podcast.desc}
             </h2>
+          </div>
+          <div className="flex gap-3">
+          <div className="flex-shrink-0">
+            <img
+              className="w-10 h-10 rounded-full"
+              src={userimage}
+              alt="Neil image"
+            />
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-semibold inline-flex items-center text-gray-900 truncate dark:text-white">
+              {podcast?.speader}{" "}
+              <span className="ml-2 text-xs font-medium font-mono text-gray-500">
+                120M subscribers
+              </span>
+            </p>
+            <p className="text-sm text-gray-500 truncate dark:text-gray-400">
+            120M subscribers
+            </p>
+          </div>
           </div>
         </div>
         <div className="lg:w-2/6 h-full px-6 pt-6 flex flex-col gap-3 bg-color-card rounded-xl">
           <h2 className=" text-sm md:text-base font-semibold text-color-font">Episodes</h2>
           <div className="flex flex-col overflow-auto h-full gap-2">
-        {podcasts?.filter(pod => pod.type === 'video').slice(0,3)?.map((podcast) => (
+        {episodes?.map((episode) => (
           <ListCard
-            key={podcast._id}
-            podcast={podcast}
+            key={episode._id}
+            episode={episode}
           />
         ))}
       </div>

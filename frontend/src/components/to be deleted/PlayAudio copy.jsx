@@ -11,10 +11,10 @@ import { resetVideo } from "../../features/podcastSlice";
 export default function PlayAudio({hide, setHide}) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { podcasts, audioPodcast } = useSelector((state) => state.podcasts);
+  const { podcasts, podcast } = useSelector((state) => state.podcasts);
   useEffect(() => {
     dispatch(resetVideo());
-  }, [audioPodcast]);
+  }, [podcast]);
   return (
     <div className={!hide ? `fixed left-64 z-50 bg-color-dark py-8 h-full pl-6 pr-10 scroll-container overflow-auto lg:overflow-hidden` : `fixed bottom-0 lg:right-0 z-40 lg:mb-5 lg:mr-5 p-5 bg-slate-900 shadow-xl w-full lg:w-1/3 rounded-t-2xl lg:rounded-2xl`}>
      {!hide && <div className="flex gap-3 items-center">
@@ -53,15 +53,15 @@ export default function PlayAudio({hide, setHide}) {
             />
 
             <div className=" flex justify-between">
-              <h2 className=" text-lg text-color-font">{audioPodcast.title}</h2>
-              <h2 className=" text-lg text-color-font">{audioPodcast.desc}</h2>
+              <h2 className=" text-lg text-color-font">{podcast.title}</h2>
+              <h2 className=" text-lg text-color-font">{podcast.desc}</h2>
             </div>
             <AudioPlayer
               // customIcons={}
               children={<h2> Hello </h2>}
               className=" bg-color-bg shadow-none"
               autoPlay
-              src={audioPodcast.fileUrl}
+              src={audioUrl}
               onPlay={(e) => console.log("onPlay")}
               // other props here
             />

@@ -30,7 +30,7 @@ export default function Search() {
   }, [searchItem, searchType])
   
   return (
-    <div className=" flex flex-col w-full h-full px-8 pt-8">
+    <div className=" flex flex-col w-full h-full p-4 md:p-8">
       <div className="grid gap-2">
       <div className="grid md:grid-cols-2 mb-2">
         <SearchBar searchItem={searchItem} setSearchItem={setSearchItem}/>

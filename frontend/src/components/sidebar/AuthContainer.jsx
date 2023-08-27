@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../features/userSlice";
+import { favouriteImg, myPodcastsImg } from "../../assets";
 
 export default function AuthContainer({ current, setCurrent }) {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ export default function AuthContainer({ current, setCurrent }) {
             >
               <div className="flex items-center gap-2">
                 <img
-                  src="assets/mypodcasts-img.png"
+                  src={myPodcastsImg}
                   className="h-7 bg-color-bg rounded-md p-0.5 w-7"
                   alt=""
                 />
@@ -43,7 +44,7 @@ export default function AuthContainer({ current, setCurrent }) {
               className="flex w-full justify-between text-slate-300 hover:text-color-font cursor-pointer items-center mb-6 ml-2"
             >
               <div className="flex items-center gap-2">
-                <img src="favourite-img.png" className=" h-6 w-7" />
+                <img src={favouriteImg} className=" h-6 w-7" />
                 <span
                   className={`text-sm ${
                     current === "favourites"

@@ -3,14 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { resetAudio, resetVideo, setAudioPodcast, setHidePlayer, setV, setVideoPodcast, setVideoPodcastideoPodcast } from "../../features/podcastSlice";
 import { getAllEpisodes, setEpisode } from "../../features/episodeSlice";
 import { podcastCardImg } from "../../assets";
-import { useNavigate } from "react-router-dom";
-import { SaveIcon } from "../icons";
 // import podcastCardImg from "../assets/podcast-img.jpg";
 
 export default function PodcastCard({podcast}) {
   // const { name: title, description: desc, type } = podcast
   const dispatch = useDispatch();
-  const navigate = useNavigate()
   const { episodes } = useSelector((state) => state.episodes);
 
   // useEffect(() => {
@@ -30,16 +27,15 @@ export default function PodcastCard({podcast}) {
     // dispatch(setPodcast(podcast))
     // dispatch(setEpisode(episodes[0]))
     // if(episodes.length > 0){
-    navigate(`/podcasts/${podcast._id}`)
-      // if (podcast?.type === "audio") {
-      //   dispatch(resetVideo())
-      //   dispatch(setAudioPodcast(podcast));
-      //   dispatch(setHidePlayer(false))
-      // } else {
-      //   dispatch(resetAudio())
-      //   dispatch(setVideoPodcast(podcast));
-      //   dispatch(setHidePlayer(false))
-      // }
+      if (podcast?.type === "audio") {
+        dispatch(resetVideo())
+        dispatch(setAudioPodcast(podcast));
+        dispatch(setHidePlayer(false))
+      } else {
+        dispatch(resetAudio())
+        dispatch(setVideoPodcast(podcast));
+        dispatch(setHidePlayer(false))
+      }
     // } else {
     //   console.log('Provide complete data')
     // }
@@ -87,10 +83,24 @@ export default function PodcastCard({podcast}) {
         </div>
         <div className="flex flex-col sm:gap-1 px-1">
           <div className="flex gap-3 items-center justify-between text-color-font cursor-pointer">
-            {podcast?.name ? <h4 className="text-gray-200 text-sm sm:text-base font-medium truncate">
+            {podcast?.name ? <h4 className="text-gray-200 w-5/6 text-sm sm:text-base font-medium truncate">
               {podcast?.name}
             </h4> : <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48 animate-pulse"></div>}
-            {/* <SaveIcon/> */}
+            <svg
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2.5}
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              className="w-5 h-5"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
+              />
+            </svg>
           </div>
           {podcast?.description ? <p className="text-gray-300 text-xs font-normal truncate">{podcast?.description}</p> : <div className="h-2 mt-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>}
         </div>

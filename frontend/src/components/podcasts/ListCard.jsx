@@ -1,45 +1,48 @@
 import React from "react";
-import cardImg from "../../assets/podcast-card.png";
+import { podcastCardImg } from "../../assets";
 import { useDispatch, useSelector } from "react-redux";
 import { setMediaUrl } from "../../features/mediaSlice";
 import { useNavigate } from "react-router-dom";
 import { resetAudio, resetVideo, setAudioPodcast, setHidePlayer, setVideoPodcast } from "../../features/podcastSlice";
+import { setEpisode } from "../../features/episodeSlice";
 
 export default function ListCard({podcast}) {
   const { name: title, description: desc, fileUrl, type, speaker } = podcast
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { status } = useSelector((state) => state.podcasts);
-  function handleClick() {
-    // dispatch(setMediaUrl({ path: fileUrl, type: type }));
-    if(title && desc && fileUrl && type){
-      if (type === "audio") {
-        dispatch(setAudioPodcast(podcast));
+  const { episodes } = useSelector((state) => state.episodes);
+  
+  const handleClick = async () => {
+    // dispatch(getAllEpisodes(podcast._id))
+    // dispatch(setPodcast(podcast))
+    // dispatch(setEpisode(episodes[0]))
+    // if(episodes.length > 0){
+      if (podcast?.type === "audio") {
         dispatch(resetVideo())
-        // navigate("/play-audio");
-        // dispatch(setHidePlayer(false))
+        dispatch(setAudioPodcast(podcast));
+        dispatch(setHidePlayer(false))
       } else {
-        dispatch(setVideoPodcast(podcast));
         dispatch(resetAudio())
-        // navigate("/play-video");
-        // dispatch(setHidePlayer(false))
+        dispatch(setVideoPodcast(podcast));
+        dispatch(setHidePlayer(false))
       }
-    } else {
-      console.log('Provide complete data')
-    }
+    // } else {
+    //   console.log('Provide complete data')
+    // }
   }
+
   return (
     <div 
     onClick={handleClick} className="p-2 md:p-3 group relative cursor-pointer bg-color-bg shadow-lg rounded-md md:rounded-lg">
       <div className="flex items-center space-x-4">
       <div>
           <img
-            src={cardImg}
+            src={podcastCardImg}
             className="w-10 group-hover:opacity-90 shadow rounded"
             loading="lazy"
             alt=""
           />
-          <button class="opacity-0 absolute top-4 left-4 flex justify-center items-center group-hover:opacity-100 transition duration-200">
+          <button className="opacity-0 absolute top-4 left-4 flex justify-center items-center group-hover:opacity-100 transition duration-200">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"

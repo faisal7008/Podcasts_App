@@ -105,6 +105,7 @@ const authSlice = createSlice({
     logout: (state) => {
       state.isAuthenticated = false;
       state.user = null;
+      state.profile = null;
       state.token = null;
       localStorage.removeItem("user");
     },
@@ -140,6 +141,11 @@ const authSlice = createSlice({
         state.error = action.payload
           ? action.payload.message
           : action.error.message;
+      })
+
+      .addCase(getMe.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.profile = action.payload;
       });
   },
 });

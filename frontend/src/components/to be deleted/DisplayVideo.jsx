@@ -17,7 +17,7 @@ export default function DisplayVideo({setHide}) {
             loading="lazy"
             alt=""
           />
-          <button class="opacity-0 absolute top-1 left-1 flex justify-center items-center group-hover:opacity-100 transition duration-200">
+          <button className="opacity-0 absolute top-1 left-1 flex justify-center items-center group-hover:opacity-100 transition duration-200">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"

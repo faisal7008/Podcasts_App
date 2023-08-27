@@ -1,16 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { categories } from "../../constants/Categories";
 
 export default function CategoryCard() {
   const { podcasts } = useSelector((state) => state.podcasts);
-  const categories = [
-    "News and Politics",
-    "Arts & Entertainment",
-    "Sports",
-    "Motivation & Inspiration",
-    "Educational",
-  ];
 
   return (
     <div className="grid grid-cols-2 w-full gap-6">

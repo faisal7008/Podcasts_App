@@ -5,18 +5,18 @@ import "../components/player/audioplayer.css";
 import cardImg from "../assets/podcast-card.png";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import ListCard from "../components/podcasts/ListCard";
-import { resetVideo } from "../features/podcastSlice";
+import ListCard from "../../components/podcasts/ListCard";
+import { resetVideo } from "../../features/podcastSlice";
 
 export default function PlayAudio() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { podcasts, audioPodcast } = useSelector((state) => state.podcasts);
+  const { podcasts, podcast } = useSelector((state) => state.podcasts);
   // useEffect(() => {
   //   dispatch(resetVideo());
-  // }, [audioPodcast]);
+  // }, [podcast]);
   return (
-    <div className="w-full py-8 min-h-full px-6 scroll-container overflow-auto lg:overflow-hidden">
+    <div className="w-full min-h-full p-4 md:p-8 scroll-container overflow-auto lg:overflow-hidden">
       <div className="flex gap-3 items-center">
         <div
           onClick={() => navigate(-1)}
@@ -53,15 +53,15 @@ export default function PlayAudio() {
             />
 
             <div className=" flex justify-between">
-              <h2 className=" text-lg text-color-font">{audioPodcast.title}</h2>
-              <h2 className=" text-lg text-color-font">{audioPodcast.desc}</h2>
+              <h2 className=" text-lg text-color-font">{podcast.title}</h2>
+              <h2 className=" text-lg text-color-font">{podcast.desc}</h2>
             </div>
             <AudioPlayer
               // customIcons={}
               children={<h2> Hello </h2>}
               className=" bg-color-bg shadow-none"
               autoPlay
-              src={audioPodcast.fileUrl}
+              src={audioUrl}
               onPlay={(e) => console.log("onPlay")}
               // other props here
             />

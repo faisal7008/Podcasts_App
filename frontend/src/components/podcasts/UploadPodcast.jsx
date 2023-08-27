@@ -100,7 +100,7 @@ const UploadPodcast = ({file, setFile, setFileUrl}) => {
       for="title"
       className="block mb-2 text-xs font-semibold text-gray-900"
     >
-      Upload the file <span className=" text-rose-600">*</span>
+      Upload Episode <span className=" text-rose-600">*</span>
     </label>
     <div>
       <span className="sr-only">Upload file</span>

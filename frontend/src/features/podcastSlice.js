@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { getMe } from "./userSlice";
 
 const api_url = `${process.env.REACT_APP_API_URL}`;
 
@@ -67,13 +68,53 @@ export const addPodcast = createAsyncThunk(
   }
 );
 
+// Get podcast by Id
+export const getPodcast = createAsyncThunk(
+  "podcasts/getPodcast",
+  async (podcastId, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.get(api_url + "/podcasts/" + podcastId, config);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+// Save or like podcast
+export const savePodcast = createAsyncThunk(
+  "podcasts/savePodcast",
+  async (podcastId, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.put(`${api_url}/podcasts/${podcastId}/like`, {}, config);
+      thunkAPI.dispatch(getMe())
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const podcastsSlice = createSlice({
   name: "podcasts",
   initialState: {
     podcasts: [],
+    podcast: null,
     audioPodcast: null,
     videoPodcast: null,
-    fileUrl: null,
+    // fileUrl: null,
     hidePlayer: false,
     uploadStatus: "idle",
     status: "idle",
@@ -89,10 +130,10 @@ const podcastsSlice = createSlice({
     setHidePlayer(state, action) {
       state.hidePlayer = action.payload
     },
-    resetAudio(state, action) {
+    resetAudio(state) {
       state.audioPodcast = null;
     },
-    resetVideo(state, action) {
+    resetVideo(state) {
       state.videoPodcast = null;
     }
   },
@@ -127,6 +168,12 @@ const podcastsSlice = createSlice({
       state.error = action.payload
         ? action.payload.message
         : action.error.message;
+    });
+
+    // Get podcast by id
+    builder.addCase(getPodcast.fulfilled, (state, action) => {
+      state.status = "succeeded";
+      state.podcast = action.payload;
     });
 
     // Upload podcast

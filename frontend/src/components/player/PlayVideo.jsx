@@ -1,20 +1,35 @@
-import React from "react";
-import cardImg from "../../assets/podcast-card.png";
+import React, { useEffect, useState } from "react";
+import { podcastCardImg } from "../../assets";
 import NetPlayer from "netplayer";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import ListCard from "../podcasts/ListCard";
-import { setHidePlayer } from "../../features/podcastSlice";
+import { savePodcast, setHidePlayer } from "../../features/podcastSlice";
+import EpisodeCard from "../podcasts/EpisodeCard";
+import { SaveIcon } from "../icons";
+import { getAllEpisodes } from "../../features/episodeSlice";
+
+const userimage =
+  "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80";
 
 export default function PlayVideo({ hide }) {
-  const navigate = useNavigate();
-  const { podcasts, videoPodcast } = useSelector((state) => state.podcasts);
+  const { profile } = useSelector((state) => state.auth);
+  const { videoPodcast } = useSelector((state) => state.podcasts);
+  const { episodes, episode } = useSelector((state) => state.episodes);
   const dispatch = useDispatch();
+  const [isFavourite, setIsFavourite] = useState(profile?.favoritePodcasts?.includes(videoPodcast._id))
+
+  useEffect(() => {
+    setIsFavourite(profile?.favoritePodcasts?.includes(videoPodcast._id))
+  }, [profile])
+
+  const handleSave = () => {
+    dispatch(savePodcast(videoPodcast._id))
+    setIsFavourite(prev => !prev)
+  }
 
   return !hide ? (
     <div
       className={
-        "fixed lg:w-5/6 w-full lg:left-64 z-50 bg-color-dark py-8 h-full px-6 lg:pr-10 scroll-container overflow-y-auto lg:overflow-hidden transition-all duration-700"
+        "fixed lg:w-5/6 w-full lg:left-64 z-50 bg-color-dark p-4 sm:p-7 h-full scroll-container overflow-y-auto transition-all duration-700"
       }
     >
       <div className="flex gap-3 items-center">
@@ -42,43 +57,63 @@ export default function PlayVideo({ hide }) {
           Video Player
         </h2>
       </div>
-      <div className="flex flex-col lg:flex-row w-full h-full py-4 gap-4 ">
-        <div className="lg:w-4/6 p-6 bg-color-bg rounded-xl">
-          <div className="mb-4 flex-1">
+      <div className="flex flex-col lg:flex-row w-full min-h-full py-4 gap-4">
+        <div className=" space-y-3 lg:w-4/6 p-5 bg-color-bg rounded-xl">
+          <div className="flex-1">
             <NetPlayer
               // style={{ maxHeight: "500px" }}
               sources={[
                 {
-                  file: `${videoPodcast.fileUrl}`,
+                  file: `${episode?.mediaUrl}`,
                   label: "1080p",
                 },
               ]}
               autoPlay
             />
           </div>
-          <div className=" flex justify-between">
-            <h2 className=" text-lg mb-5 text-color-font">
-              {videoPodcast.name}
-            </h2>
-            <h2 className=" text-lg mb-5 text-color-font">
-              {videoPodcast.speaker}
+          <div className="flex justify-between">
+            <h2 className="text-lg font-medium text-color-font">
+               {episode.title} <span className=" text-2xl mx-1 font-light"> | </span> {videoPodcast.name}
             </h2>
           </div>
+          <div className="flex justify-between items-start">
+            <div className="flex gap-3">
+              <div className="flex-shrink-0">
+                <img
+                  className="w-10 h-10 rounded-full"
+                  src={userimage}
+                  alt="Neil image"
+                />
+              </div>
+              <div className="flex flex-col justify-center">
+                <p className="text-sm font-semibold inline-flex items-center text-color-font truncate">
+                  {videoPodcast?.speaker}{" "}
+                  {/* <span className="ml-2 text-xs font-medium font-mono text-gray-200">
+                  120M subscribers
+                </span> */}
+                </p>
+                <p className="text-xs font-light text-gray-200 truncate">
+                  120M subscribers
+                </p>
+              </div>
+            </div>
+            <div onClick={handleSave} className="inline-flex items-center gap-2 font-medium px-4 py-2 rounded-full text-sm bg-color-font text-color-bg outline-none border-none transition-opacity duration-200 ease-linear cursor-pointer">
+              <SaveIcon size={18} fill={isFavourite && "currentColor"}/>
+              {isFavourite ? 'saved' : 'save'}
+            </div>
+          </div>
+          <div className="w-full text-sm rounded-xl px-4 py-3 bg-color-card/100 ">
+                {videoPodcast?.description}
+          </div>
         </div>
-        <div className="lg:w-2/6 h-full px-6 pt-6 flex flex-col gap-3 bg-color-card rounded-xl">
+        <div className="lg:w-2/6 h-full p-5 flex flex-col gap-3 bg-color-card rounded-xl">
           <h2 className=" text-sm md:text-base font-semibold text-color-font">
             Episodes
           </h2>
-          <div className="flex flex-col overflow-auto h-full gap-2">
-            {podcasts
-              ?.filter((pod) => pod.type === "video")
-              .slice(0, 3)
-              ?.map((podcast) => (
-                <ListCard
-                  key={podcast._id}
-                  podcast={podcast}
-                />
-              ))}
+          <div className="flex flex-col overflow-auto min-h-full gap-2">
+            {episodes?.map((episode) => (
+              <EpisodeCard key={episode._id} episode={episode} />
+            ))}
           </div>
         </div>
       </div>
@@ -92,12 +127,12 @@ export default function PlayVideo({ hide }) {
         <div className="flex items-center space-x-4">
           <div>
             <img
-              src={cardImg}
+              src={podcastCardImg}
               className="w-10 group-hover:opacity-90 shadow rounded"
               loading="lazy"
               alt=""
             />
-            <button class="opacity-0 absolute top-1 left-1 flex justify-center items-center group-hover:opacity-100 transition duration-200">
+            <button className="opacity-0 absolute top-1 left-1 flex justify-center items-center group-hover:opacity-100 transition duration-200">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -118,6 +153,7 @@ export default function PlayVideo({ hide }) {
             </p>
             <p className="text-xs text-gray-50 truncate">{videoPodcast.speaker}</p>
           </div>
+
           <div className="inline-flex cursor-pointer px-3 py-1 bg-color-bg hover:bg-color-dark items-center text-sm font-medium text-color-font rounded-lg shadow transition-all duration-200">
             Resume playing
           </div>

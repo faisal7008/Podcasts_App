@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import PodcastCard from "../components/podcasts/PodcastCard";
+import PodcastCard from "../../components/podcasts/PodcastCard";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Slider from "react-slick";
@@ -10,11 +10,11 @@ import "./slider.css";
 export default function HomeContent() {
   const dispatch = useDispatch();
   const { isAuthenticated } = useSelector((state) => state.auth);
-  const { podcasts, audioPodcast, videoPodcast } = useSelector((state) => state.podcasts);
+  const { podcasts } = useSelector((state) => state.podcasts);
 
   const popularPodcasts = podcasts?.slice(0, 10)
-  const videoPodcasts = podcasts?.filter((pod) => pod.type === "video")
   const audioPodcasts = podcasts?.filter((pod) => pod.type === "audio")
+  const videoPodcasts = podcasts?.filter((pod) => pod.type === "video")
   // const [allPodcasts, setAllPodcasts] = useState(null);
 
   const settings = {
@@ -61,13 +61,13 @@ export default function HomeContent() {
   };
 
   return (
-    <div className="flex flex-col gap-4 w-full py-8 min-h-full scroll-container overflow-y-auto pl-6 pr-10">
+    <div className="flex flex-col gap-4 w-full p-4 md:p-8 min-h-full scroll-container overflow-y-auto">
       <div className="flex justify-between items-center">
       <h2 className="text-base md:text-xl tracking-wider font-semibold text-color-font">Popular</h2>
       <Link
         to='/popular' state={{podcastData: popularPodcasts, title: 'Popular'}}
         type="button"
-        className="px-3 py-1 font-semibold text-color-font hover:text-stone-200 transition-all text-xs sm:text-sm"
+        className="py-2 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold text-color-font hover:text-stone-200 focus:outline-none transition-all text-xs sm:text-sm"
       >
         View all
       </Link>
@@ -80,12 +80,21 @@ export default function HomeContent() {
           />
         ))}
       </Slider>
+      {/* <div className=" flex gap-6 min-h-48 sm:min-h-[17rem] snap-x snap-mandatory overflow-x-scroll scroll-smooth">
+        {popularPodcasts?.map((podcast) => (
+          <div className=" snap-always snap-start" key={podcast._id}>
+          <PodcastCard
+            podcast={podcast}
+          />
+          </div>
+        ))}
+      </div> */}
       <div className="flex justify-between items-center">
       <h2 className="texl-2xl md:text-xl font-semibold text-color-font">Video Podcasts</h2>
       <Link
-        to='/videocasts' state= {{podcastData: videoPodcasts, title: 'Video Podcasts'}}
+        to='/videocasts' state= {{podcastData: podcasts, title: 'Video Podcasts'}}
         type="button"
-        class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold text-color-font hover:text-stone-200 focus:outline-none transition-all text-xs sm:text-sm"
+        className="py-2 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold text-color-font hover:text-stone-200 focus:outline-none transition-all text-xs sm:text-sm"
       >
         View all
       </Link>
@@ -102,9 +111,9 @@ export default function HomeContent() {
       <div className="flex justify-between items-center">
       <h2 className="texl-2xl md:text-xl font-semibold text-color-font">Audio Podcasts</h2>
       <Link
-        to='/audiocasts' state= {{podcastData: audioPodcasts, title: 'Audio Podcasts'}}
+        to='/audiocasts' state= {{podcastData: podcasts, title: 'Audio Podcasts'}}
         type="button"
-        class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md font-semibold text-color-font hover:text-stone-200 focus:outline-none transition-all text-xs sm:text-sm"
+        className="py-2 px-4 inline-flex justify-center items-center gap-2 rounded-md font-semibold text-color-font hover:text-stone-200 focus:outline-none transition-all text-xs sm:text-sm"
       >
         View all
       </Link>
@@ -119,7 +128,7 @@ export default function HomeContent() {
           ))}
       </Slider>
       {/* {path && <AudioPlayer src={path} />} */}
-      {/* {audioPodcast?.fileUrl && <><br /><br /><br /><br /></>} */}
+      {/* {podcast?.fileUrl && <><br /><br /><br /><br /></>} */}
       {/* <br />
       <br />
       <br /> */}

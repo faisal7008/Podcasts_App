@@ -6,9 +6,9 @@ export default function ViewAll() {
   const navigate = useNavigate();
   const location = useLocation();
   const { podcastData, title } = location.state;
-  console.log(podcastData);
+  // console.log(podcastData);
   return (
-    <div className="flex flex-col gap-4 w-full py-8 h-full scroll-container overflow-auto px-6">
+    <div className="flex flex-col gap-4 w-full p-4 md:p-8 h-full scroll-container overflow-auto">
       <div className="flex gap-3 items-center">
         <div onClick={() => navigate(-1)} className="p-1.5 cursor-pointer rounded-full hover:bg-color-card">
           <svg
@@ -30,12 +30,6 @@ export default function ViewAll() {
         <h2 className="sm:text-xl tracking-wider font-semibold text-color-font">{title}</h2>
       </div>
       <div className=" inline-flex px-5 py-2 flex-wrap gap-3 sm:gap-8 mb-2">
-        {podcastData?.map((podcast) => (
-          <PodcastCard
-            key={podcast._id}
-            podcast={podcast}
-          />
-        ))}
         {podcastData?.map((podcast) => (
           <PodcastCard
             key={podcast._id}
