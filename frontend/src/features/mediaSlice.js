@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   mediaUrl: null,
@@ -6,7 +6,7 @@ const initialState = {
 };
 
 const mediaSlice = createSlice({
-  name: "media",
+  name: 'media',
   initialState,
   reducers: {
     setMediaUrl(state, action) {

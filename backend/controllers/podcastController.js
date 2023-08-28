@@ -1,4 +1,6 @@
+const Episode = require("../models/Episode");
 const Podcast = require("../models/Podcast");
+const User = require("../models/User");
 
 // @desc    get all podcasts
 // @route   GET /podcasts
@@ -48,7 +50,7 @@ const getPodcastsSpeaker = async (req, res) => {
 
 const getPodcast = async (req, res) => {
   try {
-    const podcast = await Podcast.find({ id: req.params.id });
+    const podcast = await Podcast.findById(req.params.id);
     res.json(podcast);
   } catch (err) {
     console.error(err);
@@ -58,14 +60,14 @@ const getPodcast = async (req, res) => {
 
 // @desc    add a podcast
 // @route   POST /podcasts
-// @access  Public
+// @access  Private
 
 const addPodcast = async (req, res) => {
-  const { name, description, category, type, speaker, fileUrl, imageUrl } =
+  const { name, description, category, type, speaker, imageUrl } =
     req.body;
   try {
     // Check if the user entered all the details
-    if (!name || !description || !category || !type || !speaker || !fileUrl) {
+    if (!name || !description || !category || !type || !speaker) {
       return res
         .status(401)
         .json({ message: "Please fill the necessary details" });
@@ -77,11 +79,16 @@ const addPodcast = async (req, res) => {
       category,
       type,
       speaker,
-      fileUrl,
       imageUrl,
       addedBy: req.user.userId,
     });
     await newPodcast.save();
+
+    // Update the episodes array in the corresponding podcast
+    await User.findByIdAndUpdate(req.user.userId, {
+      $push: { podcasts: newPodcast._id },
+    });
+
     res.status(201).json(newPodcast);
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -119,65 +126,68 @@ const updatePodcast = async (req, res) => {
 const deletePodcast = async (req, res) => {
   try {
     const podcastId = req.params.id;
+
+    // Find the podcast to get the list of episode IDs
     const deletedPodcast = await Podcast.findByIdAndDelete(podcastId);
     if (!deletedPodcast) {
       return res.status(404).json({ message: "Podcast not found" });
     }
-    res.json(deletedPodcast);
+
+    // Delete associated episodes
+    const deletedEpisodes = await Episode.deleteMany({ podcastId });
+
+    res.json({
+      status: "deleted",
+      deletedPodcast,
+      deletedEpisodes,
+    });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 };
 
+
 // @desc    like podcast
 // @route   POST /podcasts/:id/like
 // @access  Private
 
-// const likePodcast = async (req, res) => {
-//   const podcastId = req.params.id;
-//   const userId = req.user.userId;
-
-//   try {
-//     // Check if the podcast exists
-//     const podcast = await Podcast.findById(podcastId);
-//     if (!podcast) {
-//       return res.status(404).json({ message: "Podcast not found" });
-//     }
-
-//     // Check if the user has already liked the podcast
-//     if (podcast.likes.includes(userId)) {
-//       return res
-//         .status(400)
-//         .json({ message: "You have already liked this podcast" });
-//     }
-
-//     // Add the user's ID to the podcast's list of likes
-//     podcast.likes.push(userId);
-//     await podcast.save();
-
-//     res.json({ message: "Podcast liked successfully" });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ message: "Server error" });
-//   }
-// };
-
 const favouritePodcast = async (req, res) => {
   try {
-    const userId = req.user._id;
-    const podcastId = req.params.podcastId;
+    const userId = req.user.userId;
+    const podcastId = req.params.id;
 
-    // Add the podcast ID to the user's favoritePodcasts array
-    const updatedUser = await User.findByIdAndUpdate(
-      userId,
-      { $addToSet: { favoritePodcasts: podcastId } },
-      { new: true }
-    ).populate("favoritePodcasts");
-    res.json({ msg: "Added to favourite list" });
+    // Find the user to check their favoritePodcasts array
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Check if podcastId is already in user's favoritePodcasts array
+    const isPodcastFavorited = user.favoritePodcasts.includes(podcastId);
+
+    if (isPodcastFavorited) {
+      // Remove podcastId from the favoritePodcasts array
+      await User.findByIdAndUpdate(
+        userId,
+        { $pull: { favoritePodcasts: podcastId } },
+        { new: true }
+      );
+      res.json({ userId, podcastId, msg: "Removed from favourite list" });
+    } else {
+      // Add podcastId to the favoritePodcasts array
+      await User.findByIdAndUpdate(
+        userId,
+        { $addToSet: { favoritePodcasts: podcastId } },
+        { new: true }
+      );
+      res.json({ userId, podcastId, msg: "Added to favourite list" });
+    }
   } catch (error) {
-    res.status(400).json({ message: err.message });
+    res.status(400).json({ message: error.message });
   }
 };
+
 
 module.exports = {
   addPodcast,
