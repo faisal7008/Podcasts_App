@@ -97,17 +97,49 @@ const getMe = async (req, res) => {
 // @route   PUT /users/me
 // @access  Private
 
-const updateMe = async (req, res) => {
-  const { name } = req.body;
 
+const comparePasswords = (password, hashedPassword) => {
+  return new Promise((resolve, reject) => {
+    bcrypt.compare(password, hashedPassword, (error, result) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(result);
+      }
+    });
+  });
+};
+
+const updateMe = async (req, res) => {
   try {
+    const { name, email, currentPassword, newPassword } = req.body;
+    const user = await User.findById(req.user.userId);
+
+    if (!user) {
+      return res.status(400).json({ message: "User not found" });
+    }
     // Update the authenticated user's information
-    const user = await User.findByIdAndUpdate(
-      req.user.userId,
-      { $set: { name } },
-      { new: true }
-    ).select("-password");
-    res.json(user);
+    if (name) {
+      user.name = name;
+    }
+    if (email) {
+      user.email = email;
+    }
+    let passwordMsg = null;
+    if (currentPassword && newPassword) {
+      let passwordMatch = false;
+      passwordMatch = await comparePasswords(currentPassword, user.password);
+      if (passwordMatch) {
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(newPassword, salt);
+        user.password = hashedPassword;
+        passwordMsg = 'Password updated succesfully!';
+      } else {
+        return res.status(403).json({ passwordError: 'Current Password does not match!' });
+      }
+    }
+    await user.save();
+    return res.status(200).json({ user, message: 'Profile updated', passwordMsg });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
