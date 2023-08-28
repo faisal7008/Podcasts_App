@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { Cloudinary } from "cloudinary-core";
-import "pure-react-carousel/dist/react-carousel.es.css";
+import React, { useState } from 'react';
+import { Cloudinary } from 'cloudinary-core';
+import 'pure-react-carousel/dist/react-carousel.es.css';
 
 const cloudName = process.env.REACT_APP_CLOUD_NAME;
 const apiKey = process.env.REACT_APP_CLOUDINARY_API_KEY;
@@ -23,12 +23,12 @@ const Library = () => {
 
   const handleUpload = () => {
     const formData = new FormData();
-    formData.append("file", file);
-    formData.append("resource_type", "audio"); // or 'audio' for audio files
-    formData.append("upload_preset", "upload_podcasts"); // create an upload preset in your Cloudinary account
+    formData.append('file', file);
+    formData.append('resource_type', 'audio'); // or 'audio' for audio files
+    formData.append('upload_preset', 'upload_podcasts'); // create an upload preset in your Cloudinary account
 
     fetch(`https://api.cloudinary.com/v1_1/${cloudName}/upload`, {
-      method: "POST",
+      method: 'POST',
       body: formData,
     })
       .then((response) => response.json())
@@ -41,11 +41,7 @@ const Library = () => {
       });
   };
 
-  return (
-    <div>
-        
-    </div>
-  );
+  return <div></div>;
 };
 
 export default Library;

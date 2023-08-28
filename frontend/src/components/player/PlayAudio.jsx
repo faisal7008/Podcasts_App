@@ -1,30 +1,24 @@
-import React, { useEffect, useRef, useState } from "react";
-import AudioPlayer from "react-h5-audio-player";
-import "react-h5-audio-player/lib/styles.css";
-import "../player/audioplayer.css";
-import { podcastCardImg } from "../../assets";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  resetAudio,
-  savePodcast,
-  setHidePlayer,
-} from "../../features/podcastSlice";
-import { BackIcon, CloseIcon, SaveIcon } from "../icons";
-import EpisodeCard from "../episodes/EpisodeCard";
-import { getAllEpisodes, resetEpisode } from "../../features/episodeSlice";
+import React, { useEffect, useRef, useState } from 'react';
+import AudioPlayer from 'react-h5-audio-player';
+import 'react-h5-audio-player/lib/styles.css';
+import '../player/audioplayer.css';
+import { podcastCardImg } from '../../assets';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetAudio, savePodcast, setHidePlayer } from '../../features/podcastSlice';
+import { BackIcon, CloseIcon, SaveIcon } from '../icons';
+import EpisodeCard from '../episodes/EpisodeCard';
+import { getAllEpisodes, resetEpisode } from '../../features/episodeSlice';
 
 const userimage =
-  "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80";
+  'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80';
 
 export default function PlayAudio({ hide }) {
   const { profile } = useSelector((state) => state.auth);
-  const { podcasts, audioPodcast } = useSelector(
-    (state) => state.podcasts
-  );
+  const { podcasts, audioPodcast } = useSelector((state) => state.podcasts);
   const { episodes, episode } = useSelector((state) => state.episodes);
   const dispatch = useDispatch();
   const [isFavourite, setIsFavourite] = useState(
-    profile?.favoritePodcasts?.includes(audioPodcast._id)
+    profile?.favoritePodcasts?.includes(audioPodcast._id),
   );
 
   useEffect(() => {
@@ -51,10 +45,10 @@ export default function PlayAudio({ hide }) {
       }
     >
       {!hide && (
-        <div className="flex gap-3 items-center">
+        <div className='flex gap-3 items-center'>
           <div
             onClick={() => dispatch(setHidePlayer(true))}
-            className="p-1.5 cursor-pointer rounded-full hover:bg-color-card"
+            className='p-1.5 cursor-pointer rounded-full hover:bg-color-card'
           >
             {/* <svg
               fill="none"
@@ -71,113 +65,83 @@ export default function PlayAudio({ hide }) {
                 d="M15.75 19.5L8.25 12l7.5-7.5"
               />
             </svg> */}
-            <BackIcon size={18}/>
+            <BackIcon size={18} />
           </div>
-          <h2 className="text-lg sm:text-xl tracking-wider font-semibold text-color-font">
+          <h2 className='text-lg sm:text-xl tracking-wider font-semibold text-color-font'>
             Audio Player
           </h2>
         </div>
       )}
       {hide && (
-        <div onClick={handleClick} className="flex justify-between">
-          <div className="grid px-4">
-            <h2 className=" text-base font-medium text-color-font">
-              {audioPodcast?.name}
-            </h2>
-            <h2 className=" text-sm font-light text-color-font">
-              {audioPodcast?.speaker}
-            </h2>
+        <div onClick={handleClick} className='flex justify-between'>
+          <div className='grid px-4'>
+            <h2 className=' text-base font-medium text-color-font'>{audioPodcast?.name}</h2>
+            <h2 className=' text-sm font-light text-color-font'>{audioPodcast?.speaker}</h2>
           </div>
           <div>
-          <button
-            className="p-1.5 rounded-full bg-color-card text-color-font hover:bg-color-dark focus:outline-none shadow transition-all duration-200"
-            onClick={() => dispatch(resetEpisode())}
-          >
-            <CloseIcon size={16}/>
-          </button>
+            <button
+              className='p-1.5 rounded-full bg-color-card text-color-font hover:bg-color-dark focus:outline-none shadow transition-all duration-200'
+              onClick={() => dispatch(resetEpisode())}
+            >
+              <CloseIcon size={16} />
+            </button>
           </div>
         </div>
       )}
-      <div
-        className={
-          !hide && "flex flex-col lg:flex-row w-full min-h-full py-4 gap-4 "
-        }
-      >
-        <div
-          className={!hide && "lg:w-4/6 p-6 min-h-full rounded-xl bg-color-bg"}
-        >
-          <div className=" grid gap-3">
+      <div className={!hide && 'flex flex-col lg:flex-row w-full min-h-full py-4 gap-4 '}>
+        <div className={!hide && 'lg:w-4/6 p-6 min-h-full rounded-xl bg-color-bg'}>
+          <div className=' grid gap-3'>
             {!hide && (
               <img
                 src={podcastCardImg}
-                className="w-64 place-self-center shadow rounded-lg"
-                loading="lazy"
-                alt=""
+                className='w-64 place-self-center shadow rounded-lg'
+                loading='lazy'
+                alt=''
               />
             )}
-
-            {/* {!hide && (
-              <div className="px-4 grid">
-                <h2 className=" text-base font-medium text-color-font">
-                  {audioPodcast?.name}
-                </h2>
-                <h2 className=" text-sm font-light text-color-font">
-                  {audioPodcast?.speaker}
-                </h2>
-              </div>
-            )} */}
-            <div className="z-[1000]">
+            <div className='z-[1000]'>
               <AudioPlayer
                 // customIcons={}
-                children={<h2> Hello </h2>}
-                className={`${
-                  hide ? "bg-slate-900" : "bg-color-bg"
-                } z-[1000] p-2 shadow-none`}
+                // children={<h2> Hello </h2>}
+                className={`${hide ? 'bg-slate-900' : 'bg-color-bg'} z-[1000] p-2 shadow-none`}
                 autoPlay
                 src={episode?.mediaUrl}
-                onPlay={(e) => console.log("onPlay")}
+                onPlay={(e) => console.log('onPlay')}
                 // other props here
               />
             </div>
             {!hide && (
               <>
-                <div className="flex justify-between">
-                  <h2 className="text-lg font-medium text-color-font">
-                    {episode.title}{" "}
-                    <span className=" text-2xl mx-1 font-light"> | </span>{" "}
+                <div className='flex justify-between'>
+                  <h2 className='text-lg font-medium text-color-font'>
+                    {episode.title} <span className=' text-2xl mx-1 font-light'> | </span>{' '}
                     {audioPodcast.name}
                   </h2>
                 </div>
-                <div className="flex justify-between items-start">
-                  <div className="flex gap-3">
-                    <div className="flex-shrink-0">
-                      <img
-                        className="w-10 h-10 rounded-full"
-                        src={userimage}
-                        alt="Neil image"
-                      />
+                <div className='flex justify-between items-start'>
+                  <div className='flex gap-3'>
+                    <div className='flex-shrink-0'>
+                      <img className='w-10 h-10 rounded-full' src={userimage} alt='Neil image' />
                     </div>
-                    <div className="flex flex-col justify-center">
-                      <p className="text-sm font-semibold inline-flex items-center text-color-font truncate">
-                        {audioPodcast?.speaker}{" "}
+                    <div className='flex flex-col justify-center'>
+                      <p className='text-sm font-semibold inline-flex items-center text-color-font truncate'>
+                        {audioPodcast?.speaker}{' '}
                         {/* <span className="ml-2 text-xs font-medium font-mono text-gray-200">
                   120M subscribers
                 </span> */}
                       </p>
-                      <p className="text-xs font-light text-gray-200 truncate">
-                        120M subscribers
-                      </p>
+                      <p className='text-xs font-light text-gray-200 truncate'>120M subscribers</p>
                     </div>
                   </div>
                   <div
                     onClick={handleSave}
-                    className="inline-flex items-center gap-2 font-medium px-4 py-2 rounded-full text-sm bg-color-font text-color-bg outline-none border-none transition-opacity duration-200 ease-linear cursor-pointer"
+                    className='inline-flex items-center gap-2 font-medium px-4 py-2 rounded-full text-sm bg-color-font text-color-bg outline-none border-none transition-opacity duration-200 ease-linear cursor-pointer'
                   >
-                    <SaveIcon size={18} fill={isFavourite && "currentColor"} />
-                    {isFavourite ? "saved" : "save"}
+                    <SaveIcon size={18} fill={isFavourite && 'currentColor'} />
+                    {isFavourite ? 'saved' : 'save'}
                   </div>
                 </div>
-                <div className="w-full text-sm rounded-xl px-4 py-3 bg-color-card/100 ">
+                <div className='w-full text-sm rounded-xl px-4 py-3 bg-color-card/100 '>
                   {audioPodcast?.description}
                 </div>
               </>
@@ -185,18 +149,16 @@ export default function PlayAudio({ hide }) {
           </div>
         </div>
         {!hide && (
-          <div className="lg:w-2/6 h-full p-5 flex flex-col gap-3 bg-color-card rounded-xl">
-          <h2 className=" text-sm md:text-base font-semibold text-color-font">
-            Episodes
-          </h2>
-          <div className="flex flex-col overflow-auto min-h-full gap-2">
-            {episodes?.map((episode) => (
-              <EpisodeCard key={episode._id} episode={episode} />
-            ))}
+          <div className='lg:w-2/6 h-full p-5 flex flex-col gap-3 bg-color-card rounded-xl'>
+            <h2 className=' text-sm md:text-base font-semibold text-color-font'>Episodes</h2>
+            <div className='flex flex-col overflow-auto min-h-full gap-2'>
+              {episodes?.map((episode) => (
+                <EpisodeCard key={episode._id} episode={episode} />
+              ))}
+            </div>
           </div>
-        </div>
         )}
-        {!hide && <br className="lg:hidden" />}
+        {!hide && <br className='lg:hidden' />}
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { Cloudinary } from "cloudinary-core";
+import { Cloudinary } from 'cloudinary-core';
 
 const cloudName = process.env.REACT_APP_CLOUD_NAME;
 const apiKey = process.env.REACT_APP_CLOUDINARY_API_KEY;
@@ -17,12 +17,12 @@ const cloudinary = new Cloudinary({
 
 export const handleUpload = async ({ file, type }) => {
   const formData = new FormData();
-  formData.append("file", file);
-  formData.append("resource_type", type); // or 'audio' for audio files
-  formData.append("upload_preset", "upload_podcasts"); // create an upload preset in your Cloudinary account
+  formData.append('file', file);
+  formData.append('resource_type', type); // or 'audio' for audio files
+  formData.append('upload_preset', 'upload_podcasts'); // create an upload preset in your Cloudinary account
 
   await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/upload`, {
-    method: "POST",
+    method: 'POST',
     body: formData,
   })
     .then((response) => response.json())

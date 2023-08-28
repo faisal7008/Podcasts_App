@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 .scroll-container::-webkit-scrollbar {
-    display: none;
+  display: none;
 }

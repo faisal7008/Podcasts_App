@@ -1,7 +1,10 @@
 .rhap_time {
-    color: #F4EEE0;
-  }
+  color: #f4eee0;
+}
 
-.rhap_progress-filled, .rhap_repeat-button, .rhap_main-controls-button, .rhap_volume-button{
-    color: #F4EEE0;
+.rhap_progress-filled,
+.rhap_repeat-button,
+.rhap_main-controls-button,
+.rhap_volume-button {
+  color: #f4eee0;
 }
