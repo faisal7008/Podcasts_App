@@ -14,11 +14,13 @@ import Search from "./pages/Search";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getAllPodcasts } from "./features/podcastSlice";
-import ViewAll from "./components/podcasts/ViewAll";
+import ViewAll from "./pages/Home/ViewAll";
 import ComingSoon from "./pages/ComingSoon";
 import { getMe } from "./features/userSlice";
-import Library from "./pages/Library";
 import PodcastDetails from "./pages/PodcastDetails";
+import Profile from "./pages/Profile";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const dispatch = useDispatch();
@@ -35,7 +37,7 @@ function App() {
             <Route path="/" element={<HomeContent />} />
               <Route path="/:type" element={<ViewAll/>} />
             <Route path="/search" element={<Search />} />
-            <Route path="/library" element={<Library />} />
+            <Route path="/library" element={<ComingSoon />} />
             {/* <Route path="/play-audio" element={<PlayAudio />}/> */}
             {/* <Route path="/play-video" element={<PlayVideo />}/> */}
             <Route
@@ -54,7 +56,7 @@ function App() {
             <Route
               path="/profile"
               element={
-                isAuthenticated ? <ComingSoon /> : <Navigate to={"/login"} />
+                isAuthenticated ? <Profile /> : <Navigate to={"/login"} />
               }
             />
             <Route
@@ -68,6 +70,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
         </Routes>
       </Router>
+      <ToastContainer autoClose={2000} closeButton={false} toastContainerStyle={{ width: '320px' }} />
     </div>
   );
 }

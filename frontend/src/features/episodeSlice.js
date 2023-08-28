@@ -9,8 +9,13 @@ export const getAllEpisodes = createAsyncThunk(
   async (podcastId, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.token;
-      const response = await axios.get(api_url + "/episodes/" + podcastId);
-    //   thunkAPI.dispatch(setEpisode())
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.get(api_url + "/episodes/" + podcastId, config);
+      // thunkAPI.dispatch(resetEpisode())
       return response.data;
     } catch (error) {
       console.log(error.message);
@@ -47,7 +52,6 @@ const episodesSlice = createSlice({
     error: null,
   },
   reducers: {
-    // You can define any additional reducer actions here if needed
     setEpisode(state, action) {
         state.episode = action.payload;
     },
@@ -64,7 +68,7 @@ const episodesSlice = createSlice({
     builder.addCase(getAllEpisodes.fulfilled, (state, action) => {
       state.status = "succeeded";
       state.episodes = action.payload;
-      state.episode = action.payload[0];
+      // state.episode = action.payload[0];
     });
     builder.addCase(getAllEpisodes.rejected, (state, action) => {
       state.status = "failed";

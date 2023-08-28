@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import PopularCard from './PodcastCard';
+import PopularCard from '../podcasts/PodcastCard';
 
 const CardCarousel = ({ podcasts }) => {
   const carouselRef = useRef(null);

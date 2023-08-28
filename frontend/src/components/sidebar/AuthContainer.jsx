@@ -190,13 +190,13 @@ export default function AuthContainer({ current, setCurrent }) {
         <div className="flex flex-col h-full gap-3">
           <button
             onClick={() => navigate("/login")}
-            className="px-4 py-2 md:px-5 md:py-3 hover:translate-x-1 transition-all bg-color-font text-color-dark font-mono text-xs md:text-sm font-semibold rounded-full"
+            className="px-4 py-2 md:px-5 md:py-3 hover:translate-x-1 transition-all bg-color-font text-color-dark font-mono text-sm font-semibold rounded-full"
           >
             Log in
           </button>
           <button
             onClick={() => navigate("/signup")}
-            className="px-4 py-2 md:px-5 md:py-3 hover:translate-x-1 transition-all bg-color-card text-color-font font-mono text-xs md:text-sm font-semibold rounded-full"
+            className="px-4 py-2 md:px-5 md:py-3 hover:translate-x-1 transition-all bg-color-card text-color-font font-mono text-sm font-semibold rounded-full"
           >
             Sign up
           </button>

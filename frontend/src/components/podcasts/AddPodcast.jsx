@@ -15,8 +15,6 @@ export default function AddPodcast() {
   const [category, setCategory] = useState("");
   const [type, setType] = useState("");
   const [speaker, setSpeaker] = useState("");
-  // const [file, setFile] = useState(null);
-  // const [fileUrl, setFileUrl] = useState(null);
 
   const resetState = () => {
     setName("");
@@ -24,8 +22,6 @@ export default function AddPodcast() {
     setDescription("");
     setType("");
     setSpeaker("");
-    // setFile(null)
-    // setFileUrl("")
   };
 
   const handleSubmit = async (e) => {

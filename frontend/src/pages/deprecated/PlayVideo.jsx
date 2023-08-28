@@ -15,7 +15,7 @@ export default function PlayVideo() {
   const { episodes } = useSelector(state => state.episodes)
   const dispatch = useDispatch()
   return (
-    <div className="w-full h-full p-4 md:p-8 scroll-container overflow-auto lg:overflow-hidden">
+    <div className="w-full h-full p-4 md:p-7 scroll-container overflow-auto lg:overflow-hidden">
       <div className="flex gap-3 items-center">
         <div onClick={() => navigate(-1)} className="p-1.5 cursor-pointer rounded-full hover:bg-color-card">
           <svg

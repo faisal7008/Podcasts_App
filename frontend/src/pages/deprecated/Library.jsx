@@ -15,10 +15,10 @@ export default function Library({podcast}) {
     dispatch(getAllEpisodes(podcast?._id))
   }, [podcast])
   return (
-    <div className='p-8 w-full h-full'>
+    <div className='p-7 w-full h-full'>
       <div className="flex gap-3 items-center">
         <div onClick={() => navigate(-1)} className="p-1.5 cursor-pointer rounded-full hover:bg-color-card">
-          <BackIcon size={17}/>
+          <BackIcon size={18}/>
         </div>
         <h2 className="sm:text-xl tracking-wider font-semibold text-color-font">My Podcasts</h2>
         <p className='text-2xl font-light'> | </p>

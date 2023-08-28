@@ -9,9 +9,9 @@ import {
   savePodcast,
   setHidePlayer,
 } from "../../features/podcastSlice";
-import { SaveIcon } from "../icons";
-import EpisodeCard from "../podcasts/EpisodeCard";
-import { getAllEpisodes } from "../../features/episodeSlice";
+import { BackIcon, CloseIcon, SaveIcon } from "../icons";
+import EpisodeCard from "../episodes/EpisodeCard";
+import { getAllEpisodes, resetEpisode } from "../../features/episodeSlice";
 
 const userimage =
   "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80";
@@ -47,7 +47,7 @@ export default function PlayAudio({ hide }) {
       className={
         !hide
           ? `fixed lg:w-5/6 w-full lg:left-64 z-50 bg-color-dark p-7 h-full scroll-container overflow-auto transition-all duration-700`
-          : `fixed bottom-0 lg:right-0 z-40 lg:mb-5 lg:mr-5 p-5 cursor-pointer bg-slate-900 shadow-xl w-full lg:w-1/3 rounded-t-2xl lg:rounded-2xl transition-all duration-700`
+          : `fixed bottom-0 lg:right-0 z-40 lg:mb-5 lg:mr-5 p-4 cursor-pointer bg-slate-900 shadow-xl w-full lg:w-1/3 rounded-t-2xl lg:rounded-2xl transition-all duration-700`
       }
     >
       {!hide && (
@@ -56,7 +56,7 @@ export default function PlayAudio({ hide }) {
             onClick={() => dispatch(setHidePlayer(true))}
             className="p-1.5 cursor-pointer rounded-full hover:bg-color-card"
           >
-            <svg
+            {/* <svg
               fill="none"
               stroke="currentColor"
               strokeWidth={2}
@@ -70,9 +70,10 @@ export default function PlayAudio({ hide }) {
                 strokeLinejoin="round"
                 d="M15.75 19.5L8.25 12l7.5-7.5"
               />
-            </svg>
+            </svg> */}
+            <BackIcon size={18}/>
           </div>
-          <h2 className="sm:text-xl tracking-wider font-semibold text-color-font">
+          <h2 className="text-lg sm:text-xl tracking-wider font-semibold text-color-font">
             Audio Player
           </h2>
         </div>
@@ -87,25 +88,13 @@ export default function PlayAudio({ hide }) {
               {audioPodcast?.speaker}
             </h2>
           </div>
-          <div
-            className="cursor-pointer"
-            onClick={() => dispatch(resetAudio())}
+          <div>
+          <button
+            className="p-1.5 rounded-full bg-color-card text-color-font hover:bg-color-dark focus:outline-none shadow transition-all duration-200"
+            onClick={() => dispatch(resetEpisode())}
           >
-            <svg
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
-              className="w-5"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
+            <CloseIcon size={16}/>
+          </button>
           </div>
         </div>
       )}

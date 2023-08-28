@@ -63,7 +63,7 @@ export const updateMe = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       };
-      const response = await axios.put(api_url + "/users/me", config, userData);
+      const response = await axios.put(api_url + "/users/me", userData, config);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -109,6 +109,9 @@ const authSlice = createSlice({
       state.token = null;
       localStorage.removeItem("user");
     },
+    clearError: (state) => {
+      state.error = null
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -146,9 +149,13 @@ const authSlice = createSlice({
       .addCase(getMe.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.profile = action.payload;
+      })
+      .addCase(updateMe.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.profile = action.payload;
       });
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, clearError } = authSlice.actions;
 export default authSlice.reducer;

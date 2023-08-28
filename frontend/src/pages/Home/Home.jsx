@@ -16,22 +16,10 @@ export default function Home() {
   useEffect(() => {
     dispatch(getAllEpisodes(videoPodcast?._id))
   }, [videoPodcast])
-  // useEffect(() => {
-  //   if (podcast?.type === "audio") {
-  //     dispatch(setAudioUrl(episode?.mediaUrl));
-  //     dispatch(resetVideo())
-  //     dispatch(setHidePlayer(false))
-  //   } else {
-  //     dispatch(setVideoUrl(episode?.mediaUrl));
-  //     dispatch(resetAudio())
-  //     dispatch(setHidePlayer(false))
-  //   }
-  // }, [podcast, episode])
 
   return (
     <div className="flex h-screen flex-nowrap">
       <Sidebar />
-      {/* <Main Component={}/> */}
       <Outlet />
       {episode && audioPodcast && <PlayAudio hide={hidePlayer} />}
       {episode && videoPodcast && <PlayVideo hide={hidePlayer} />}

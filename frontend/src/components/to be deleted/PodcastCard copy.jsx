@@ -23,10 +23,6 @@ export default function PodcastCard({podcast}) {
   // }, [podcast])
 
   const handleClick = async () => {
-    // dispatch(getAllEpisodes(podcast._id))
-    // dispatch(setPodcast(podcast))
-    // dispatch(setEpisode(episodes[0]))
-    // if(episodes.length > 0){
       if (podcast?.type === "audio") {
         dispatch(resetVideo())
         dispatch(setAudioPodcast(podcast));

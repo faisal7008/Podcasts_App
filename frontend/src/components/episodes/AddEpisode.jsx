@@ -1,9 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../handlers/Loader";
-import axios from "axios";
-import { addPodcast } from "../../features/podcastSlice";
-import UploadPodcast from "./UploadPodcast";
+import UploadPodcast from "../podcasts/UploadPodcast";
 import { addEpisode } from "../../features/episodeSlice";
 
 export default function AddEpisode({podcastId}) {
@@ -38,6 +36,29 @@ export default function AddEpisode({podcastId}) {
     closeBtn?.current?.click();
     resetState();
     // console.log(podcastData);
+  };
+
+  const handleDurationChange = (e) => {
+    const input = e.target.value;
+    const formattedInput = formatDuration(input?.slice(0, 8));
+    // console.log(formattedInput)
+    setDuration(formattedInput);
+  };
+
+  const formatDuration = (input) => {
+    // Remove non-numeric characters
+    const numericInput = input.replace(/[^\d]/g, '');
+
+    // Format the input with colons
+    let formattedInput = '';
+    for (let i = 0; i < numericInput.length; i++) {
+      if (i === 2 || i === 4) {
+        formattedInput += ':';
+      }
+      formattedInput += numericInput[i];
+    }
+
+    return formattedInput;
   };
 
   return (
@@ -127,9 +148,10 @@ export default function AddEpisode({podcastId}) {
                 <input
                   type="text"
                   id="title"
-                  onChange={(e) => setDuration(e.target.value)}
+                  value={duration}
+                  onChange={handleDurationChange}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded focus:ring-stone-500 focus:border-stone-500 block w-full p-2.5"
-                  placeholder="Duration"
+                  placeholder="HH:MM:SS"
                   required
                 />
               </div>

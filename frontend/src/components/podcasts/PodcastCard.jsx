@@ -1,98 +1,69 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { resetAudio, resetVideo, setAudioPodcast, setHidePlayer, setV, setVideoPodcast, setVideoPodcastideoPodcast } from "../../features/podcastSlice";
-import { getAllEpisodes, setEpisode } from "../../features/episodeSlice";
+import React from "react";
 import { podcastCardImg } from "../../assets";
 import { useNavigate } from "react-router-dom";
-import { SaveIcon } from "../icons";
-// import podcastCardImg from "../assets/podcast-img.jpg";
+import { useDispatch } from "react-redux";
+import { resetEpisode } from "../../features/episodeSlice";
+import PlayCircleIcon from "../icons/PlayCircleIcon";
 
-export default function PodcastCard({podcast}) {
-  // const { name: title, description: desc, type } = podcast
-  const dispatch = useDispatch();
-  const navigate = useNavigate()
-  const { episodes } = useSelector((state) => state.episodes);
-
-  // useEffect(() => {
-  //   dispatch(setPodcast(podcast))
-  //   console.log(podcast)
-  // }, [podcast])
-
-  // useEffect(() => {
-  //   // dispatch(getAllEpisodes(podcast?._id))
-  //   if(podcast?.type === "audio"){
-  //     setAudioPodcast
-  //   }
-  // }, [podcast])
+export default function PodcastCard({ podcast }) {
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
 
   const handleClick = async () => {
-    // dispatch(getAllEpisodes(podcast._id))
-    // dispatch(setPodcast(podcast))
-    // dispatch(setEpisode(episodes[0]))
-    // if(episodes.length > 0){
-    navigate(`/podcasts/${podcast._id}`)
-      // if (podcast?.type === "audio") {
-      //   dispatch(resetVideo())
-      //   dispatch(setAudioPodcast(podcast));
-      //   dispatch(setHidePlayer(false))
-      // } else {
-      //   dispatch(resetAudio())
-      //   dispatch(setVideoPodcast(podcast));
-      //   dispatch(setHidePlayer(false))
-      // }
-    // } else {
-    //   console.log('Provide complete data')
-    // }
-  }
+    dispatch(resetEpisode())
+    navigate(`/podcasts/${podcast._id}`);
+  };
   return (
-    // <div>
-    //   <div className="flex w-full items-center justify-center">
-    //     <div>
-    <div className={"w-32 h-48 sm:w-48 sm:h-[17rem] flex flex-col justify-between bg-color-bg hover:bg-color-card rounded-lg border-gray-400 p-2 sm:p-4"}>
+    <div
+      className={
+        "w-32 h-48 sm:w-48 sm:h-[17rem] flex flex-col justify-between bg-color-bg hover:bg-color-card rounded-lg border-gray-400 p-2 sm:p-4"
+      }
+    >
       <div className="flex flex-col gap-2">
-        <div
-          // tabIndex={-1}
-          role="button"
-          onClick={handleClick}
-          className="group relative"
-          // data-hs-overlay={
-          //   type === "audio" ? "#display-audio" : "#display-video"
-          // }
-        >
-          {podcastCardImg ? <img
-            src={podcastCardImg}
-            className=" w-full h-full group-hover:opacity-90 shadow rounded-lg"
-            loading="lazy"
-            alt=""
-          /> : <div className="flex items-center justify-center h-40 mb-4 bg-gray-300 rounded dark:bg-gray-700">
-          <svg className="w-10 h-10 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 20">
-              <path d="M14.066 0H7v5a2 2 0 0 1-2 2H0v11a1.97 1.97 0 0 0 1.934 2h12.132A1.97 1.97 0 0 0 16 18V2a1.97 1.97 0 0 0-1.934-2ZM10.5 6a1.5 1.5 0 1 1 0 2.999A1.5 1.5 0 0 1 10.5 6Zm2.221 10.515a1 1 0 0 1-.858.485h-8a1 1 0 0 1-.9-1.43L5.6 10.039a.978.978 0 0 1 .936-.57 1 1 0 0 1 .9.632l1.181 2.981.541-1a.945.945 0 0 1 .883-.522 1 1 0 0 1 .879.529l1.832 3.438a1 1 0 0 1-.031.988Z"/>
-              <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.98 2.98 0 0 0 .13 5H5Z"/>
-          </svg>
-      </div>}
-          <button className="opacity-0 absolute top-0 left-0 w-full h-full flex justify-center items-center group-hover:opacity-100 transition duration-200">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="w-14 h-14 text-color-font"
-            >
-              <path
-                fillRule="evenodd"
-                d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm14.024-.983a1.125 1.125 0 010 1.966l-5.603 3.113A1.125 1.125 0 019 15.113V8.887c0-.857.921-1.4 1.671-.983l5.603 3.113z"
-                clipRule="evenodd"
-              />
-            </svg>
+        <div role="button" onClick={handleClick} className="group relative focus:outline-none">
+          {podcastCardImg ? (
+            <img
+              src={podcastCardImg}
+              className=" w-full h-full group-hover:opacity-90 shadow rounded-lg"
+              loading="lazy"
+              alt=""
+            />
+          ) : (
+            <div className="flex items-center justify-center h-40 mb-4 bg-gray-300 rounded dark:bg-gray-700">
+              <svg
+                className="w-10 h-10 text-gray-200 dark:text-gray-600"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 16 20"
+              >
+                <path d="M14.066 0H7v5a2 2 0 0 1-2 2H0v11a1.97 1.97 0 0 0 1.934 2h12.132A1.97 1.97 0 0 0 16 18V2a1.97 1.97 0 0 0-1.934-2ZM10.5 6a1.5 1.5 0 1 1 0 2.999A1.5 1.5 0 0 1 10.5 6Zm2.221 10.515a1 1 0 0 1-.858.485h-8a1 1 0 0 1-.9-1.43L5.6 10.039a.978.978 0 0 1 .936-.57 1 1 0 0 1 .9.632l1.181 2.981.541-1a.945.945 0 0 1 .883-.522 1 1 0 0 1 .879.529l1.832 3.438a1 1 0 0 1-.031.988Z" />
+                <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.98 2.98 0 0 0 .13 5H5Z" />
+              </svg>
+            </div>
+          )}
+          <button className="opacity-0 absolute top-0 left-0 w-full h-full flex justify-center items-center group-hover:opacity-100 focus:outline-none transition duration-200">
+            <PlayCircleIcon className="w-14 h-14 text-color-font" />
           </button>
         </div>
         <div className="flex flex-col sm:gap-1 px-1">
           <div className="flex gap-3 items-center justify-between text-color-font cursor-pointer">
-            {podcast?.name ? <h4 className="text-gray-200 text-sm sm:text-base font-medium truncate">
-              {podcast?.name}
-            </h4> : <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48 animate-pulse"></div>}
+            {podcast?.name ? (
+              <h4 className="text-gray-200 text-sm sm:text-base font-medium truncate">
+                {podcast?.name}
+              </h4>
+            ) : (
+              <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48 animate-pulse"></div>
+            )}
             {/* <SaveIcon/> */}
           </div>
-          {podcast?.description ? <p className="text-gray-300 text-xs font-normal truncate">{podcast?.description}</p> : <div className="h-2 mt-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>}
+          {podcast?.description ? (
+            <p className="text-gray-300 text-xs font-normal truncate">
+              {podcast?.description}
+            </p>
+          ) : (
+            <div className="h-2 mt-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+          )}
         </div>
       </div>
     </div>
