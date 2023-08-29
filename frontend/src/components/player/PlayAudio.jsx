@@ -2,19 +2,18 @@ import React, { useEffect, useRef, useState } from 'react';
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/lib/styles.css';
 import '../player/audioplayer.css';
-import { podcastCardImg } from '../../assets';
+import { podcastCardImg, userImg } from '../../assets';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetAudio, savePodcast, setHidePlayer } from '../../features/podcastSlice';
 import { BackIcon, CloseIcon, SaveIcon } from '../icons';
 import EpisodeCard from '../episodes/EpisodeCard';
 import { getAllEpisodes, resetEpisode } from '../../features/episodeSlice';
-
-const userimage =
-  'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80';
+import { useNavigate } from 'react-router-dom';
 
 export default function PlayAudio({ hide }) {
+  const navigate = useNavigate();
   const { profile } = useSelector((state) => state.auth);
-  const { podcasts, audioPodcast } = useSelector((state) => state.podcasts);
+  const { audioPodcast } = useSelector((state) => state.podcasts);
   const { episodes, episode } = useSelector((state) => state.episodes);
   const dispatch = useDispatch();
   const [isFavourite, setIsFavourite] = useState(
@@ -26,6 +25,10 @@ export default function PlayAudio({ hide }) {
   }, [profile]);
 
   const handleSave = () => {
+    if(!profile){
+      navigate('/login')
+      return
+    }
     dispatch(savePodcast(audioPodcast._id));
     setIsFavourite((prev) => !prev);
   };
@@ -121,7 +124,7 @@ export default function PlayAudio({ hide }) {
                 <div className='flex justify-between items-start'>
                   <div className='flex gap-3'>
                     <div className='flex-shrink-0'>
-                      <img className='w-10 h-10 rounded-full' src={userimage} alt='Neil image' />
+                      <img className='w-10 h-10 rounded-full' src={userImg} alt='Neil image' />
                     </div>
                     <div className='flex flex-col justify-center'>
                       <p className='text-sm font-semibold inline-flex items-center text-color-font truncate'>

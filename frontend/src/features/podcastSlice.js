@@ -4,7 +4,7 @@ import { getMe } from './userSlice';
 
 const api_url = `${process.env.REACT_APP_API_URL}`;
 
-// Fetch podcasts
+// Fetch all podcasts
 export const getAllPodcasts = createAsyncThunk('podcasts/getAllPodcasts', async (_, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.token;
@@ -14,6 +14,23 @@ export const getAllPodcasts = createAsyncThunk('podcasts/getAllPodcasts', async 
     //   },
     // };
     const response = await axios.get(api_url + '/podcasts');
+    return response.data;
+  } catch (error) {
+    console.log(error.message);
+    return thunkAPI.rejectWithValue(error.response.data);
+  }
+});
+
+// Fetch podcasts
+export const getMyPodcasts = createAsyncThunk('podcasts/getMyPodcasts', async (_, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.token;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const response = await axios.get(api_url + '/podcasts/me', config);
     return response.data;
   } catch (error) {
     console.log(error.message);
@@ -93,6 +110,7 @@ const podcastsSlice = createSlice({
   name: 'podcasts',
   initialState: {
     podcasts: [],
+    myPodcasts: [],
     podcast: null,
     audioPodcast: null,
     videoPodcast: null,
@@ -153,6 +171,11 @@ const podcastsSlice = createSlice({
     builder.addCase(getPodcast.fulfilled, (state, action) => {
       state.status = 'succeeded';
       state.podcast = action.payload;
+    });
+    // Get my podcasts
+    builder.addCase(getMyPodcasts.fulfilled, (state, action) => {
+      state.status = 'succeeded';
+      state.myPodcasts = action.payload;
     });
     // Delete podcast by id
     builder.addCase(deletePodcast.fulfilled, (state, action) => {

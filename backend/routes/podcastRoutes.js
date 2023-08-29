@@ -7,6 +7,7 @@ const {
   getAllPodcasts,
   favouritePodcast,
   getPodcast,
+  getMyPodcasts,
 } = require("../controllers/podcastController");
 const auth = require("../middlewares/authMiddleware");
 
@@ -14,6 +15,7 @@ const auth = require("../middlewares/authMiddleware");
 
 router.post("/", auth, addPodcast);
 router.get("/", getAllPodcasts);
+router.get("/me", auth, getMyPodcasts);
 router.get("/:id", auth, getPodcast);
 router.put("/:id", auth, updatePodcast);
 router.delete("/:id", auth, deletePodcast);

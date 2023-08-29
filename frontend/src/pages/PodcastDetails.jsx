@@ -10,6 +10,7 @@ import { deletePodcast, getPodcast, savePodcast } from '../features/podcastSlice
 import moment from 'moment';
 import { toast } from 'react-toastify';
 import DeleteModal from '../components/modals/DeleteModal';
+import { getMe } from '../features/userSlice';
 
 export default function PodcastDetails() {
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ export default function PodcastDetails() {
   const [episodesToBeDeleted, setEpisodesToBeDeleted] = useState([]);
 
   useEffect(() => {
+    dispatch(getMe());
     dispatch(getPodcast(podcastId));
     dispatch(getAllEpisodes(podcastId));
     // dispatch(resetEpisode());
@@ -58,6 +60,10 @@ export default function PodcastDetails() {
   }, [profile]);
 
   const handleSave = () => {
+    if(!profile){
+      navigate('/login')
+      return
+    }
     dispatch(savePodcast(podcast?._id));
     setIsFavourite((prev) => !prev);
   };

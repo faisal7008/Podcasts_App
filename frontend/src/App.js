@@ -41,7 +41,8 @@ function App() {
             />
             <Route
               path='/podcasts/:podcastId'
-              element={isAuthenticated ? <PodcastDetails /> : <Navigate to={'/login'} />}
+              element={<PodcastDetails />}
+              // element={isAuthenticated ? <PodcastDetails /> : <Navigate to={'/login'} />}
             />
             <Route
               path='/favourites'

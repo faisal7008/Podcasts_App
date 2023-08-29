@@ -20,9 +20,9 @@ const getAllPodcasts = async (req, res) => {
 // @route   GET /podcasts/:addedBy
 // @access  Private
 
-const getPodcastsAddedBy = async (req, res) => {
+const getMyPodcasts = async (req, res) => {
   try {
-    const podcasts = await Podcast.find({ addedBy: req.params.addedBy });
+    const podcasts = await Podcast.find({ addedBy: req.user.userId });
     res.json(podcasts);
   } catch (err) {
     console.error(err);
@@ -133,6 +133,11 @@ const deletePodcast = async (req, res) => {
       return res.status(404).json({ message: "Podcast not found" });
     }
 
+    // Update the episodes array in the corresponding podcast
+    await User.findByIdAndUpdate(req.user.userId, {
+      $pull: { podcasts: deletePodcast._id },
+    });
+
     // Delete associated episodes
     const deletedEpisodes = await Episode.deleteMany({ podcastId });
 
@@ -198,6 +203,6 @@ module.exports = {
   favouritePodcast,
   getAllPodcasts,
   getPodcast,
-  getPodcastsAddedBy,
+  getMyPodcasts,
   getPodcastsSpeaker,
 };

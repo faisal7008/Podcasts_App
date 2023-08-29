@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { podcastCardImg } from '../../assets';
+import { podcastCardImg, userImg } from '../../assets';
 import NetPlayer from 'netplayer';
 import { useDispatch, useSelector } from 'react-redux';
 import { savePodcast, setHidePlayer } from '../../features/podcastSlice';
@@ -7,11 +7,10 @@ import EpisodeCard from '../episodes/EpisodeCard';
 import { BackIcon, PlayIcon, SaveIcon } from '../icons';
 import { getAllEpisodes, resetEpisode } from '../../features/episodeSlice';
 import StopIcon from '../icons/StopIcon';
-
-const userimage =
-  'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80';
+import { useNavigate } from 'react-router-dom';
 
 export default function PlayVideo({ hide }) {
+  const navigate = useNavigate();
   const { profile } = useSelector((state) => state.auth);
   const { videoPodcast } = useSelector((state) => state.podcasts);
   const { episodes, episode } = useSelector((state) => state.episodes);
@@ -25,6 +24,10 @@ export default function PlayVideo({ hide }) {
   }, [profile]);
 
   const handleSave = () => {
+    if(!profile){
+      navigate('/login')
+      return
+    }
     dispatch(savePodcast(videoPodcast._id));
     setIsFavourite((prev) => !prev);
   };
@@ -69,7 +72,7 @@ export default function PlayVideo({ hide }) {
           <div className='flex justify-between items-start'>
             <div className='flex gap-3'>
               <div className='flex-shrink-0'>
-                <img className='w-10 h-10 rounded-full' src={userimage} alt='Neil image' />
+                <img className='w-10 h-10 rounded-full' src={userImg} alt='Neil image' />
               </div>
               <div className='flex flex-col justify-center'>
                 <p className='text-sm font-semibold inline-flex items-center text-color-font truncate'>

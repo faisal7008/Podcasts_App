@@ -16,10 +16,6 @@ export default function Search() {
   const [searchType, setSearchType] = useState('');
 
   useEffect(() => {
-    dispatch(getAllPodcasts());
-  }, []);
-
-  useEffect(() => {
     let filterItems = podcasts;
     if (searchItem) {
       filterItems = filterItems?.filter(

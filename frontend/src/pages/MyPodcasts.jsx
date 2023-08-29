@@ -1,23 +1,24 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import PopularCard from '../components/podcasts/PodcastCard';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import AddPodcast from '../components/podcasts/AddPodcast';
-// import "slick-carousel/slick/slick.css";
-// import "slick-carousel/slick/slick-theme.css";
 import { MicIcon } from '../components/icons';
 import { Outlet } from 'react-router-dom';
-import { emptyLogo } from '../assets';
 import PodcastGrid from '../components/podcasts/PodcastGrid';
+import { getMyPodcasts } from '../features/podcastSlice';
 
 export default function MyPodcasts() {
-  const { user } = useSelector((state) => state.auth);
-  const { podcasts } = useSelector((state) => state.podcasts);
-  const videoPodcasts = podcasts?.filter(
-    (podcast) => podcast.type === 'video' && podcast.addedBy === user?._id,
+  const { myPodcasts } = useSelector((state) => state.podcasts);
+  const videoPodcasts = myPodcasts?.filter(
+    (podcast) => podcast.type === 'video'
   );
-  const audioPodcasts = podcasts?.filter(
-    (podcast) => podcast.type === 'audio' && podcast.addedBy === user?._id,
+  const audioPodcasts = myPodcasts?.filter(
+    (podcast) => podcast.type === 'audio'
   );
+
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getMyPodcasts())
+  }, [])
 
   return (
     <div className='flex flex-col gap-4 w-full p-4 md:p-7 h-full scroll-container overflow-auto'>
