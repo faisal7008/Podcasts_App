@@ -81,9 +81,9 @@ const deleteEpisode = async (req, res) => {
   try {
     const deletedEpisode = await Episode.findByIdAndDelete(req.params.id);
     if (!deletedEpisode) {
-      return res.status(404).json({ message: "Episode not found" });
+      return res.status(404).json({ errorMsg: "Episode not found" });
     }
-    res.status(200).json({status: "deleted", deletedEpisode});
+    res.status(200).json({successMsg: `Deleted ${deletedEpisode?.title}`, status: "deleted", id: req.params.id});
   } catch (err) {
     res.status(500).json({ message: "Server error" });
   }

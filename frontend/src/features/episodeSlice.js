@@ -40,6 +40,25 @@ export const addEpisode = createAsyncThunk('episodes/addEpisode', async (episode
   }
 });
 
+// delete episode
+export const deleteEpisode = createAsyncThunk(
+  'episodes/deleteEpisode',
+  async (episodeId, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.delete(api_url + '/episodes/' + episodeId, config);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  },
+);
+
 const episodesSlice = createSlice({
   name: 'episodes',
   initialState: {
@@ -84,6 +103,12 @@ const episodesSlice = createSlice({
     builder.addCase(addEpisode.rejected, (state, action) => {
       state.status = 'failed';
       state.error = action.payload ? action.payload.message : action.error.message;
+    });
+
+    //delete episode
+    builder.addCase(deleteEpisode.fulfilled, (state, action) => {
+      state.status = 'succeeded';
+      state.episodes = state.episodes?.filter((ep) => ep?._id !== action.payload?.id);
     });
   },
 });

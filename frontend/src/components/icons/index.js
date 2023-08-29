@@ -8,6 +8,8 @@ import MainLogoIcon from './MainLogoIcon';
 import SearchIcon from './SearchIcon';
 import CloseIcon from './CloseIcon';
 import PlayIcon from './PlayIcon';
+import DeleteIcon from './DeleteIcon';
+import PlusIcon from './PlusIcon';
 
 export {
   SaveIcon,
@@ -20,4 +22,6 @@ export {
   SearchIcon,
   CloseIcon,
   PlayIcon,
+  DeleteIcon,
+  PlusIcon,
 };

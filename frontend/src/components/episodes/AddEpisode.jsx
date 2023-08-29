@@ -1,10 +1,11 @@
 import React, { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../handlers/Loader';
-import UploadPodcast from '../podcasts/UploadPodcast';
+import UploadEpisode from './UploadEpisode';
 import { addEpisode } from '../../features/episodeSlice';
+import { PlusIcon } from '../icons';
 
-export default function AddEpisode({ podcastId }) {
+export default function AddEpisode({ podcast }) {
   const dispatch = useDispatch();
   const closeBtn = useRef();
   const { status } = useSelector((state) => state.podcasts);
@@ -29,7 +30,7 @@ export default function AddEpisode({ podcastId }) {
       title,
       description,
       duration,
-      podcastId,
+      podcastId: podcast?._id,
       mediaUrl: fileUrl, // Use fileData.url to set the fileUrl
     };
     dispatch(addEpisode(episodeData));
@@ -66,16 +67,16 @@ export default function AddEpisode({ podcastId }) {
       <button
         type='button'
         data-hs-overlay='#add-episode'
-        className='px-4 py-1.5 w-max font-mono text-sm font-semibold text-color-dark bg-color-font shadow rounded-full flex items-center focus:outline-none gap-2'
+        className='px-4 py-1.5 w-max font-mono text-sm font-semibold text-color-dark bg-color-font shadow rounded-full flex items-center focus:outline-none gap-0.5'
       >
-        Add
+        <PlusIcon size={18} /> Add
       </button>
       <div
         id='add-episode'
         className='hs-overlay hidden w-full h-full fixed -top-5 left-0 z-[60] scroll-container overflow-x-hidden overflow-y-auto'
       >
         <div className='hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all sm:max-w-full sm:w-full m-3 sm:mx-auto min-h-[calc(100%-3.5rem)] flex justify-center items-center'>
-          <div className='relative flex p-6 flex-col max-h-[95vh] w-full md:w-3/5 lg:w-2/5  bg-white border shadow-sm rounded h-5/6'>
+          <div className='relative flex p-5 flex-col max-h-[95vh] w-full md:w-3/5 lg:w-2/5  bg-white border shadow-sm rounded h-5/6'>
             <div className='flex justify-between mb-4'>
               <h1 className='font-semibold tracking-wide text-slate-800 text-xl'>Add Episode</h1>
               <button
@@ -144,11 +145,16 @@ export default function AddEpisode({ podcastId }) {
                   required
                 />
               </div>
-              <UploadPodcast file={file} setFile={setFile} setFileUrl={setFileUrl} />
+              <UploadEpisode
+                type={podcast?.type}
+                file={file}
+                setFile={setFile}
+                setFileUrl={setFileUrl}
+              />
               <button
                 type='submit'
                 className='mt-2 text-white inline-flex justify-center items-center bg-stone-700 hover:bg-stone-800 w-full focus:ring-4 focus:ring-stone-300 font-medium rounded text-sm px-5 py-2.5 mr-2 disabled:bg-stone-500'
-                disabled={!fileUrl || !title || !description || !duration || !podcastId}
+                disabled={!fileUrl || !title || !description || !duration || !podcast}
               >
                 {status === 'loading' ? <Loader /> : <>Add</>}
               </button>

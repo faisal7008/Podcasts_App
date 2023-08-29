@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Cloudinary } from 'cloudinary-core';
 import axios from 'axios';
 
-const UploadPodcast = ({ file, setFile, setFileUrl }) => {
+const UploadEpisode = ({ file, type, setFile, setFileUrl }) => {
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const controller = new AbortController();
@@ -94,22 +94,26 @@ const UploadPodcast = ({ file, setFile, setFileUrl }) => {
             </button>
           </div>
         ) : (
-          <input
-            type='file'
-            onChange={handleChange}
-            accept='audio/*,video/*'
-            className='block w-full text-sm text-gray-500
-              file:mr-4 file:py-2 file:px-4
-              file:rounded-md file:border-0
-              file:text-sm file:font-semibold
-              file:bg-stone-500 file:text-white
-              hover:file:bg-stone-600
-              '
-          />
+          <>
+            <label htmlFor='file-input-medium' className='sr-only'>
+              Choose file
+            </label>
+            <input
+              accept={`${type}/*`}
+              onChange={handleChange}
+              type='file'
+              name='file-input-medium'
+              id='file-input-medium'
+              className='block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10
+              file:bg-transparent file:border-0
+            file:bg-gray-100 file:mr-4
+              file:py-3 file:px-4'
+            ></input>
+          </>
         )}
       </div>
     </div>
   );
 };
 
-export default UploadPodcast;
+export default UploadEpisode;

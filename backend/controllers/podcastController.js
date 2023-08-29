@@ -138,8 +138,10 @@ const deletePodcast = async (req, res) => {
 
     res.json({
       status: "deleted",
-      deletedPodcast,
-      deletedEpisodes,
+      successMsg: `Deleted ${deletePodcast?.name}.`,
+      id: podcastId
+      // deletedPodcast,
+      // deletedEpisodes,
     });
   } catch (err) {
     res.status(400).json({ message: err.message });

@@ -53,6 +53,25 @@ export const getPodcast = createAsyncThunk('podcasts/getPodcast', async (podcast
   }
 });
 
+// Delete podcast by Id
+export const deletePodcast = createAsyncThunk(
+  'podcasts/deletePodcast',
+  async (podcastId, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.token;
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.delete(api_url + '/podcasts/' + podcastId, config);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  },
+);
+
 // Save or like podcast
 export const savePodcast = createAsyncThunk('podcasts/savePodcast', async (podcastId, thunkAPI) => {
   try {
@@ -81,6 +100,7 @@ const podcastsSlice = createSlice({
     hidePlayer: false,
     uploadStatus: 'idle',
     status: 'idle',
+    message: null,
     error: null,
   },
   reducers: {
@@ -133,6 +153,13 @@ const podcastsSlice = createSlice({
     builder.addCase(getPodcast.fulfilled, (state, action) => {
       state.status = 'succeeded';
       state.podcast = action.payload;
+    });
+    // Delete podcast by id
+    builder.addCase(deletePodcast.fulfilled, (state, action) => {
+      state.status = 'succeeded';
+      state.podcasts = state.podcasts?.filter((pod) => pod?._id !== action.payload?.id);
+      state.podcast = null;
+      state.message = action.payload?.successMsg;
     });
   },
 });
