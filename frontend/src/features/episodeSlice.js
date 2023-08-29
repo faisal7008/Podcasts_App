@@ -59,10 +59,13 @@ export const deleteEpisode = createAsyncThunk(
   },
 );
 
+const storedEpisodeJson = localStorage.getItem('currentEpisode');
+const storedEpisode = storedEpisodeJson ? JSON.parse(storedEpisodeJson) : null;
+
 const episodesSlice = createSlice({
   name: 'episodes',
   initialState: {
-    episode: null,
+    episode: storedEpisode || null,
     episodes: [],
     status: 'idle',
     error: null,
@@ -70,6 +73,8 @@ const episodesSlice = createSlice({
   reducers: {
     setEpisode(state, action) {
       state.episode = action.payload;
+      // Save the podcast in localStorage
+      localStorage.setItem('currentEpisode', JSON.stringify(action.payload));
     },
     resetEpisode(state) {
       state.episode = null;

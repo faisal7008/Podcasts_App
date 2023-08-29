@@ -106,14 +106,21 @@ export const savePodcast = createAsyncThunk('podcasts/savePodcast', async (podca
   }
 });
 
+const storedPodcastJson = localStorage.getItem('currentPodcast');
+const storedPodcast = storedPodcastJson ? JSON.parse(storedPodcastJson) : null;
+const storedAudioPodcastJson = localStorage.getItem('currentAudioPodcast');
+const storedAudioPodcast = storedAudioPodcastJson ? JSON.parse(storedAudioPodcastJson) : null;
+const storedVideoPodcastJson = localStorage.getItem('currentVideoPodcast');
+const storedVideoPodcast = storedVideoPodcastJson ? JSON.parse(storedVideoPodcastJson) : null;
+
 const podcastsSlice = createSlice({
   name: 'podcasts',
   initialState: {
     podcasts: [],
     myPodcasts: [],
-    podcast: null,
-    audioPodcast: null,
-    videoPodcast: null,
+    podcast: storedPodcast || null,
+    audioPodcast: storedAudioPodcast || null,
+    videoPodcast: storedVideoPodcast || null,
     // fileUrl: null,
     hidePlayer: false,
     uploadStatus: 'idle',
@@ -122,11 +129,20 @@ const podcastsSlice = createSlice({
     error: null,
   },
   reducers: {
+    setPodcast(state, action) {
+      state.podcast = action.payload;
+      // Save the podcast in localStorage
+      localStorage.setItem('currentPodcast', JSON.stringify(action.payload));
+    },
     setAudioPodcast(state, action) {
       state.audioPodcast = action.payload;
+      // Save the podcast in localStorage
+      localStorage.setItem('currentAudioPodcast', JSON.stringify(action.payload));
     },
     setVideoPodcast(state, action) {
       state.videoPodcast = action.payload;
+      // Save the podcast in localStorage
+      localStorage.setItem('currentVideoPodcast', JSON.stringify(action.payload));
     },
     setHidePlayer(state, action) {
       state.hidePlayer = action.payload;
@@ -187,6 +203,6 @@ const podcastsSlice = createSlice({
   },
 });
 
-export const { setAudioPodcast, setVideoPodcast, setHidePlayer, resetAudio, resetVideo } =
+export const { setPodcast, setAudioPodcast, setVideoPodcast, setHidePlayer, resetAudio, resetVideo } =
   podcastsSlice.actions;
 export default podcastsSlice.reducer;

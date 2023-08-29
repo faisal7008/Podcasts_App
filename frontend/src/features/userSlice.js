@@ -81,7 +81,8 @@ export const deleteMe = createAsyncThunk('auth/deleteme', async (_, thunkAPI) =>
 });
 
 // Get user from localStorage
-const userData = JSON.parse(localStorage.getItem('user')); // do not destructure like {user, token} it raises error when you open the website in another browser as there is no user in that localStorage
+const userJson = localStorage.getItem('podcasts_user');
+const userData = userJson ? JSON.parse(userJson) : null;
 
 const authSlice = createSlice({
   name: 'auth',
@@ -99,6 +100,10 @@ const authSlice = createSlice({
       state.profile = null;
       state.token = null;
       localStorage.removeItem('user');
+      localStorage.removeItem('currentPodcast');
+      localStorage.removeItem('currentAudioPodcast');
+      localStorage.removeItem('currentVideoPodcast');
+      localStorage.removeItem('currentEpisode');
     },
     clearError: (state) => {
       state.error = null;

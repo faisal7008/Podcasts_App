@@ -4,13 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { resetEpisode } from '../../features/episodeSlice';
 import PlayCircleIcon from '../icons/PlayCircleIcon';
+import { setPodcast } from '../../features/podcastSlice';
 
 export default function PodcastCard({ podcast }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleClick = async () => {
-    dispatch(resetEpisode());
+    dispatch(setPodcast(podcast));
     navigate(`/podcasts/${podcast._id}`);
   };
   return (

@@ -24,7 +24,7 @@ export default function PodcastDetails() {
 
   useEffect(() => {
     dispatch(getMe());
-    dispatch(getPodcast(podcastId));
+    // dispatch(getPodcast(podcastId));
     dispatch(getAllEpisodes(podcastId));
     // dispatch(resetEpisode());
   }, [podcastId]);
