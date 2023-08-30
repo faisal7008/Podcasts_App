@@ -78,6 +78,7 @@ const episodesSlice = createSlice({
     },
     resetEpisode(state) {
       state.episode = null;
+      localStorage.removeItem('currentEpisode');
     },
   },
   extraReducers: (builder) => {

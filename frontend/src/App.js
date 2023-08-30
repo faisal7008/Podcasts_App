@@ -7,7 +7,7 @@ import Favourites from './pages/Favourites';
 import HomeContent from './pages/Home/HomeContent';
 import Search from './pages/Search';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getAllPodcasts } from './features/podcastSlice';
 import ViewAll from './pages/Home/ViewAll';
 import ComingSoon from './pages/ComingSoon';
@@ -24,6 +24,28 @@ function App() {
     dispatch(getAllPodcasts());
     dispatch(getMe());
   }, []);
+  const [toastPosition, setToastPosition] = useState('top-center');
+
+  useEffect(() => {
+    const handleResize = () => {
+      // Check the screen width and update the toast position accordingly
+      if (window.innerWidth <= 768) {
+        setToastPosition('top-center');
+      } else {
+        setToastPosition('bottom-right');
+      }
+    };
+
+    // Call handleResize initially and add a listener for window resize events
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+  
   return (
     <div className='app bg-color-dark h-screen'>
       <Router>
@@ -62,8 +84,9 @@ function App() {
         </Routes>
       </Router>
       <ToastContainer
-        autoClose={2000}
+        autoClose={1500}
         closeButton={false}
+        position={toastPosition}
         toastContainerStyle={{ width: '320px' }}
       />
     </div>

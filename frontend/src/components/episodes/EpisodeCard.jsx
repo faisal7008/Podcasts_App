@@ -41,7 +41,7 @@ export default function EpisodeCard({ episode, canEdit, setEpisodesToBeDeleted }
   };
 
   return (
-    <div className='p-3 md:p-3 group relative cursor-pointer bg-color-bg shadow-lg rounded-md md:rounded-lg'>
+    <div className='p-2 md:p-3 group relative cursor-pointer bg-color-bg shadow-lg rounded-md md:rounded-lg'>
       <div className='flex items-center gap-3'>
         {canEdit && (
           <input
@@ -54,7 +54,7 @@ export default function EpisodeCard({ episode, canEdit, setEpisodesToBeDeleted }
         <label
           htmlFor={`hs-checkbox-group-${episode?._id}`}
           onClick={handleClick}
-          className='w-full flex items-center space-x-4 cursor-pointer'
+          className='w-full flex overflow-hidden items-center space-x-4 cursor-pointer'
         >
           <div className='relative'>
             {/* <div className='flex gap-3 items-center'> */}

@@ -1,39 +1,38 @@
 import React, { useEffect, useState } from 'react';
-import { podcastCardImg } from '../assets';
+import { loaderImg, podcastCardImg } from '../assets';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteEpisode, getAllEpisodes, resetEpisode, setEpisode } from '../features/episodeSlice';
 import EpisodeCard from '../components/episodes/EpisodeCard';
 import { useNavigate, useParams } from 'react-router-dom';
 import { BackIcon, DeleteIcon, EditIcon, PlayIcon, SaveIcon } from '../components/icons';
 import AddEpisode from '../components/episodes/AddEpisode';
-import { deletePodcast, getPodcast, savePodcast } from '../features/podcastSlice';
+import {
+  deletePodcast,
+  getPodcast,
+  resetPodcast,
+  savePodcast,
+  setPodcast,
+} from '../features/podcastSlice';
 import moment from 'moment';
 import { toast } from 'react-toastify';
 import DeleteModal from '../components/modals/DeleteModal';
 import { getMe } from '../features/userSlice';
+import PodcastLoader from '../components/handlers/PodcastLoader';
 
 export default function PodcastDetails() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { podcastId } = useParams();
   const { episodes } = useSelector((state) => state.episodes);
-  const { podcast } = useSelector((state) => state.podcasts);
+  const { podcast, status } = useSelector((state) => state.podcasts);
   const [canEdit, setCanEdit] = useState(false);
   const [canDelete, setCanDelete] = useState(false);
   const [episodesToBeDeleted, setEpisodesToBeDeleted] = useState([]);
 
   useEffect(() => {
     dispatch(getMe());
-    // dispatch(getPodcast(podcastId));
     dispatch(getAllEpisodes(podcastId));
-    // dispatch(resetEpisode());
   }, [podcastId]);
-
-  // useEffect(() => {
-  //   if(podcast === null){
-  //     navigate('/podcasts')
-  //   }
-  // }, [podcast])
 
   useEffect(() => {
     if (canDelete) {
@@ -47,22 +46,18 @@ export default function PodcastDetails() {
     }
   }, [canDelete]);
 
-  // useEffect(() => {
-  //   console.log(episodesToBeDeleted);
-  // }, [episodesToBeDeleted]);
-
   const { profile } = useSelector((state) => state.auth);
   const [isFavourite, setIsFavourite] = useState(profile?.favoritePodcasts?.includes(podcast?._id));
-  const myPodcasts = profile?.podcasts
+  const myPodcasts = profile?.podcasts;
 
   useEffect(() => {
     setIsFavourite(profile?.favoritePodcasts?.includes(podcast?._id));
   }, [profile]);
 
   const handleSave = () => {
-    if(!profile){
-      navigate('/login')
-      return
+    if (!profile) {
+      navigate('/login');
+      return;
     }
     dispatch(savePodcast(podcast?._id));
     setIsFavourite((prev) => !prev);
@@ -70,18 +65,19 @@ export default function PodcastDetails() {
 
   const handleDelete = async () => {
     try {
+      if (episodesToBeDeleted?.length === 0) return;
       for (const episodeId of episodesToBeDeleted) {
         await dispatch(deleteEpisode(episodeId)).then((res) => {
           // Handle success
           const { successMsg, errorMsg } = res.payload;
           if (successMsg) {
             toast.success(successMsg, {
-              position: toast.POSITION.BOTTOM_RIGHT,
+              //position: toast.POSITION.BOTTOM_RIGHT,
             });
           }
           if (errorMsg) {
             toast.error(errorMsg, {
-              position: toast.POSITION.BOTTOM_RIGHT,
+              //position: toast.POSITION.BOTTOM_RIGHT,
             });
           }
         });
@@ -108,10 +104,14 @@ export default function PodcastDetails() {
   };
 
   return (
-    <div className='p-4 md:p-7 overflow-y-auto w-full h-full'>
-      <div className='flex gap-3 items-center'>
+    <div className='px-2 py-4 md:p-7 w-full h-full overflow-hidden'>
+      {/* {podcast !== null && <PodcastLoader />} */}
+      <div className='flex gap-3 items-center mb-1'>
         <div
-          onClick={() => navigate(-1)}
+          onClick={() => {
+            navigate(-1);
+            dispatch(resetPodcast());
+          }}
           className='p-1.5 cursor-pointer rounded-full hover:bg-color-card'
         >
           <BackIcon size={18} />
@@ -124,7 +124,7 @@ export default function PodcastDetails() {
           {podcast?.name}
         </h2>
       </div>
-      <div className='flex flex-col md:flex-row pb-4 w-full h-full'>
+      <div className='flex flex-col md:flex-row pb-4 w-full h-full overflow-y-auto'>
         <div className='md:w-5/12 h-full p-4 flex flex-col items-center gap-4'>
           <div>
             <img src={podcastCardImg} className='w-64 rounded-lg shadow-lg' />
@@ -156,16 +156,18 @@ export default function PodcastDetails() {
               </div>
             </div>
             <div className='w-full text-base text-justify mb-4'>{podcast?.description}</div>
-            {myPodcasts?.includes(podcastId) && <button
-              // onClick={() => {
+            {myPodcasts?.includes(podcastId) && (
+              <button
+                // onClick={() => {
 
-              // }}
-              data-hs-overlay='#delete-modal'
-              className='inline-flex gap-2 items-center justify-center px-4 py-2 text-sm font-semibold w-full bg-color-font text-rose-600 rounded-full focus:outline-none  transition-opacity duration-200 ease-linear cursor-pointer'
-            >
-              <DeleteIcon size={18} />
-              Delete Podcast
-            </button>}
+                // }}
+                data-hs-overlay='#delete-modal'
+                className='inline-flex gap-2 items-center justify-center px-4 py-2 text-sm font-semibold w-full bg-color-font text-rose-600 rounded-full focus:outline-none  transition-opacity duration-200 ease-linear cursor-pointer'
+              >
+                <DeleteIcon size={18} />
+                Delete Podcast
+              </button>
+            )}
           </div>
         </div>
         <div className='p-4 w-full min-h-full overflow-y-auto space-y-3'>
@@ -176,30 +178,33 @@ export default function PodcastDetails() {
                 {episodes?.length}
               </p>
             </div>
-            {myPodcasts?.includes(podcastId) &&<div className='inline-flex gap-2'>
-              <AddEpisode podcast={podcast} />
-              {!canEdit ? (
-                <button
-                  onClick={() => setCanEdit((prev) => !prev)}
-                  type='button'
-                  className='px-4 py-1.5 w-max font-mono text-sm font-semibold text-color-dark bg-color-font shadow rounded-full flex items-center focus:outline-none gap-1'
-                >
-                  <EditIcon size={12} /> Edit
-                </button>
-              ) : (
-                <button
-                  onClick={handleDelete}
-                  type='button'
-                  disabled={episodesToBeDeleted?.length === 0}
-                  // data-hs-overlay='#delete-modal'
-                  className='px-4 py-1.5 w-max font-mono text-sm font-semibold text-color-dark bg-color-font shadow rounded-full flex items-center focus:outline-none gap-1'
-                >
-                  <DeleteIcon size={14} /> Remove
-                </button>
-              )}
-            </div>}
+            {myPodcasts?.includes(podcastId) && (
+              <div className='inline-flex gap-2'>
+                <AddEpisode podcast={podcast} />
+                {!canEdit ? (
+                  <button
+                    onClick={() => setCanEdit((prev) => !prev)}
+                    type='button'
+                    className='px-4 py-1.5 w-max font-mono text-sm font-semibold text-color-dark bg-color-font shadow rounded-full flex items-center focus:outline-none gap-1'
+                  >
+                    <EditIcon size={12} /> Edit
+                  </button>
+                ) : (
+                  <button
+                    onClick={handleDelete}
+                    type='button'
+                    // disabled={episodesToBeDeleted?.length === 0}
+                    // data-hs-overlay='#delete-modal'
+                    className='px-4 py-1.5 w-max font-mono text-sm font-semibold text-color-dark bg-color-font shadow rounded-full flex items-center focus:outline-none gap-1'
+                  >
+                    <DeleteIcon size={14} /> Remove
+                  </button>
+                )}
+              </div>
+            )}
           </div>
           <div className='space-y-3'>
+            {episodes ? <>
             {episodes?.map((ep) => (
               <EpisodeCard
                 key={ep?._id}
@@ -207,7 +212,7 @@ export default function PodcastDetails() {
                 canEdit={canEdit}
                 setEpisodesToBeDeleted={setEpisodesToBeDeleted}
               />
-            ))}
+            ))}</> : <div className='w-full h-[75vh] flex justify-center items-center'><img src={loaderImg} className='w-24' /></div>}
           </div>
         </div>
       </div>

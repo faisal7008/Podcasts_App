@@ -27,12 +27,13 @@ export default function Sidebar() {
   return (
     <div onClick={() => dispatch(setHidePlayer(true))}>
       {/* Sidebar starts */}
-      <div className='w-52 md:w-64 absolute sm:relative bg-slate-900 shadow lg:h-full hidden lg:flex flex-col'>
+      <div className='w-64 absolute sm:relative bg-slate-900 shadow lg:h-full hidden lg:flex flex-col'>
         <SidebarContent />
       </div>
+      <div className={`z-20 ${isOpen ? '' : 'hidden'} fixed inset-0 bg-slate-700 bg-opacity-75 transition-opacity`}></div>
       <div
         ref={sidebarRef}
-        className={`fixed inset-y-0 left-0 w-52 md:w-64 bg-slate-900 shadow-lg transform transition-transform duration-300 ease-in-out z-[1500] ${
+        className={`fixed inset-y-0 left-0 w-64 bg-slate-900 shadow-lg transform transition-all duration-300 ease-in-out z-[1500] ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
         id='mobile-nav'

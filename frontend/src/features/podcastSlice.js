@@ -147,11 +147,17 @@ const podcastsSlice = createSlice({
     setHidePlayer(state, action) {
       state.hidePlayer = action.payload;
     },
+    resetPodcast(state) {
+      state.podcast = null;
+      localStorage.removeItem('currentPodcast');
+    },
     resetAudio(state) {
       state.audioPodcast = null;
+      localStorage.removeItem('currentAudioPodcast');
     },
     resetVideo(state) {
       state.videoPodcast = null;
+      localStorage.removeItem('currentVideoPodcast');
     },
   },
   extraReducers: (builder) => {
@@ -203,6 +209,5 @@ const podcastsSlice = createSlice({
   },
 });
 
-export const { setPodcast, setAudioPodcast, setVideoPodcast, setHidePlayer, resetAudio, resetVideo } =
-  podcastsSlice.actions;
+export const { setPodcast, setAudioPodcast, setVideoPodcast, setHidePlayer, resetPodcast, resetAudio, resetVideo } = podcastsSlice.actions;
 export default podcastsSlice.reducer;

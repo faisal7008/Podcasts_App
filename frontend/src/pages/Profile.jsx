@@ -36,7 +36,7 @@ export default function Profile() {
   useEffect(() => {
     if (errorMsg) {
       toast.error(errorMsg, {
-        position: toast.POSITION.BOTTOM_RIGHT,
+        //position: toast.POSITION.BOTTOM_RIGHT,
       });
     }
   }, [errorMsg]);
@@ -99,17 +99,17 @@ export default function Profile() {
         console.log('Message:', message);
         if (message) {
           toast.success(message, {
-            position: toast.POSITION.BOTTOM_RIGHT,
+            //position: toast.POSITION.BOTTOM_RIGHT,
           });
         }
         if (passwordMsg) {
           toast.success(passwordMsg, {
-            position: toast.POSITION.BOTTOM_RIGHT,
+            //position: toast.POSITION.BOTTOM_RIGHT,
           });
         }
         if (passwordError) {
           toast.error(passwordError, {
-            position: toast.POSITION.BOTTOM_RIGHT,
+            //position: toast.POSITION.BOTTOM_RIGHT,
           });
         }
       })

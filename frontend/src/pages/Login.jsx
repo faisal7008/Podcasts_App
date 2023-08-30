@@ -23,8 +23,10 @@ export default function Login() {
   useEffect(() => {
     if (error) {
       toast.error(error, {
-        position: toast.POSITION.BOTTOM_RIGHT,
+        //position: toast.POSITION.BOTTOM_RIGHT,
+        className: "m-2 font-sans rounded shadow font-medium text-color-dark md:m-0"
       });
+      dispatch(clearError())
     }
   }, [error]);
 
@@ -59,7 +61,7 @@ export default function Login() {
             Podcasts
           </h1>
         </div>
-        <div className='bg-white shadow rounded lg:w-1/3  md:w-1/2 w-full p-10'>
+        <div className='bg-white shadow rounded lg:w-1/3  md:w-1/2 w-full p-6 sm:p-10'>
           <p
             tabIndex={0}
             aria-label='Login to your account'

@@ -23,7 +23,7 @@ export default function Signup() {
   useEffect(() => {
     if (error) {
       toast.error(error, {
-        position: toast.POSITION.BOTTOM_RIGHT,
+        //position: toast.POSITION.BOTTOM_RIGHT,
       });
     }
   }, [error]);

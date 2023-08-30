@@ -43,31 +43,17 @@ export default function PlayAudio({ hide }) {
     <div
       className={
         !hide
-          ? `fixed lg:w-5/6 w-full lg:left-64 z-50 bg-color-dark p-7 h-full scroll-container overflow-auto transition-all duration-700`
-          : `fixed bottom-0 lg:right-0 z-40 lg:mb-5 lg:mr-5 p-4 cursor-pointer bg-slate-900 shadow-xl w-full lg:w-1/3 rounded-t-2xl lg:rounded-2xl transition-all duration-700`
+          ? `fixed lg:w-5/6 w-full lg:left-64 z-50 bg-color-dark p-4 md:p-7 h-full scroll-container overflow-hidden transition-all duration-700`
+          : `fixed bottom-0 lg:right-0 z-40 lg:mb-5 lg:mr-5 p-4 md:p-7 cursor-pointer bg-slate-900 shadow-xl w-full lg:w-1/3 rounded-t-2xl lg:rounded-2xl transition-all duration-700`
       }
     >
+      <div className='overflow-y-auto'>
       {!hide && (
         <div className='flex gap-3 items-center'>
           <div
             onClick={() => dispatch(setHidePlayer(true))}
             className='p-1.5 cursor-pointer rounded-full hover:bg-color-card'
           >
-            {/* <svg
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-5 h-5"
-              aria-hidden="true"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15.75 19.5L8.25 12l7.5-7.5"
-              />
-            </svg> */}
             <BackIcon size={18} />
           </div>
           <h2 className='text-lg sm:text-xl tracking-wider font-semibold text-color-font'>
@@ -162,6 +148,7 @@ export default function PlayAudio({ hide }) {
           </div>
         )}
         {!hide && <br className='lg:hidden' />}
+      </div>
       </div>
     </div>
   );
