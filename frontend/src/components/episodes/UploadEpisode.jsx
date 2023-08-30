@@ -61,17 +61,17 @@ const UploadEpisode = ({ file, type, setFile, setFileUrl }) => {
   };
 
   return (
-    <div className='mb-4'>
+    <div className='mb-4 w-full'>
       <label htmlFor='title' className='block mb-2 text-xs font-semibold text-gray-900'>
         Upload Episode <span className=' text-rose-600'>*</span>
       </label>
-      <div>
+      <div className='w-full'>
         <span className='sr-only'>Upload file</span>
         {file ? (
           <div className='flex gap-4 justify-between items-start'>
             <div className='mb-4 grow'>
               <div className='flex gap-2 justify-between mb-2'>
-                <span className='text-sm w-60 truncate font-medium text-gray-900'>
+                <span className='text-sm w-full max-w-[150px] sm:max-w-[250px] truncate font-medium text-gray-900'>
                   {file?.name}
                 </span>
                 <span className='text-xs font-medium text-gray-800'>{uploadProgress}%</span>

@@ -177,6 +177,7 @@ const podcastsSlice = createSlice({
     builder.addCase(addPodcast.fulfilled, (state, action) => {
       state.status = 'succeeded';
       state.podcasts.push(action.payload);
+      state.myPodcasts.push(action.payload);
     });
     builder.addCase(addPodcast.rejected, (state, action) => {
       state.status = 'failed';
