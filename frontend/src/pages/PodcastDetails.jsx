@@ -8,8 +8,13 @@ import { BackIcon, DeleteIcon, EditIcon, PlayIcon, SaveIcon } from '../component
 import AddEpisode from '../components/episodes/AddEpisode';
 import {
   deletePodcast,
+  resetAudio,
   resetPodcast,
+  resetVideo,
   savePodcast,
+  setAudioPodcast,
+  setHidePlayer,
+  setVideoPodcast,
 } from '../features/podcastSlice';
 import moment from 'moment';
 import { toast } from 'react-toastify';
@@ -59,6 +64,19 @@ export default function PodcastDetails() {
     }
     dispatch(savePodcast(podcast?._id));
     setIsFavourite((prev) => !prev);
+  };
+
+  const handlePlay = async () => {
+    dispatch(setEpisode(episodes[0]));
+    if (podcast?.type === 'audio') {
+      dispatch(resetVideo());
+      dispatch(setAudioPodcast(podcast));
+      dispatch(setHidePlayer(false));
+    } else {
+      dispatch(resetAudio());
+      dispatch(setVideoPodcast(podcast));
+      dispatch(setHidePlayer(false));
+    }
   };
 
   const handleDelete = async () => {
@@ -137,9 +155,7 @@ export default function PodcastDetails() {
             </h2>
             <div className='flex justify-between gap-4 my-4'>
               <button
-                onClick={() => {
-                  dispatch(setEpisode(episodes[0]));
-                }}
+                onClick={handlePlay}
                 className='inline-flex gap-2 items-center justify-center px-4 py-2 text-sm font-semibold w-full bg-color-font text-color-card rounded-full focus:outline-none  transition-opacity duration-200 ease-linear cursor-pointer'
               >
                 <PlayIcon size={18} />

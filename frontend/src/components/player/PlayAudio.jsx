@@ -4,7 +4,7 @@ import 'react-h5-audio-player/lib/styles.css';
 import '../player/audioplayer.css';
 import { podcastCardImg, userImg } from '../../assets';
 import { useDispatch, useSelector } from 'react-redux';
-import { resetAudio, savePodcast, setHidePlayer } from '../../features/podcastSlice';
+import { resetAudio, resetVideo, savePodcast, setHidePlayer } from '../../features/podcastSlice';
 import { BackIcon, CloseIcon, SaveIcon } from '../icons';
 import EpisodeCard from '../episodes/EpisodeCard';
 import { getAllEpisodes, resetEpisode } from '../../features/episodeSlice';
@@ -19,6 +19,10 @@ export default function PlayAudio({ hide }) {
   const [isFavourite, setIsFavourite] = useState(
     profile?.favoritePodcasts?.includes(audioPodcast._id),
   );
+
+  useEffect(() => {
+    dispatch(resetVideo())
+  }, [audioPodcast])
 
   useEffect(() => {
     setIsFavourite(profile?.favoritePodcasts?.includes(audioPodcast._id));
@@ -43,11 +47,11 @@ export default function PlayAudio({ hide }) {
     <div
       className={
         !hide
-          ? `fixed lg:w-5/6 w-full lg:left-64 z-50 bg-color-dark p-4 md:p-7 h-full scroll-container overflow-hidden transition-all duration-700`
+          ? `fixed lg:w-5/6 w-full lg:left-64 z-50 bg-color-dark p-4 md:p-7 h-full scroll-container overflow-y-auto transition-all duration-700`
           : `fixed bottom-0 lg:right-0 z-40 lg:mb-5 lg:mr-5 p-4 cursor-pointer bg-slate-900 shadow-xl w-full lg:w-1/3 rounded-t-2xl lg:rounded-2xl transition-all duration-700`
       }
     >
-      <div className='overflow-y-auto'>
+      <div className='min-h-full overflow-y-auto'>
       {!hide && (
         <div className='flex gap-3 items-center'>
           <div
@@ -135,7 +139,7 @@ export default function PlayAudio({ hide }) {
           </div>
         </div>
         {!hide && (
-          <div className='lg:w-2/6 h-full p-5 flex flex-col gap-3 bg-color-card rounded-xl'>
+          <div className='lg:w-2/6 min-h-full p-5 flex flex-col gap-3 bg-color-card rounded-xl'>
             <h2 className=' text-sm md:text-base font-semibold text-color-font'>Episodes</h2>
             <div className='flex flex-col overflow-auto min-h-full gap-2'>
               {episodes?.map((episode) => (

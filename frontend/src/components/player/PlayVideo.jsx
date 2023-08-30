@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { podcastCardImg, userImg } from '../../assets';
 import NetPlayer from 'netplayer';
 import { useDispatch, useSelector } from 'react-redux';
-import { savePodcast, setHidePlayer } from '../../features/podcastSlice';
+import { resetAudio, savePodcast, setHidePlayer } from '../../features/podcastSlice';
 import EpisodeCard from '../episodes/EpisodeCard';
 import { BackIcon, PlayIcon, SaveIcon } from '../icons';
 import { resetEpisode } from '../../features/episodeSlice';
@@ -18,6 +18,10 @@ export default function PlayVideo({ hide }) {
   const [isFavourite, setIsFavourite] = useState(
     profile?.favoritePodcasts?.includes(videoPodcast._id),
   );
+
+  useEffect(() => {
+    dispatch(resetAudio())
+  }, [videoPodcast])
 
   useEffect(() => {
     setIsFavourite(profile?.favoritePodcasts?.includes(videoPodcast._id));
