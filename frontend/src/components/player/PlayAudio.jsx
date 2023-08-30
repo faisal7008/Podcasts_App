@@ -139,7 +139,7 @@ export default function PlayAudio({ hide }) {
           </div>
         </div>
         {!hide && (
-          <div className='lg:w-2/6 min-h-full p-5 flex flex-col gap-3 bg-color-card rounded-xl'>
+          <div className='lg:w-2/6 h-full p-5 flex flex-col gap-3 bg-color-card rounded-xl'>
             <h2 className=' text-sm md:text-base font-semibold text-color-font'>Episodes</h2>
             <div className='flex flex-col overflow-auto min-h-full gap-2'>
               {episodes?.map((episode) => (

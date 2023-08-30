@@ -56,12 +56,12 @@ export default function Login() {
           >
             Login to your account
           </p>
-          <p className='text-xs md:text-sm mt-3 font-medium leading-none text-gray-500'>
+          <p className='text-sm mt-3 font-medium leading-none text-gray-500'>
             {"Don't have an account?"}
             <span
               tabIndex={0}
               aria-label='Sign up here'
-              className='text-xs md:text-sm font-medium leading-none underline text-gray-800 cursor-pointer'
+              className='text-sm font-medium leading-none underline text-gray-800 cursor-pointer'
             >
               {' '}
               <Link to={'/signup'}> Sign up here </Link>
@@ -83,7 +83,7 @@ export default function Login() {
           </div>
           <form onSubmit={handleSubmit}>
             <div>
-              <label className='text-xs md:text-sm font-medium leading-none text-gray-800'>
+              <label className='text-sm font-medium leading-none text-gray-800'>
                 Email
               </label>
               <input
@@ -91,11 +91,11 @@ export default function Login() {
                 aria-label='enter email adress'
                 onChange={(e) => setEmail(e.target.value)}
                 type='email'
-                className='bg-gray-200 border focus:border-color-bg focus:ring-color-bg rounded focus:outline-none text-xs md:text-sm font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2'
+                className='bg-gray-200 border focus:border-color-bg focus:ring-color-bg rounded focus:outline-none font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2'
               />
             </div>
             <div className='mt-6  w-full'>
-              <label className='text-xs md:text-sm font-medium leading-none text-gray-800'>
+              <label className='text-sm font-medium leading-none text-gray-800'>
                 Password
               </label>
               <div className='relative flex items-center justify-center'>
@@ -104,7 +104,7 @@ export default function Login() {
                   aria-label='enter Password'
                   onChange={(e) => setPassword(e.target.value)}
                   type='password'
-                  className='bg-gray-200 border focus:border-color-bg focus:ring-color-bg rounded focus:outline-none text-xs md:text-sm font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2'
+                  className='bg-gray-200 border focus:border-color-bg focus:ring-color-bg rounded focus:outline-none font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2'
                 />
               </div>
             </div>

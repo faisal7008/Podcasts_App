@@ -98,19 +98,13 @@ export default function Profile() {
         const { message, passwordError, passwordMsg } = response.payload;
         console.log('Message:', message);
         if (message) {
-          toast.success(message, {
-            //position: toast.POSITION.BOTTOM_RIGHT,
-          });
+          toast.success(message);
         }
         if (passwordMsg) {
-          toast.success(passwordMsg, {
-            //position: toast.POSITION.BOTTOM_RIGHT,
-          });
+          toast.success(passwordMsg);
         }
         if (passwordError) {
-          toast.error(passwordError, {
-            //position: toast.POSITION.BOTTOM_RIGHT,
-          });
+          toast.error(passwordError);
         }
       })
       .catch((error) => {

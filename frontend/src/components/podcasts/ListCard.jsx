@@ -1,28 +1,17 @@
 import React from 'react';
 import { podcastCardImg } from '../../assets';
 import { useDispatch } from 'react-redux';
-import {
-  resetAudio,
-  resetVideo,
-  setAudioPodcast,
-  setHidePlayer,
-  setVideoPodcast,
-} from '../../features/podcastSlice';
+import { setPodcast } from '../../features/podcastSlice';
 import PlayCircleIcon from '../icons/PlayCircleIcon';
+import { useNavigate } from 'react-router-dom';
 
 export default function ListCard({ podcast }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
 
   const handleClick = async () => {
-    if (podcast?.type === 'audio') {
-      dispatch(resetVideo());
-      dispatch(setAudioPodcast(podcast));
-      dispatch(setHidePlayer(false));
-    } else {
-      dispatch(resetAudio());
-      dispatch(setVideoPodcast(podcast));
-      dispatch(setHidePlayer(false));
-    }
+    dispatch(setPodcast(podcast));
+    navigate(`/podcasts/${podcast._id}`);
   };
 
   return (
