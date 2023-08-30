@@ -44,7 +44,7 @@ export default function PlayAudio({ hide }) {
       className={
         !hide
           ? `fixed lg:w-5/6 w-full lg:left-64 z-50 bg-color-dark p-4 md:p-7 h-full scroll-container overflow-hidden transition-all duration-700`
-          : `fixed bottom-0 lg:right-0 z-40 lg:mb-5 lg:mr-5 p-4 md:p-7 cursor-pointer bg-slate-900 shadow-xl w-full lg:w-1/3 rounded-t-2xl lg:rounded-2xl transition-all duration-700`
+          : `fixed bottom-0 lg:right-0 z-40 lg:mb-5 lg:mr-5 p-4 cursor-pointer bg-slate-900 shadow-xl w-full lg:w-1/3 rounded-t-2xl lg:rounded-2xl transition-all duration-700`
       }
     >
       <div className='overflow-y-auto'>
@@ -63,7 +63,7 @@ export default function PlayAudio({ hide }) {
       )}
       {hide && (
         <div onClick={handleClick} className='flex justify-between'>
-          <div className='grid px-4'>
+          <div className='grid px-2'>
             <h2 className=' text-base font-medium text-color-font'>{audioPodcast?.name}</h2>
             <h2 className=' text-sm font-light text-color-font'>{audioPodcast?.speaker}</h2>
           </div>
@@ -92,7 +92,7 @@ export default function PlayAudio({ hide }) {
               <AudioPlayer
                 // customIcons={}
                 // children={<h2> Hello </h2>}
-                className={`${hide ? 'bg-slate-900' : 'bg-color-bg'} z-[1000] p-2 shadow-none`}
+                className={`${hide ? 'bg-slate-900' : 'bg-color-bg'} z-[1000] p-2 pt-3 shadow-none`}
                 autoPlay
                 src={episode?.mediaUrl}
                 onPlay={(e) => console.log('onPlay')}
@@ -115,9 +115,6 @@ export default function PlayAudio({ hide }) {
                     <div className='flex flex-col justify-center'>
                       <p className='text-sm font-semibold inline-flex items-center text-color-font truncate'>
                         {audioPodcast?.speaker}{' '}
-                        {/* <span className="ml-2 text-xs font-medium font-mono text-gray-200">
-                  120M subscribers
-                </span> */}
                       </p>
                       <p className='text-xs font-light text-gray-200 truncate'>120M subscribers</p>
                     </div>
