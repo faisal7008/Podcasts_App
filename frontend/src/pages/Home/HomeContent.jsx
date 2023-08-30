@@ -20,7 +20,7 @@ export default function HomeContent() {
           Popular
         </h2>
         <Link
-          to='/popular'
+          to='/category/popular'
           state={{ podcastData: popularPodcasts, title: 'Popular' }}
           type='button'
           className='py-2 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold text-color-font hover:text-stone-200 outline-none focus:outline-none transition-all text-xs sm:text-sm'
@@ -32,7 +32,7 @@ export default function HomeContent() {
       <div className='flex justify-between items-center'>
         <h2 className='texl-2xl md:text-xl font-semibold text-color-font'>Video Podcasts</h2>
         <Link
-          to='/videocasts'
+          to='/category/videocasts'
           state={{ podcastData: podcasts, title: 'Video Podcasts' }}
           type='button'
           className='py-2 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold text-color-font hover:text-stone-200 outline-none focus:outline-none transition-all text-xs sm:text-sm'
@@ -44,7 +44,7 @@ export default function HomeContent() {
       <div className='flex justify-between items-center'>
         <h2 className='texl-2xl md:text-xl font-semibold text-color-font'>Audio Podcasts</h2>
         <Link
-          to='/audiocasts'
+          to='/category/audiocasts'
           state={{ podcastData: podcasts, title: 'Audio Podcasts' }}
           type='button'
           className='py-2 px-4 inline-flex justify-center items-center gap-2 rounded-md font-semibold text-color-font hover:text-stone-200 focus:outline-none outline-none transition-all text-xs sm:text-sm'

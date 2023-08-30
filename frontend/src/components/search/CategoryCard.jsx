@@ -10,7 +10,7 @@ export default function CategoryCard() {
     <div className='grid grid-cols-2 w-full gap-6'>
       {categories?.map((category) => (
         <Link
-          to={`/${category}`}
+          to={`/category/${category}`}
           state={{
             podcastData: podcasts?.filter((pod) => pod.category === category),
             title: category,

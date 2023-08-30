@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import SearchBar from '../components/search/SearchBar';
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { getAllPodcasts } from '../features/podcastSlice';
+import { useSelector } from 'react-redux';
 import CategoryCard from '../components/search/CategoryCard';
 import ListCard from '../components/podcasts/ListCard';
 import { emptyLogo } from '../assets';
 
 export default function Search() {
-  const dispatch = useDispatch();
   const { podcasts } = useSelector((state) => state.podcasts);
-  const { isAuthenticated } = useSelector((state) => state.auth);
   const [fiteredPodcasts, setFilteredPodcasts] = useState([]);
   const [searchItem, setSearchItem] = useState('');
   const [searchType, setSearchType] = useState('');

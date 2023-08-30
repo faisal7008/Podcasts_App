@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { savePodcast, setHidePlayer } from '../../features/podcastSlice';
 import EpisodeCard from '../episodes/EpisodeCard';
 import { BackIcon, PlayIcon, SaveIcon } from '../icons';
-import { getAllEpisodes, resetEpisode } from '../../features/episodeSlice';
+import { resetEpisode } from '../../features/episodeSlice';
 import StopIcon from '../icons/StopIcon';
 import { useNavigate } from 'react-router-dom';
 
@@ -53,7 +53,7 @@ export default function PlayVideo({ hide }) {
         <div className='grid space-y-3 lg:w-4/6 p-5 bg-color-bg rounded-xl'>
           <div className='flex-1'>
             <NetPlayer
-              // style={{ maxHeight: "500px" }}
+              style={{ maxHeight: "500px" }}
               sources={[
                 {
                   file: `${episode?.mediaUrl}`,

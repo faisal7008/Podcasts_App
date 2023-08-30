@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../components/handlers/Loader';
 import { MainLogoIcon } from '../components/icons';
 import { toast } from 'react-toastify';
+import GoBack from '../components/handlers/GoBack';
 
 export default function Signup() {
   const dispatch = useDispatch();
@@ -37,21 +38,7 @@ export default function Signup() {
   };
   return (
     <div className='h-full bg-gradient-to-tl from-color-dark to-color-bg w-full py-16 px-4'>
-      <Link to='/' className=' absolute bg-color-font rounded-full p-1 top-4 left-4'>
-        <svg
-          xmlns='http://www.w3.org/2000/svg'
-          viewBox='0 0 24 24'
-          strokeWidth={2}
-          fill='currentColor'
-          className='w-4 h-4 text-color-dark'
-        >
-          <path
-            fillRule='evenodd'
-            d='M11.03 3.97a.75.75 0 010 1.06l-6.22 6.22H21a.75.75 0 010 1.5H4.81l6.22 6.22a.75.75 0 11-1.06 1.06l-7.5-7.5a.75.75 0 010-1.06l7.5-7.5a.75.75 0 011.06 0z'
-            clipRule='evenodd'
-          />
-        </svg>
-      </Link>
+      <GoBack navigateToHome={true} />
       <div className='flex flex-col gap-4 items-center justify-center'>
         <div className='w-full flex gap-1 justify-center items-center'>
           <MainLogoIcon />
@@ -59,7 +46,7 @@ export default function Signup() {
             Podcasts
           </h1>
         </div>
-        <div className='bg-white shadow rounded lg:w-1/3  md:w-1/2 w-full p-10'>
+        <div className='bg-white shadow rounded lg:w-1/3 md:w-2/3 w-full p-10'>
           <p
             tabIndex={0}
             aria-label='Create your account'

@@ -16,6 +16,7 @@ import PodcastDetails from './pages/PodcastDetails';
 import Profile from './pages/Profile';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import NoPageFound from './pages/NoPageFound';
 
 function App() {
   const dispatch = useDispatch();
@@ -52,7 +53,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />}>
             <Route path='/' element={<HomeContent />} />
-            <Route path='/:type' element={<ViewAll />} />
+            <Route path='/category/:type' element={<ViewAll />} />
             <Route path='/search' element={<Search />} />
             <Route path='/library' element={<ComingSoon />} />
             {/* <Route path="/play-audio" element={<PlayAudio />}/> */}
@@ -81,6 +82,7 @@ function App() {
           </Route>
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
+          <Route path='/*' element={<NoPageFound />} />
         </Routes>
       </Router>
       <ToastContainer

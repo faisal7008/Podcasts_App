@@ -10,6 +10,7 @@ import CloseIcon from './CloseIcon';
 import PlayIcon from './PlayIcon';
 import DeleteIcon from './DeleteIcon';
 import PlusIcon from './PlusIcon';
+import GoogleIcon from './GoogleIcon';
 
 export {
   SaveIcon,
@@ -24,4 +25,5 @@ export {
   PlayIcon,
   DeleteIcon,
   PlusIcon,
+  GoogleIcon
 };

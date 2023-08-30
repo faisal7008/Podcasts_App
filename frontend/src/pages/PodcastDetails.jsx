@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { loaderImg, podcastCardImg } from '../assets';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteEpisode, getAllEpisodes, resetEpisode, setEpisode } from '../features/episodeSlice';
+import { deleteEpisode, getAllEpisodes, setEpisode } from '../features/episodeSlice';
 import EpisodeCard from '../components/episodes/EpisodeCard';
 import { useNavigate, useParams } from 'react-router-dom';
 import { BackIcon, DeleteIcon, EditIcon, PlayIcon, SaveIcon } from '../components/icons';
 import AddEpisode from '../components/episodes/AddEpisode';
 import {
   deletePodcast,
-  getPodcast,
   resetPodcast,
   savePodcast,
-  setPodcast,
 } from '../features/podcastSlice';
 import moment from 'moment';
 import { toast } from 'react-toastify';
 import DeleteModal from '../components/modals/DeleteModal';
 import { getMe } from '../features/userSlice';
-import PodcastLoader from '../components/handlers/PodcastLoader';
+// import PodcastLoader from '../components/handlers/PodcastLoader';
 
 export default function PodcastDetails() {
   const dispatch = useDispatch();
@@ -105,7 +103,7 @@ export default function PodcastDetails() {
 
   return (
     <div className='px-2 py-4 md:p-7 w-full h-full overflow-hidden'>
-      {/* {podcast !== null && <PodcastLoader />} */}
+      {/* {!podcast && <PodcastLoader />} */}
       <div className='flex gap-3 items-center mb-1'>
         <div
           onClick={() => {
@@ -158,9 +156,6 @@ export default function PodcastDetails() {
             <div className='w-full text-base text-justify mb-4'>{podcast?.description}</div>
             {myPodcasts?.includes(podcastId) && (
               <button
-                // onClick={() => {
-
-                // }}
                 data-hs-overlay='#delete-modal'
                 className='inline-flex gap-2 items-center justify-center px-4 py-2 text-sm font-semibold w-full bg-color-font text-rose-600 rounded-full focus:outline-none  transition-opacity duration-200 ease-linear cursor-pointer'
               >

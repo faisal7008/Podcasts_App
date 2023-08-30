@@ -7,12 +7,6 @@ const api_url = `${process.env.REACT_APP_API_URL}`;
 // Fetch all podcasts
 export const getAllPodcasts = createAsyncThunk('podcasts/getAllPodcasts', async (_, thunkAPI) => {
   try {
-    const token = thunkAPI.getState().auth.token;
-    // const config = {
-    //   headers: {
-    //     Authorization: `Bearer ${token}`,
-    //   },
-    // };
     const response = await axios.get(api_url + '/podcasts');
     return response.data;
   } catch (error) {
