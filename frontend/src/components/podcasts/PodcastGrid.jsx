@@ -54,7 +54,7 @@ export default function PodcastGrid({ podcasts }) {
     <>
       {podcasts?.length === 0 && (
         <div className='h-80 grid place-content-center'>
-          <img src={emptyLogo} className='h-32' />
+          <img src={emptyLogo} className='h-32 animate-pulse' />
         </div>
       )}
       <Slider
