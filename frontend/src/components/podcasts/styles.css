@@ -1,0 +1,8 @@
+/* CSS to style the next and previous buttons */
+.swiper-button-next {
+    right: 0;
+}
+
+.swiper-button-prev {
+    left: 0;
+}

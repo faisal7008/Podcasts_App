@@ -1,6 +1,6 @@
 import React from 'react';
 
-function BackIcon({ size = 24, color = 'currentColor', fill }) {
+function BackIcon({ size = 24, color = 'currentColor', fill, className }) {
   return (
     <svg
       fill={fill ? fill : 'none'}
@@ -11,6 +11,7 @@ function BackIcon({ size = 24, color = 'currentColor', fill }) {
       aria-hidden='true'
       width={size}
       height={size}
+      className={className}
     >
       <path strokeLinecap='round' strokeLinejoin='round' d='M15.75 19.5L8.25 12l7.5-7.5' />
     </svg>

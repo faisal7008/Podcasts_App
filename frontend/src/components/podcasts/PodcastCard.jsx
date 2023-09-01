@@ -17,7 +17,7 @@ export default function PodcastCard({ podcast }) {
   return (
     <div
       className={
-        'w-32 h-48 sm:w-48 sm:h-[17rem] flex flex-col justify-between bg-color-bg hover:bg-color-card rounded-lg border-gray-400 p-2 sm:p-4'
+        'w-32 h-48 lg:w-48 lg:h-[17rem] p-2 lg:p-4 flex flex-col justify-between bg-color-bg hover:bg-color-card rounded-lg border-gray-400'
       }
     >
       <div className='flex flex-col gap-2'>
@@ -47,10 +47,10 @@ export default function PodcastCard({ podcast }) {
             <PlayCircleIcon className='w-14 h-14 text-color-font' />
           </button>
         </div>
-        <div className='flex flex-col sm:gap-1 px-1'>
+        <div className='flex flex-col lg:gap-1 px-1'>
           <div className='flex gap-3 items-center justify-between text-color-font cursor-pointer'>
             {podcast?.name ? (
-              <h4 className='text-gray-200 text-sm sm:text-base font-medium truncate'>
+              <h4 className='text-gray-200 text-sm lg:text-base font-medium truncate'>
                 {podcast?.name}
               </h4>
             ) : (
