@@ -108,7 +108,7 @@ export default function Signup() {
           >
             Create your account
           </p>
-          <p className='text-sm mt-4 font-medium leading-none text-gray-500'>
+          <p className='text-sm mt-3 font-medium leading-none text-gray-500'>
             Already have an account?{' '}
             <span
               tabIndex={0}

@@ -52,7 +52,7 @@ export default function Login() {
           <p
             tabIndex={0}
             aria-label='Login to your account'
-            className='text-lg md:text-2xl font-extrabold leading-6 text-gray-800'
+            className='text-2xl font-extrabold leading-6 text-gray-800'
           >
             Login to your account
           </p>
