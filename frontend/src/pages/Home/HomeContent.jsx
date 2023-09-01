@@ -16,7 +16,7 @@ export default function HomeContent() {
   return (
     <div className='flex flex-col gap-4 w-full p-4 md:p-7 min-h-full scroll-container overflow-y-auto'>
       <div className='flex justify-between items-center'>
-        <h2 className='text-base md:text-xl tracking-wider font-semibold text-color-font'>
+        <h2 className='text-lg sm:text-xl tracking-wider font-semibold text-color-font'>
           Popular
         </h2>
         <Link
@@ -30,7 +30,7 @@ export default function HomeContent() {
       </div>
       <PodcastGrid podcasts={popularPodcasts} />
       <div className='flex justify-between items-center'>
-        <h2 className='texl-2xl md:text-xl font-semibold text-color-font'>Video Podcasts</h2>
+        <h2 className='text-lg sm:text-xl tracking-wider font-semibold text-color-font'>Video Podcasts</h2>
         <Link
           to='/category/videocasts'
           state={{ podcastData: podcasts, title: 'Video Podcasts' }}
@@ -42,7 +42,7 @@ export default function HomeContent() {
       </div>
       <PodcastGrid podcasts={videoPodcasts} />
       <div className='flex justify-between items-center'>
-        <h2 className='texl-2xl md:text-xl font-semibold text-color-font'>Audio Podcasts</h2>
+        <h2 className='text-lg sm:text-xl tracking-wider font-semibold text-color-font'>Audio Podcasts</h2>
         <Link
           to='/category/audiocasts'
           state={{ podcastData: podcasts, title: 'Audio Podcasts' }}
