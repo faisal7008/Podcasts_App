@@ -25,14 +25,20 @@ export default function Signup() {
 
   useEffect(() => {
     if (error) {
-      toast.error(error);
+      toast.error(error, {
+        //position: toast.POSITION.BOTTOM_RIGHT,
+        className: "m-2 font-sans rounded shadow font-medium text-color-dark md:m-0"
+      });
       dispatch(clearError())
     }
   }, [error]);
 
   useEffect(() => {
     if (errorMsg) {
-      toast.error(errorMsg);
+      toast.error(errorMsg, {
+        //position: toast.POSITION.BOTTOM_RIGHT,
+        className: "m-2 font-sans rounded shadow font-medium text-color-dark md:m-0"
+      });
       setErrorMsg('')
     }
   }, [errorMsg]);

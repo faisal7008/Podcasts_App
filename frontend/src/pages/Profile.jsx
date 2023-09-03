@@ -37,6 +37,7 @@ export default function Profile() {
     if (errorMsg) {
       toast.error(errorMsg, {
         //position: toast.POSITION.BOTTOM_RIGHT,
+        className: "m-2 font-sans rounded shadow font-medium text-color-dark md:m-0"
       });
     }
   }, [errorMsg]);
@@ -98,13 +99,22 @@ export default function Profile() {
         const { message, passwordError, passwordMsg } = response.payload;
         console.log('Message:', message);
         if (message) {
-          toast.success(message);
+          toast.success(message, {
+            //position: toast.POSITION.BOTTOM_RIGHT,
+            className: "m-2 font-sans rounded shadow font-medium text-color-dark md:m-0"
+          });
         }
         if (passwordMsg) {
-          toast.success(passwordMsg);
+          toast.success(passwordMsg, {
+            //position: toast.POSITION.BOTTOM_RIGHT,
+            className: "m-2 font-sans rounded shadow font-medium text-color-dark md:m-0"
+          });
         }
         if (passwordError) {
-          toast.error(passwordError);
+          toast.error(passwordError, {
+            //position: toast.POSITION.BOTTOM_RIGHT,
+            className: "m-2 font-sans rounded shadow font-medium text-color-dark md:m-0"
+          });
         }
       })
       .catch((error) => {

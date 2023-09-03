@@ -89,11 +89,13 @@ export default function PodcastDetails() {
           if (successMsg) {
             toast.success(successMsg, {
               //position: toast.POSITION.BOTTOM_RIGHT,
+              className: "m-2 font-sans rounded shadow font-medium text-color-dark md:m-0"
             });
           }
           if (errorMsg) {
             toast.error(errorMsg, {
               //position: toast.POSITION.BOTTOM_RIGHT,
+              className: "m-2 font-sans rounded shadow font-medium text-color-dark md:m-0"
             });
           }
         });
