@@ -27,9 +27,9 @@ export default function Signup() {
     if (error) {
       toast.error(error, {
         //position: toast.POSITION.BOTTOM_RIGHT,
-        className: "m-2 font-sans rounded shadow font-medium text-color-dark md:m-0"
+        className: 'm-2 font-sans rounded shadow font-medium text-color-dark md:m-0',
       });
-      dispatch(clearError())
+      dispatch(clearError());
     }
   }, [error]);
 
@@ -37,9 +37,9 @@ export default function Signup() {
     if (errorMsg) {
       toast.error(errorMsg, {
         //position: toast.POSITION.BOTTOM_RIGHT,
-        className: "m-2 font-sans rounded shadow font-medium text-color-dark md:m-0"
+        className: 'm-2 font-sans rounded shadow font-medium text-color-dark md:m-0',
       });
-      setErrorMsg('')
+      setErrorMsg('');
     }
   }, [errorMsg]);
 
@@ -127,9 +127,7 @@ export default function Signup() {
           </p>
           <form onSubmit={handleSubmit}>
             <div className='mt-6'>
-              <label className='text-sm font-medium leading-none text-gray-800'>
-                Fullname
-              </label>
+              <label className='text-sm font-medium leading-none text-gray-800'>Fullname</label>
               <input
                 required
                 aria-label='enter fullname'
@@ -139,9 +137,7 @@ export default function Signup() {
               />
             </div>
             <div className='mt-6'>
-              <label className='text-sm font-medium leading-none text-gray-800'>
-                Email
-              </label>
+              <label className='text-sm font-medium leading-none text-gray-800'>Email</label>
               <input
                 required
                 aria-label='enter email adress'
@@ -151,9 +147,7 @@ export default function Signup() {
               />
             </div>
             <div className='mt-6'>
-              <label className='text-sm font-medium leading-none text-gray-800'>
-                Password
-              </label>
+              <label className='text-sm font-medium leading-none text-gray-800'>Password</label>
               <div className='relative flex items-center justify-center'>
                 <input
                   required
@@ -163,13 +157,17 @@ export default function Signup() {
                   className='bg-gray-200 border focus:border-color-bg focus:ring-color-bg rounded focus:outline-none font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2'
                 />
 
-          <button
-            type='button'
-            onClick={() => setShowPassword((prev) => !prev)}
-            className=' absolute bottom-2.5 right-3 focus:outline-none'
-          >
-            {showPassword ? <EyeOpenIcon color='#393646' /> : <EyeCloseIcon color='#393646' />}
-          </button>
+                {password && <button
+                  type='button'
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className=' absolute bottom-3 right-3 focus:outline-none'
+                >
+                  {showPassword ? (
+                    <EyeOpenIcon size={20} color='#393646' />
+                  ) : (
+                    <EyeCloseIcon size={20} color='#393646' />
+                  )}
+                </button>}
               </div>
             </div>
             <div className='mt-8'>

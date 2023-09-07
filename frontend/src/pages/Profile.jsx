@@ -37,7 +37,7 @@ export default function Profile() {
     if (errorMsg) {
       toast.error(errorMsg, {
         //position: toast.POSITION.BOTTOM_RIGHT,
-        className: "m-2 font-sans rounded shadow font-medium text-color-dark md:m-0"
+        className: 'm-2 font-sans rounded shadow font-medium text-color-dark md:m-0',
       });
     }
   }, [errorMsg]);
@@ -101,19 +101,19 @@ export default function Profile() {
         if (message) {
           toast.success(message, {
             //position: toast.POSITION.BOTTOM_RIGHT,
-            className: "m-2 font-sans rounded shadow font-medium text-color-dark md:m-0"
+            className: 'm-2 font-sans rounded shadow font-medium text-color-dark md:m-0',
           });
         }
         if (passwordMsg) {
           toast.success(passwordMsg, {
             //position: toast.POSITION.BOTTOM_RIGHT,
-            className: "m-2 font-sans rounded shadow font-medium text-color-dark md:m-0"
+            className: 'm-2 font-sans rounded shadow font-medium text-color-dark md:m-0',
           });
         }
         if (passwordError) {
           toast.error(passwordError, {
             //position: toast.POSITION.BOTTOM_RIGHT,
-            className: "m-2 font-sans rounded shadow font-medium text-color-dark md:m-0"
+            className: 'm-2 font-sans rounded shadow font-medium text-color-dark md:m-0',
           });
         }
       })
@@ -183,13 +183,19 @@ export default function Profile() {
             onChange={(e) => setCurrentPassword(e.target.value)}
             className='py-3 px-4 text-color-dark/100 bg-color-font font-medium block w-full text-base/3 rounded-md outline-none focus:outline-none border-none shadow'
           />
-          <button
-            type='button'
-            onClick={() => setShowPassword1((prev) => !prev)}
-            className=' absolute bottom-2.5 right-3 focus:outline-none'
-          >
-            {showPassword1 ? <EyeOpenIcon color='#393646' /> : <EyeCloseIcon color='#393646' />}
-          </button>
+          {currentPassword && (
+            <button
+              type='button'
+              onClick={() => setShowPassword1((prev) => !prev)}
+              className=' absolute bottom-3 right-3 focus:outline-none'
+            >
+              {showPassword1 ? (
+                <EyeOpenIcon size={20} color='#393646' />
+              ) : (
+                <EyeCloseIcon size={20} color='#393646' />
+              )}
+            </button>
+          )}
         </div>
         <div className='relative'>
           <label
@@ -205,13 +211,19 @@ export default function Profile() {
             onChange={(e) => setNewPassword(e.target.value)}
             className='py-3 px-4 text-color-dark/100 bg-color-font font-medium block w-full  text-base/3 rounded-md outline-none focus:outline-none border-none shadow'
           />
-          <button
-            type='button'
-            onClick={() => setShowPassword2((prev) => !prev)}
-            className=' absolute bottom-2.5 right-3 focus:outline-none'
-          >
-            {showPassword2 ? <EyeOpenIcon color='#393646' /> : <EyeCloseIcon color='#393646' />}
-          </button>
+          {newPassword && (
+            <button
+              type='button'
+              onClick={() => setShowPassword2((prev) => !prev)}
+              className=' absolute bottom-3 right-3 focus:outline-none'
+            >
+              {showPassword2 ? (
+                <EyeOpenIcon size={20} color='#393646' />
+              ) : (
+                <EyeCloseIcon size={20} color='#393646' />
+              )}
+            </button>
+          )}
         </div>
         <div className='flex gap-3 mt-6 items-center justify-end'>
           <button

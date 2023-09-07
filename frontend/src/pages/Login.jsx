@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { clearError, login } from '../features/userSlice';
 import ErrorContainer from '../components/handlers/ErrorContainer';
 import Loader from '../components/handlers/Loader';
-import { GoogleIcon, MainLogoIcon } from '../components/icons';
+import { EyeCloseIcon, EyeOpenIcon, GoogleIcon, MainLogoIcon } from '../components/icons';
 import { toast } from 'react-toastify';
 import GoBack from '../components/handlers/GoBack';
 
@@ -13,6 +13,7 @@ export default function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const { status, error, isAuthenticated } = useSelector((state) => state.auth);
 
   useEffect(() => {
@@ -94,18 +95,28 @@ export default function Login() {
                 className='bg-gray-200 border focus:border-color-bg focus:ring-color-bg rounded focus:outline-none font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2'
               />
             </div>
-            <div className='mt-6  w-full'>
-              <label className='text-sm font-medium leading-none text-gray-800'>
-                Password
-              </label>
+            <div className='mt-6'>
+              <label className='text-sm font-medium leading-none text-gray-800'>Password</label>
               <div className='relative flex items-center justify-center'>
                 <input
                   required
                   aria-label='enter Password'
+                  type={showPassword ? 'text' : 'password'}
                   onChange={(e) => setPassword(e.target.value)}
-                  type='password'
                   className='bg-gray-200 border focus:border-color-bg focus:ring-color-bg rounded focus:outline-none font-medium leading-none text-gray-800 py-3 w-full pl-3 mt-2'
                 />
+
+                {password && <button
+                  type='button'
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className=' absolute bottom-3 right-3 focus:outline-none'
+                >
+                  {showPassword ? (
+                    <EyeOpenIcon size={20} color='#393646' />
+                  ) : (
+                    <EyeCloseIcon size={20} color='#393646' />
+                  )}
+                </button>}
               </div>
             </div>
             <div className='mt-8'>
